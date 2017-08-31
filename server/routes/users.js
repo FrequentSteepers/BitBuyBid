@@ -1,16 +1,16 @@
 'use strict';
 const express = require('express');
 const router = express.Router();
-const ProfileController = require('../controllers').Profiles;
+const {getAll, getOne, update} = require('../controllers').Users;
 
 router.route('/')
-  .get(ProfileController.getAll)
+  .get(getAll)
   // .post(ProfileController.create)
   ;
 
 router.route('/:id')
-  .get(ProfileController.getOne)
-  .put(ProfileController.update)
+  .get(getOne)
+  .put(update)
   // .delete(ProfileController.deleteOne)
   ;
 

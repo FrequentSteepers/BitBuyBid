@@ -3,17 +3,16 @@ const models = require('../../db/models');
 
 const generateMockData = number => {
   var productTitles = ['Peanut butter', 'Kikiriki', 'Cacauet', 'Maní', 'Eros'];
-  var productId = 0;
   var results = [];
   for (var i = 0; i < number; i++ ) {
     results.push({
-      productId: productId++,
+      id: i,
       imgs: {
         small: 'https://images.freshop.com/00070690282000/246f35b9481cc6a61446f25cb80875c1_medium.png',
         medium: 'http://s.eatthis-cdn.com/media/images/ext/551146431/peanut-butter-ranked-nutsnmore-Peanut-Reg.jpg',
         large: 'https://cdn.shopify.com/s/files/1/0923/2946/products/SmoothOp-1024.jpg?v=1502224339',
       },
-      title: productTitles[productId % productTitles.length],
+      title: productTitles[i % productTitles.length],
       description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do 
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim 
           ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut 
@@ -41,13 +40,16 @@ module.exports.getAll = (req, res) => {
 };
 
 module.exports.getOne = (req, res) => {
+  if (fakeDb.length <= req.params.id) {
+    res.status(404).end();
+  }
   res.json({
     results: fakeDb[req.params.id]
   });
 };
 
 module.exports.update = (req, res) => {
-  fakeDb[req.body.productId] = req.body;
+  fakeDb[req.body.id] = req.body;
   res.json({
     updated: req.params.id
   });

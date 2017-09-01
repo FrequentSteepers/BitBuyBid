@@ -1,11 +1,20 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
 
-export default class Listings extends Component {
-  render () {
-    return ( 
-      <div>
-        yo
-      </div>
-    );
-  }
-}
+const Listings = () => {
+
+  return ( 
+    <div>
+      yo
+    </div>
+  );
+  
+};
+
+const mapStateToProps = (state) => {
+  return {
+    products: state.listing.products
+  };
+};
+
+export default connect(mapStateToProps)(Listings);

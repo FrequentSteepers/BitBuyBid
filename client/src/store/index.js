@@ -21,3 +21,5 @@ const store = createStore(
   initialState,
   composedEnhancers
 );
+
+export default store;

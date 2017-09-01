@@ -1,5 +1,14 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-export default () => (
-  <div>Hola </div>
+const mapStateToProps = (state) => (
+  {
+    hello: state.app.hello
+  }
 );
+
+const app = (props) => (
+  <div>{props.hello} </div>
+);
+
+export default connect(mapStateToProps)(app);

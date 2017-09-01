@@ -3,11 +3,8 @@ import {render} from 'react-dom';
 import {Provider} from 'react-redux';
 import store from './store';
 
-import App from '../src/components/App.jsx';
-
-
 import ReactDOM from 'react-dom';
-import { BrowserHistory, Route, Switch, Link } from 'react-router';
+import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 import Home from './views/Home.jsx';
 
 class App extends React.Component {
@@ -20,9 +17,11 @@ class App extends React.Component {
       <div>
         <h2>Hello, there!</h2>
         <Switch>
-          <Route exact path='/home' to={Home}/>
-          <Route path='/profile' to={Profile}/>
-          <Route path='/checkout' to={Checkout}/>
+          <Route path='/home'>
+            <Home />
+          </Route>
+          {/*<Route path='/profile' to={Profile}/>
+          <Route path='/checkout' to={Checkout}/>*/}
         </Switch>
       </div>
     );
@@ -31,8 +30,8 @@ class App extends React.Component {
 
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserHistory>
+    <BrowserRouter>
       <App />
-    </BrowserHistory>
-  </ Provider>, 
+    </BrowserRouter>
+  </Provider>, 
   document.getElementById('root'));

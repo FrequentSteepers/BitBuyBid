@@ -1,4 +1,5 @@
 import React from 'react';
+import Search from '../components/Search.jsx';
 
 class Home extends React.Component {
   constructor() {
@@ -9,6 +10,7 @@ class Home extends React.Component {
     return (
       <div>
         <h2>Welcome Home, bidders!</h2>
+        <Search/>
       </div>
     );
   }

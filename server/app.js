@@ -19,7 +19,7 @@ app.use(middleware.passport.session());
 app.use(middleware.flash());
 
 
-app.use('/', routes.auth);
+app.use('/auth', routes.auth);
 app.use('/api', routes.api);
 app.use('/api/users', routes.users);
 app.use('/api/products', routes.products);
@@ -27,7 +27,6 @@ app.use('/api/products', routes.products);
 app.get('*/app.js', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../public/dist/bundle.js'));
 });
-
 
 //if there is a carrot error, then that means that the file being 
 //served is expected to be of another format, but is in HTML, 

@@ -21,7 +21,7 @@ const generateMockData = number => {
           sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt 
           mollit anim id est laborum.`,
       rating: Math.random() * 5,
-      seller: 50 * Math.random(),
+      seller: 50 * Math.random()
     });
   }
   return results;
@@ -41,7 +41,7 @@ module.exports.getAll = (req, res) => {
 
 module.exports.getOne = (req, res) => {
   if (fakeDb.length <= req.params.id) {
-    res.status(404).end();
+    res.status(404);
   }
   res.json({
     results: fakeDb[req.params.id]

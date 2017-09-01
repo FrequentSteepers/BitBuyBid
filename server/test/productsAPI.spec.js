@@ -5,7 +5,7 @@ const expect = require('chai').expect;
 const app = require('../app.js');
 const dbUtils = require('../../db/lib/utils.js');
 
-describe('Profiles API', function () {
+describe('Products API', function () {
   beforeEach(function (done) {
     dbUtils.rollbackMigrate(done);
   });
@@ -15,39 +15,37 @@ describe('Profiles API', function () {
     dbUtils.rollback(done);
   });
 
-  it('accepts GET requests to /api/profiles', function (done) {
+  it('accepts GET requests to /api/products', function (done) {
     request(app)
-      .get('/api/profiles')
+      .get('/api/products')
       .expect(res => {
         res.body = {
-          length: res.body.length
+          length: res.body.results.length
         };
       })
       .expect(200, {
-        length: 1
+        length: 15
       })
       .end(done);
   });
 
-  it('accepts GET requests to /api/profiles/:id', function (done) {
+  it('accepts GET requests to /api/products/:id', function (done) {
     request(app)
-      .get('/api/profiles/1')
+      .get('/api/products/1')
       .expect(res => {
         res.body = {
-          id: res.body.id,
-          created_at: !!Date.parse(res.body.created_at)
+          id: res.body.results.id,
         };
       })
       .expect(200, {
         id: 1,
-        created_at: true
       })
       .end(done);
   });
 
-  it('sends 404 if id on GET requests to /api/profiles/:id does not exist', function (done) {
+  it('sends 404 if id on GET requests to /api/users/:id does not exist', function (done) {
     request(app)
-      .get('/api/profiles/123')
+      .get('/api/products/123')
       .expect(404)
       .end(done);
   });
@@ -72,7 +70,7 @@ describe('Profiles API', function () {
   //     .end(done);
   // });
 
-  it('accepts PUT requests to /api/profiles/:id', function () {
+  it('accepts PUT requests to /api/users/:id', function () {
     let profile = {
       first: 'James',
       last: 'Davenport',
@@ -82,12 +80,12 @@ describe('Profiles API', function () {
     };
 
     return request(app)
-      .put('/api/profiles/1')
+      .put('/api/users/1')
       .send(profile)
       .expect(201)
       .then(() => {
         return request(app)
-          .get('/api/profiles/1')
+          .get('/api/users/1')
           .expect(res => {
             res.body = {
               first: res.body.first,
@@ -101,9 +99,9 @@ describe('Profiles API', function () {
       });
   });
 
-  it('sends 404 if id on PUT requests to /api/profiles/:id does not exist', function (done) {
+  it('sends 404 if id on PUT requests to /api/users/:id does not exist', function (done) {
     request(app)
-      .put('/api/profiles/123')
+      .put('/api/users/123')
       .expect(404)
       .end(done);
   });

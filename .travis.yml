@@ -1,0 +1,20 @@
+language: node_js
+node_js:
+  - "node"
+
+services:
+  - postgresql
+
+cache:
+  directories:
+    - "node_modules"
+
+before_install:
+  - psql -c 'create database thesis;' -U postgres
+
+before_script:
+  - webpack
+
+script:
+  - "npm test"
+  - "npm run lint"

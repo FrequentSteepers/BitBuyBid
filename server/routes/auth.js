@@ -2,7 +2,8 @@ const express = require('express');
 const middleware = require('../middleware');
 
 const router = express.Router();
-
+// middleware.auth.verify, 
+// reenable middleware
 router.route('/')
   .get((req, res) => {
     res.render('index.ejs');

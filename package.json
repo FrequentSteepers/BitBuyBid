@@ -35,6 +35,7 @@
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.6",
+    "react-router-dom": "^4.2.2",
     "react-router-redux": "^4.0.8",
     "redis": "^2.7.1",
     "redux": "^3.7.2"
@@ -42,6 +43,7 @@
   "devDependencies": {
     "babel-loader": "^7.0.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.24.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-latest": "^6.24.0",
     "babel-preset-react": "^6.23.0",
     "chai": "^3.5.0",

@@ -2,12 +2,35 @@ import React from 'react';
 import {render} from 'react-dom';
 import {Provider} from 'react-redux';
 import store from './store';
+import { connect } from 'react-redux';
+import ReactDOM from 'react-dom';
+import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
+import Home from './views/Home.jsx';
+import { setHello, appTypes } from './store/modules/app.js';
 
-import App from '../src/components/App.jsx';
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+  }
 
-render(
+  render() {
+    return (
+      <div>
+        <h2>Hello, there!</h2>
+        <Switch>
+          <Route path='/home'>
+            <Home />
+          </Route>
+        </Switch>
+      </div>
+    );
+  }
+}
+
+ReactDOM.render(
   <Provider store={store}>
-    <App />
-  </ Provider>, 
-  document.getElementById('root')
-);
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>, 
+  document.getElementById('root'));

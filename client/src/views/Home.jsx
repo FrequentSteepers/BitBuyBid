@@ -1,5 +1,6 @@
 import React from 'react';
 import Search from '../components/Search.jsx';
+import Listings from '../components/Listings.jsx';
 
 
 class Home extends React.Component {
@@ -12,6 +13,7 @@ class Home extends React.Component {
       <div>
         <h2>Welcome Home, bidders!</h2>
         <Search/>
+        <Listings/>
       </div>
     );
   }

@@ -1,7 +1,7 @@
 const db = require('../');
 
 const Product = db.Model.extend({
-  tableName: 'product',
+  tableName: 'products',
 });
 
-module.exports = db.model('product', Product);
+module.exports = db.model('Product', Product);

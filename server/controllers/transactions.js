@@ -29,14 +29,7 @@ module.exports.create = (req, res) => {
 };
 
 module.exports.getAll = (req, res) => {
-  axios.get(`https://product-search.api.cj.com/v2/product-search?website-id=${overstock['website-id']}&keywords=shoes`)
-    .then(results => {
-      res.json(convert.xml2json(results.data));
-    })
-    .catch(err => {
-      console.log(err);
-      res.status(405);
-    });
+  res.status(401);
 };
 
 module.exports.getOne = (req, res) => {

@@ -3,8 +3,10 @@
     "client": "postgresql",
     "connection": {
       "database": "thesis",
-      "user": "jacobpenney",
-      "password": ""
+      "user": "postgres",
+      "password": "postgres",
+      "host": "localhost",
+      "port": 5432
     },
     "pool": {
       "min": 1,

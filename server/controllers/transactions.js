@@ -1,4 +1,9 @@
 const {Transaction} = require('../../db/models');
+const axios = require('axios');
+const {overstock} = require('../../config/api_configs/');
+axios.defaults.headers.common['Authorization'] = overstock.Authorization;
+var convert = require('xml-js');
+
 
 /**
  * 
@@ -24,7 +29,14 @@ module.exports.create = (req, res) => {
 };
 
 module.exports.getAll = (req, res) => {
-  res.status(401);
+  axios.get(`https://product-search.api.cj.com/v2/product-search?website-id=${overstock['website-id']}&keywords=shoes`)
+    .then(results => {
+      res.json(convert.xml2json(results.data));
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(405);
+    });
 };
 
 module.exports.getOne = (req, res) => {

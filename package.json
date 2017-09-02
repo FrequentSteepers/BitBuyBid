@@ -40,7 +40,8 @@
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^4.0.8",
     "redis": "^2.7.1",
-    "redux": "^3.7.2"
+    "redux": "^3.7.2",
+    "xml-js": "^1.4.1"
   },
   "devDependencies": {
     "babel-loader": "^7.0.0",

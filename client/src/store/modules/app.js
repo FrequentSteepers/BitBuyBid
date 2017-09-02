@@ -9,7 +9,10 @@ const initialState = {
 export default (state = initialState, {type, payload}) => {
   switch (type) {
   case appTypes.SET_HELLO: 
-    return {...state, hello: payload};
+    return {
+      ...state, 
+      hello: payload
+    };
   default: return state;
   }
 };

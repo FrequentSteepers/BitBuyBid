@@ -4,18 +4,18 @@ import MenuItem from 'material-ui/MenuItem';
 import AppBar from 'material-ui/AppBar';
 
 const myNavStyle = {
-    "backgroundColor": "teal",
-    "fontFamily": "Palatino,serif",
-    "fontStyle": "oblique",
-    "textAlign": "center",
-}
+  'backgroundColor': 'teal',
+  'fontFamily': 'Palatino,serif',
+  'fontStyle': 'oblique',
+  'textAlign': 'center',
+};
 
 class Navbar extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
       open: false
-    }
+    };
     this.handleToggle = this.handleToggle.bind(this);
     this.handleClose = this.handleClose.bind(this);
     if (this.props.setToggle) {
@@ -45,7 +45,7 @@ class Navbar extends React.Component {
 
   render () {
     return (
-      <div style={{"paddingBottom": "20px"}}>
+      <div style={{'paddingBottom': '20px'}}>
         <AppBar
           style={myNavStyle}
           title="Bit Buy"
@@ -58,7 +58,7 @@ class Navbar extends React.Component {
           <MenuItem onClick={this.redirectTo.bind(this, '/logout')}>Logout</MenuItem>
         </Drawer>
       </div>
-    )
+    );
   }
 }
 

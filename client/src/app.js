@@ -36,7 +36,7 @@ ReactDOM.render(
     <MuiThemeProvider muiTheme={getMuiTheme({
       theme: lightBaseTheme,
       AppBar: {
-        position: "relative",
+        position: 'relative',
         padding: 0,
         left: 0
       }

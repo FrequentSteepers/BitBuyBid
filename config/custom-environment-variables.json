@@ -1,9 +1,9 @@
 {
   "passport": {
     "Google": {
-      "clientID": "GOOGLE_CLIENT_ID",
-      "clientSecret": "GOOGLE_CLIENT_SECRET",
-      "callbackURL": "GOOGLE_CALLBACK_URL"
+      "clientID": "688547326674-mktpeop0vsc6gl1r0ogiqc34vjfd79ei",
+      "clientSecret": "MNVphv8MRhAXghHI18zaIQuT",
+      "redirect_uri": "127.0.0.1:3000"
     },
 
     "Facebook": {

@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { setSearchTerm, searchTypes } from '../store/modules/search.js';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
 
 const mapStateToProps = (state) => {
   return {
@@ -28,11 +31,12 @@ class Search extends Component {
 
   render() {
     return (
-      <div>
-        <form onChange={(e) => this.handleSearch(e)}>
-          <input type="text" placeholder="search for a product!"/>
-          <input type="submit" value="Submit!"/>
-        </form>
+      <div style={{width: '50%', margin: '0 auto'}}>
+        <Card>
+          <form style={{textAlign:'center', paddingBottom:'10px'}} onChange={(e) => this.handleSearch(e)}>
+            <TextField floatingLabelText="search for a product!"/>
+          </form>
+        </Card>
       </div>
     );
   }

@@ -6,23 +6,15 @@ import {bindActionCreators} from 'redux';
 import {GridList, GridTile} from 'material-ui/GridList';
 import Listing from './Listing.jsx';
 import $ from 'jquery';
+import { Grid, Row, Col } from 'react-flexbox-grid';
+
 
 const styles = {
-  grid: {
-    width: 300,
-    height: 200,
-    overflowY: 'auto'
-  },
   root: {
     paddingTop: '10px',
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'space-around',
-  },
-  tile: {
-    maxHeight: '20%',
-    maxWidth: '20%',
-    padding: '0px'
   }
 };
 
@@ -37,26 +29,23 @@ const Listings = (props) => {
       });
   };
   return ( 
-    <div>
+    <div style={styles.root}>
       <button onClick={fetchProducts}>Click</button>
-      <div style={styles.root}>
-        {(props.products).map((product,i) => {
-          return (
-            <div key={i}>
-              <GridList style={styles.grid}>
-                <GridTile>
-                  <Listing 
-                    style={styles.tile}
-                    title={product.title}
-                    img={product.imgs.small}
-                    rating={product.rating}
-                  />
-                </GridTile>
-              </GridList>
-            </div>
-          );
-        })}
-      </div>
+      <Grid fluid>
+        <Row>
+          {(props.products).map((product,i) => {
+            return (
+              <Col key={i} xs={6} sm={6} md={4} lg={3}>
+                <Listing 
+                  title={product.title}
+                  img={product.imgs.small}
+                  rating={product.rating}
+                />
+              </Col>
+            );
+          })}
+        </Row>
+      </Grid>
     </div>
   );
   

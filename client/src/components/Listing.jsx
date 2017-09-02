@@ -6,8 +6,8 @@ const Listing = (props) => {
     <div>
       <Card>
         <div>
-          {props.title}:
-          rating: {props.rating}
+          Title: {props.title}<br/>
+          Rating: {props.rating}
           <img src={props.img}/>
         </div>
       </Card>

@@ -21,6 +21,12 @@ exports.up = function (knex, Promise) {
     }),
     knex.schema.createTableIfNotExists('products', function(table) {
       table.increments('id').unsigned().primary();
+      table.integer('ad-id').unsigned().nullable();
+      table.integer('sku').unsigned().nullable();
+      table.integer('upc').unsigned().nullable();
+      table.integer('catalog_id').unsigned().nullable();
+      table.float('price').unsigned().nullable();
+      table.string('buy_url', 100).nullable();
       table.string('type', 8).notNullable();
       table.string('title', 16).notNullable();
       table.string('description', 100).notNullable();

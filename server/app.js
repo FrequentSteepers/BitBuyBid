@@ -23,6 +23,7 @@ app.use('/auth', routes.auth);
 app.use('/api', routes.api);
 app.use('/api/users', routes.users);
 app.use('/api/products', routes.products);
+app.use('/api/transactions', routes.transactions);
 
 app.get('*/app.js', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../public/dist/bundle.js'));

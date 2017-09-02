@@ -1,14 +1,45 @@
 import React, { Component } from 'react';
+import { setSearchTerm, searchTypes } from '../store/modules/search.js';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
+
+const mapStateToProps = (state) => {
+  return {
+    term: state.search.term
+  };
+};
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({
+    setSearchTerm
+  }, dispatch);
+};
 
 class Search extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.handleSearch = this.handleSearch.bind(this);
   }
+
+  handleSearch(e) {
+    e.preventDefault();
+    let text = e.target.value;
+    this.props.setSearchTerm(text);
+  }
+
   render() {
     return (
-      <div>SEARCH BITCHESSS</div>
+      <div style={{width: '50%', margin: '0 auto'}}>
+        <Card>
+          <form style={{textAlign:'center', paddingBottom:'10px'}} onChange={(e) => this.handleSearch(e)}>
+            <TextField floatingLabelText="search for a product!"/>
+          </form>
+        </Card>
+      </div>
     );
   }
 }
 
-export default Search;
+export default connect(mapStateToProps, mapDispatchToProps)(Search);

@@ -2,7 +2,7 @@ import React from 'react';
 import { Card } from 'material-ui/Card';
 import { Link } from 'react-router-dom';
 
-const Listing = (props) => {
+const Listing = (item) => {
   return (
     <div>
       <Card>

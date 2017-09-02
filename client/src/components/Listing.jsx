@@ -5,9 +5,11 @@ const Listing = (props) => {
   return (
     <div>
       <Card>
-        <span>{props.title}</span>
-        <span><img src={props.img}/></span>
-        <span>rating: {props.rating}</span>
+        <div>
+          Title: {props.title}<br/>
+          Rating: {props.rating}
+          <img src={props.img}/>
+        </div>
       </Card>
     </div>
   );

@@ -11,6 +11,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import Nav from './components/Nav.js';
+import Product from './views/Product.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -21,6 +22,7 @@ class App extends React.Component {
     return (
       <div>
         <Nav />
+        <Product />
         <Switch>
           <Route path='/'>
             <Home />

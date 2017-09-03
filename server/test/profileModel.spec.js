@@ -1,5 +1,5 @@
 const expect = require('chai').expect;
-const Profile = require('../../db/models/profiles.js');
+const Profile = require('../../db/models/user.js');
 const dbUtils = require('../../db/lib/utils.js');
 
 describe('Profile model tests', function () {

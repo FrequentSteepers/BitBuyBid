@@ -18,12 +18,22 @@ class App extends React.Component {
     super(props);
   }
 
+  /*
+    the default route should always be last, as the interpreter
+    will render the first route that returns positive in the switch 
+    block as matching the path endpoint. therefor, the '/' will render
+    no matter what the chartacters after the URI are, serving as a 
+    kind of catch-all. 
+  */
+
   render() {
     return (
       <div>
         <Nav />
-        <Product />
         <Switch>
+          <Route path='/product'> 
+            <Product />
+          </Route>
           <Route path='/'>
             <Home />
           </Route>

@@ -25,7 +25,7 @@ const Listings = (props) => {
       <button onClick={() => props.setProducts()}>Click</button>
       <Grid fluid>
         <Row>
-          {props.products.length ? props.products.map((product,i) => {
+          {props.products.length ? props.products.map((product, i) => {
             return (
               <Col key={i} xs={6} sm={6} md={4} lg={3}>
                 <Listing 

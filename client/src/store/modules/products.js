@@ -24,7 +24,7 @@ export default (state = initialState, {type, payload}) => {
     return {
       ...state, 
       selectedId: payload
-    }
+    };
   default: return state;
   }
 };
@@ -55,7 +55,7 @@ export const setProducts = (dispatch) => {
       .catch(err => {
         console.log('error dispatching the products');
         throw err;
-      })
+      });
   };
 };
 
@@ -64,4 +64,4 @@ export const selectProduct = payload => {
     type: SELECT_PRODUCT,
     payload
   };
-}
+};

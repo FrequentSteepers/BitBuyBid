@@ -14,7 +14,7 @@ class Product extends Component {
     super(props);
     this.state = {
       products: []
-    }
+    };
     this.getProducts = this.getProducts.bind(this);
   }
 

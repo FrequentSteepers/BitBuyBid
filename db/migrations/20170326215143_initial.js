@@ -11,7 +11,7 @@ exports.up = function (knex, Promise) {
       table.boolean('isMerchant').notNullable();
       table.timestamps(true, true);
     }),
-    knex.schema.createTableIfNotExists('address', function (table) {
+    knex.schema.createTableIfNotExists('addresses', function (table) {
       table.increments('id').unsigned().primary();
       table.string('line1', 100).notNullable();
       table.string('line2', 100).notNullable();
@@ -57,6 +57,15 @@ exports.up = function (knex, Promise) {
       table.integer('seller_id').references('users.id').onDelete('CASCADE');
       table.integer('session');
     }),
+    knex.schema.createTableIfNotExists('reviews', function(table) {
+      table.increments('id').primary();
+    }),
+    knex.schema.createTableIfNotExists('tags', function(table) {
+      table.increments('id').primary();
+    }),
+    knex.schema.createTableIfNotExists('recommendations', function(table) {
+      table.increments('id').primary();
+    }),
   ]);
 };
 
@@ -68,6 +77,9 @@ exports.down = function (knex, Promise) {
     knex.schema.dropTable('transactions'),
     knex.schema.dropTable('categories'),
     knex.schema.dropTable('address'),
+    knex.schema.dropTable('reviews'),
+    knex.schema.dropTable('tags'),
+    knex.schema.dropTable('recommendations'),
   ]);
 };
 

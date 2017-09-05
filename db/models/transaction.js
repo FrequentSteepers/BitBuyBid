@@ -8,6 +8,9 @@ const Transaction = db.Model.extend({
   seller: function() {
     return this.belongsTo('User', 'seller_id');
   },
+  review: function() {
+    return this.hasMany('Tag');
+  }
 });
 
 module.exports = db.model('Transaction', Transaction);

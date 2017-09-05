@@ -13,7 +13,7 @@ const Listing = ({item, addToCart}) => {
           {item.title}<br/>
           <Link to={`/product?id=${item.id}`}><img src={item.img}/></Link>
           Rating: {item.rating}
-          <button onClick={ () => { addToCart(item); console.log(item); } }>Add to Cart!</button>
+          <button onClick={ () => { addToCart(item); } }>Add to Cart!</button>
         </div>
       </Card>
     </div>

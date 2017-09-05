@@ -29,18 +29,21 @@ exports.up = function (knex, Promise) {
     }),
     knex.schema.createTableIfNotExists('products', function(table) {
       table.increments('id').unsigned().primary();
-      table.integer('ad-id').unsigned().nullable();
-      table.integer('sku').unsigned().nullable();
-      table.integer('upc').unsigned().nullable();
-      table.integer('catalog_id').unsigned().nullable();
+      table.bigint('ad-id').unsigned().nullable();
+      table.bigint('sku').unsigned().nullable();
+      table.bigint('upc').unsigned().nullable();
+      table.bigint('catalog_id').unsigned().nullable();
       table.float('price').unsigned().nullable();
-      table.string('buy_url', 100).nullable();
-      table.string('type', 8).notNullable();
-      table.string('title', 16).notNullable();
-      table.string('description', 100).notNullable();
+      table.string('buy_url', 500).nullable();
+      table.string('img_url_sm', 500).nullable();
+      table.string('img_url_md', 500).nullable();
+      table.string('img_url_lg', 500).nullable();
+      table.string('type', 20).notNullable();
+      table.string('title', 500).notNullable();
+      table.string('description', 1000).notNullable();
       table.integer('user_id').references('users.id').onDelete('CASCADE');
       table.integer('category_id').references('categories.id').onDelete('CASCADE');
-      table.integer('quantity').nullable();
+      table.boolean('in-stock').nullable();
       table.timestamps(true, true);
     }),
     knex.schema.createTableIfNotExists('categories', function(table) {

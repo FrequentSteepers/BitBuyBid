@@ -11,6 +11,14 @@ exports.up = function (knex, Promise) {
       table.boolean('isMerchant').notNullable();
       table.timestamps(true, true);
     }),
+    knex.schema.createTableIfNotExists('address', function (table) {
+      table.increments('id').unsigned().primary();
+      table.string('line1', 100).notNullable();
+      table.string('line2', 100).notNullable();
+      table.string('city', 100).notNullable();
+      table.string('stateOrProvince', 100).notNullable();
+      table.integer('postalCode');
+    }),
     knex.schema.createTableIfNotExists('auths', function(table) {
       table.increments('id').unsigned().primary();
       table.string('type', 8).notNullable();
@@ -50,6 +58,7 @@ exports.down = function (knex, Promise) {
     knex.schema.dropTable('products'),
     knex.schema.dropTable('transactions'),
     knex.schema.dropTable('categories'),
+    knex.schema.dropTable('address'),
   ]);
 };
 

@@ -14,6 +14,8 @@ const Checkout = ({createCart, addToCart, removeFromCart, cart}) => (
     {cart.map((item) => {
       return <Listing key={item.id} item={item} />;
     })}
+    <div>Subtotal</div>
+    <button>Checkout</button>
   </div> 
 );
 

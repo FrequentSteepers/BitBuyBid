@@ -42,7 +42,7 @@ export default (state = initialState, {type, payload}) => {
   case REMOVE_FROM_CART:
     return {
       ...state,
-      cart: cart.filter((item)=>{
+      cart: state.cart.filter((item)=>{
         return item !== payload;
       })
     };

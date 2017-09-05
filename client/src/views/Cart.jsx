@@ -6,7 +6,7 @@ import {
   addToCart, 
   removeFromCart 
 } from '../store/modules/products.js';
-import Listing from '../components/Listing';
+import Listing from '../components/Listing.jsx';
 
 
 

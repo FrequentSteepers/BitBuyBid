@@ -18,8 +18,6 @@ const styles = {
   }
 };
 
-
-
 const Listings = (props) => {
   return ( 
     <div style={styles.root}>

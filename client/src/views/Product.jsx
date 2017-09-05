@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import axios from 'axios';
 import FeatListing from '../components/FeatListing.jsx';
 
-
 /*
   we need a way indicate which product to retrieve
   detailed information on. 

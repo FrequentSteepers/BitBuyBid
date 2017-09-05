@@ -1,5 +1,11 @@
-module.exports.Auth = require('./auths');
-module.exports.User = require('./user');
-module.exports.Product = require('./product');
-module.exports.Category = require('./category');
-module.exports.Transaction = require('./transaction');
+module.exports = {
+  Auth: require('./auths'),
+  User: require('./user'),
+  Product: require('./product'),
+  Category: require('./category'),
+  Transaction: require('./transaction'),
+  Review: require('./review'),
+  Address: require('./address'),
+  Tag: require('./tag'),
+  Recommendation: require('./recommendation')
+};

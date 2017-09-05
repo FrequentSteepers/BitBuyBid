@@ -37,7 +37,7 @@ export default (state = initialState, {type, payload}) => {
   case ADD_TO_CART:
     return {
       ...state,
-      cart: cart.concat([payload])
+      cart: state.cart.concat([payload])
     };
   case REMOVE_FROM_CART:
     return {

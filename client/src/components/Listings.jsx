@@ -19,21 +19,13 @@ const styles = {
 };
 
 const Listings = (props) => {
-  const fetchProducts = () => {
-    axios.get('/api/products')
-      .then((results) => {
-        let button = $('button');
-        console.log('data: ', results.data.results);
-        button[1].hidden = true;
-        props.setProducts(results.data.results);
-      });
-  };
+  console.log('props: ', props);
   return ( 
     <div style={styles.root}>
-      <button onClick={fetchProducts}>Click</button>
+      <button onClick={() => props.setProducts()}>Click</button>
       <Grid fluid>
         <Row>
-          {(props.products).map((product,i) => {
+          {props.products.length ? props.products.map((product, i) => {
             return (
               <Col key={i} xs={6} sm={6} md={4} lg={3}>
                 <Listing 
@@ -43,7 +35,7 @@ const Listings = (props) => {
                 />
               </Col>
             );
-          })}
+          }) : null}
         </Row>
       </Grid>
     </div>
@@ -54,7 +46,8 @@ const Listings = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    products: state.products.products
+    products: state.products.products,
+    selected: state.products.selectedId
   };
 };
 

@@ -11,17 +11,29 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import Nav from './components/Nav.js';
+import Product from './views/Product.jsx';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
   }
 
+  /*
+    the default route should always be last, as the interpreter
+    will render the first route that returns positive in the switch 
+    block as matching the path endpoint. therefor, the '/' will render
+    no matter what the chartacters after the URI are, serving as a 
+    kind of catch-all. 
+  */
+
   render() {
     return (
       <div>
         <Nav />
         <Switch>
+          <Route path='/product'> 
+            <Product />
+          </Route>
           <Route path='/'>
             <Home />
           </Route>

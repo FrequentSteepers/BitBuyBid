@@ -27,12 +27,7 @@ const Listings = (props) => {
           {props.products.length ? props.products.map((product, i) => {
             return (
               <Col key={i} xs={6} sm={6} md={4} lg={3} onClick={() => props.selectProduct(product.id)}>
-                <Listing 
-                  id={product.id}
-                  title={product.title}
-                  img={product.imgs.small}
-                  rating={product.rating}
-                />
+                <Listing item={product}/>
               </Col>
             );
           }) : null}

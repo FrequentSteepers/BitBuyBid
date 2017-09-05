@@ -11,7 +11,7 @@ const style = {
     left: '10px',
     top: '10px',
     margin: '0 auto',
-    maxHeight: '200px',
+    maxHeight: '300px',
     display: 'inline-block'
   },
   title: {
@@ -33,10 +33,10 @@ class FeatListing extends Component {
       <div>
         {selected ? 
           <div>
-            <img src={selected.imgs.large} style={style.image}/>
-            <h2 style={style.title}>{selected.title}</h2>
-            <div style={style.description}>{selected.description}</div>
-            <div style={style.rating}>Rating: {selected.rating}</div> 
+            <Card><img src={selected.imgs.large} style={style.image}/></Card>
+            <Card><h2 style={style.title}>{selected.title}</h2></Card>
+            <Card><div style={style.rating}>Rating: {selected.rating}</div></Card>
+            <Card><div style={style.description}>{selected.description}</div></Card>
           </div> :
           <div>Product not found</div>}
       </div>

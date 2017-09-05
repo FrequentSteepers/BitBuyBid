@@ -12,6 +12,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import Nav from './components/Nav.js';
 import Product from './views/Product.jsx';
+import Cart from './views/Cart.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -31,6 +32,9 @@ class App extends React.Component {
       <div>
         <Nav />
         <Switch>
+          <Route path='/cart'>
+            <Cart />
+          </Route>
           <Route path='/product'> 
             <Product />
           </Route>

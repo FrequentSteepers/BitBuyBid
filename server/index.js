@@ -1,8 +1,11 @@
 'use strict';
 const app = require('./app');
-const db = require('../db');
+const models = require('../db/models');
 const PORT = process.env.port || 3000;
 
 app.listen(PORT, () => {
   console.log('Example app listening on port 3000!');
 });
+
+// start cronjobs
+require('../workers')(models);

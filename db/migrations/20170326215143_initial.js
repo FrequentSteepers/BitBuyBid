@@ -11,6 +11,14 @@ exports.up = function (knex, Promise) {
       table.boolean('isMerchant').notNullable();
       table.timestamps(true, true);
     }),
+    knex.schema.createTableIfNotExists('address', function (table) {
+      table.increments('id').unsigned().primary();
+      table.string('line1', 100).notNullable();
+      table.string('line2', 100).notNullable();
+      table.string('city', 100).notNullable();
+      table.string('stateOrProvince', 100).notNullable();
+      table.integer('postalCode');
+    }),
     knex.schema.createTableIfNotExists('auths', function(table) {
       table.increments('id').unsigned().primary();
       table.string('type', 8).notNullable();
@@ -21,18 +29,21 @@ exports.up = function (knex, Promise) {
     }),
     knex.schema.createTableIfNotExists('products', function(table) {
       table.increments('id').unsigned().primary();
-      table.integer('ad-id').unsigned().nullable();
-      table.integer('sku').unsigned().nullable();
-      table.integer('upc').unsigned().nullable();
-      table.integer('catalog_id').unsigned().nullable();
-      table.float('price').unsigned().nullable();
-      table.string('buy_url', 100).nullable();
-      table.string('type', 8).notNullable();
-      table.string('title', 16).notNullable();
-      table.string('description', 100).notNullable();
+      table.bigint('ad-id').unsigned().nullable();
+      table.bigint('sku').unsigned().nullable();
+      table.bigint('upc').unsigned().nullable();
+      table.bigint('catalog_id').unsigned().nullable();
+      table.decimal('price').unsigned().nullable();
+      table.string('buy_url', 500).nullable();
+      table.string('img_url_sm', 500).nullable();
+      table.string('img_url_md', 500).nullable();
+      table.string('img_url_lg', 500).nullable();
+      table.string('type', 20).notNullable();
+      table.string('title', 500).notNullable();
+      table.string('description', 1000).notNullable();
       table.integer('user_id').references('users.id').onDelete('CASCADE');
       table.integer('category_id').references('categories.id').onDelete('CASCADE');
-      table.integer('quantity').nullable();
+      table.boolean('in-stock').nullable();
       table.timestamps(true, true);
     }),
     knex.schema.createTableIfNotExists('categories', function(table) {
@@ -56,6 +67,7 @@ exports.down = function (knex, Promise) {
     knex.schema.dropTable('products'),
     knex.schema.dropTable('transactions'),
     knex.schema.dropTable('categories'),
+    knex.schema.dropTable('address'),
   ]);
 };
 

@@ -2,14 +2,14 @@ import React from 'react';
 import { Card } from 'material-ui/Card';
 import { Link } from 'react-router-dom';
 
-const Listing = (item) => {
+const Listing = ({item}) => {
   return (
     <div>
       <Card>
         <div>
-          {props.title}<br/>
-          <Link to={`/product?id=${props.id}`}><img src={props.img}/></Link>
-          Rating: {props.rating}
+          {item.title}<br/>
+          <Link to={`/product?id=${item.id}`}><img src={item.img}/></Link>
+          Rating: {item.rating}
         </div>
       </Card>
     </div>

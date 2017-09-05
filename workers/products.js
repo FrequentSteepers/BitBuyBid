@@ -32,7 +32,7 @@ module.exports = ({Product}) => {
               'sku': Number.parseInt(p['sku']._text) || null,
               'upc': Number.parseInt(p['upc']._text) || null,
               'catalog_id': p['catalog-id']._text.replace(/\D/g, ''), 
-              'price': Number.parseFloat(p.price['_text']),
+              'price': Number(p.price['_text']),
               'buy_url': p['buy-url']._text,
               'type': 'ovsock',
               'title': p.name._text,

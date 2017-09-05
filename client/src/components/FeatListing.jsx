@@ -28,7 +28,6 @@ const style = {
 class FeatListing extends Component {
   render() {
     const selected = this.props.products[this.props.selectedId];
-    console.log('featured: ', selected);
     return (
       <div>
         {selected ? 

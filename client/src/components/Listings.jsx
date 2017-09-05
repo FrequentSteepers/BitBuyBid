@@ -21,7 +21,6 @@ const styles = {
 
 
 const Listings = (props) => {
-  console.log('props: ', props);
   return ( 
     <div style={styles.root}>
       <button onClick={() => props.setProducts()}>Click</button>

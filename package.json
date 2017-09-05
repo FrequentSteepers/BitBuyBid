@@ -6,7 +6,8 @@
     "start": "nodemon server",
     "test": "NODE_ENV=test grunt test",
     "travis": "NODE_ENV=travis grunt test",
-    "build": "webpack --watch"
+    "build": "webpack --watch",
+    "docs": "jsdoc client/src/ server/ -r -c conf.json -d docs/"
   },
   "author": "Hack Reactor",
   "license": "MIT",
@@ -58,6 +59,7 @@
     "grunt": "~0.4.5",
     "grunt-eslint": "^19.0.0",
     "grunt-mocha-test": "^0.13.2",
+    "jsdoc": "^3.5.4",
     "mocha": "^3.2.0",
     "node-mocks-http": "^1.6.1",
     "supertest": "^3.0.0",

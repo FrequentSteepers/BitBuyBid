@@ -36,7 +36,7 @@ class Search extends Component {
     return (
       <div style={{width: '50%', margin: '0 auto'}}>
         <Card>
-          <form style={{textAlign:'center', paddingBottom:'10px'}} onChange={(e) => this.handleSearch(e)}>
+          <form style={{textAlign: 'center', paddingBottom: '10px'}} onChange={(e) => this.handleSearch(e)}>
             <TextField floatingLabelText="search for a product!"/>
           </form>
         </Card>

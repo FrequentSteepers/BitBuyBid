@@ -16,5 +16,4 @@ before_script:
   - webpack
 
 script:
-  - "npm test"
-  - "npm run lint"
+  - "yarn test"

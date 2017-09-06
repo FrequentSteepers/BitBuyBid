@@ -9,7 +9,7 @@ const convert = require('xml-js');
  * data into the database.
  */
 module.exports = ({Product}) => {
-  console.log('api fetch!');
+  console.log('api fetch');
   axios.get('https://product-search.api.cj.com/v2/product-search?', {
     params: {
       'website-id': overstock['website-id'],

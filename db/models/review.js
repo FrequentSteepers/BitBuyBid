@@ -5,7 +5,7 @@ const Review = db.Model.extend({
   author: function() {
     return this.hasMany('User', 'author_id');
   },
-  seller: function() {
+  product: function() {
     return this.hasMany('Product', 'seller_id');
   },
   transaction: function() {

@@ -43,7 +43,7 @@ class Search extends Component {
     e.preventDefault();
     let text = e.target.value;
     this.props.setSearchTerm(text);
-    this.props.setProducts();
+    this.props.setProducts(text);
   }
 
   render() {

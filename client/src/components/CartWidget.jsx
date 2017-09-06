@@ -6,9 +6,15 @@ import Paper from 'material-ui/Paper';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 
 const style = {
+  root: {
+    position: 'fixed',
+    top: '10%',
+    right: '5%',
+    'zIndex': 2,
+    width: 200
+  },
   paper: {
-    width: 200,
-    float: 'right',
+    position: 'relative',
     textAlign: 'center',
   }
 };
@@ -29,28 +35,31 @@ class CartWidget extends Component {
   }
   render() {
     return (
-      <div>
+      <div style={style.root}>
         <Paper style={style.paper}>
           <h2>Cart</h2>
-          <Col>
-            {this.props.cart.length ? this.props.cart.map((product, i) => {
-              <Row key={i} xs={12} sm={12} md={12} lg={12}>
-                <Card>
-                  <CardHeader
-                    title="URL Avatar"
-                    subtitle="Subtitle"
-                    avatar={`${product.imgs.small}`}
-                  />
-                  <CardMedia
-                    overlay={<CardTitle title="Overlay title" subtitle="Overlay subtitle" />}
-                  >
-                    <img src={`${product.imgs.small}`} alt="" />
-                  </CardMedia>
-                  <CardTitle title="Card title" subtitle="Card subtitle" />
-                </Card>
-              </Row>;
-            }) : null}
-          </Col>
+          <Grid fluid>
+            <Row >
+              {this.props.cart ? this.props.cart.map((product, i) => {
+                <Col key={i} xs={6} sm={6} md={4} lg={3}>
+                  <div>Title: {this.props.title}</div>
+                  <Card>
+                    <CardHeader
+                      title="URL Avatar"
+                      subtitle="Subtitle"
+                      avatar={`${product.imgs.small}`}
+                    />
+                    <CardMedia
+                      overlay={<CardTitle title="Overlay title" subtitle="Overlay subtitle" />}
+                    >
+                      <img src={`${product.imgs.small}`} alt="" />
+                    </CardMedia>
+                    <CardTitle title="Card title" subtitle="Card subtitle" />
+                  </Card>
+                </Col>;
+              }) : false}
+            </Row>
+          </Grid>
         </Paper>
       </div>
     );

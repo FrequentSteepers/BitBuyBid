@@ -33,16 +33,6 @@ export default (state = initialState, {type, payload}) => {
  * Listings dispatchers
  */
 
-//  const fetchProducts = () => {
-//   axios.get('/api/products')
-//     .then((results) => {
-//       let button = $('button');
-//       console.log('data: ', results.data.results);
-//       button[1].hidden = true;
-//       props.setProducts(results.data.results);
-//     });
-// };
-
 export const setProducts = (dispatch) => {
   return (dispatch) => {
     axios.get('/api/products')

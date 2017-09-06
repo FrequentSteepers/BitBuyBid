@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import FeatListing from '../components/FeatListing.jsx';
 
 /*
   we need a way indicate which product to retrieve
@@ -10,25 +11,10 @@ import axios from 'axios';
 */
 
 class Product extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      products: []
-    };
-    this.getProducts = this.getProducts.bind(this);
-  }
-
-  getProducts() {
-    axios.get('./api/products')
-      .then(res => console.log('the products should be in here: ', res.data))
-      .catch(err => console.log('error getting the procucts: ', err));
-  }
-
   render() {
-    this.getProducts();
     return (
       <div>
-        <h2>Products!</h2>
+        <FeatListing />
       </div>
     );
   }

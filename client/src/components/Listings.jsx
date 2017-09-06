@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import axios from 'axios';
-import {setProducts} from '../store/modules/products.js';
+import {setProducts, selectProduct} from '../store/modules/products.js';
 import {bindActionCreators} from 'redux';
 import {GridList, GridTile} from 'material-ui/GridList';
 import Listing from './Listing.jsx';
@@ -19,7 +19,6 @@ const styles = {
 };
 
 const Listings = (props) => {
-  console.log('props: ', props);
   return ( 
     <div style={styles.root}>
       <button onClick={() => props.setProducts()}>Click</button>
@@ -27,8 +26,9 @@ const Listings = (props) => {
         <Row>
           {props.products.length ? props.products.map((product, i) => {
             return (
-              <Col key={i} xs={6} sm={6} md={4} lg={3}>
+              <Col key={i} xs={6} sm={6} md={4} lg={3} onClick={() => props.selectProduct(product.id)}>
                 <Listing 
+                  id={product.id}
                   title={product.title}
                   img={product.imgs.small}
                   rating={product.rating}
@@ -47,12 +47,12 @@ const Listings = (props) => {
 const mapStateToProps = (state) => {
   return {
     products: state.products.products,
-    selected: state.products.selectedId
+    selectedId: state.products.selectedId
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({setProducts}, dispatch);
+  return bindActionCreators({setProducts, selectProduct}, dispatch);
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Listings);

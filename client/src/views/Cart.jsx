@@ -15,7 +15,12 @@ const Checkout = ({createCart, addToCart, removeFromCart, cart}) => (
     {cart.map((item) => {
       return <Listing key={item.id} item={item} />;
     })}
-    <div>Subtotal</div>
+    <div>Subtotal: {
+      cart.reduce((acc, curr) => {
+        return acc + curr.price;
+      }, 0)
+    }
+    </div>
     <button>Checkout</button>
   </div> 
 );

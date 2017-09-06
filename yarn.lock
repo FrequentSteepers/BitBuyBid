@@ -1438,6 +1438,10 @@ crypto-browserify@^3.11.0:
     public-encrypt "^4.0.0"
     randombytes "^2.0.0"
 
+crypto-js@^3.1.9-1:
+  version "3.1.9-1"
+  resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-3.1.9-1.tgz#fda19e761fc077e01ffbfdc6e9fdfc59e8806cd8"
+
 css-color-names@0.0.4:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/css-color-names/-/css-color-names-0.0.4.tgz#808adc2e79cf84738069b646cb20ec27beb629e0"
@@ -4454,6 +4458,10 @@ reduce-function-call@^1.0.1:
   dependencies:
     balanced-match "^0.4.2"
 
+redux-thunk@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.2.0.tgz#e615a16e16b47a19a515766133d1e3e99b7852e5"
+
 redux@^3.7.2:
   version "3.7.2"
   resolved "https://registry.yarnpkg.com/redux/-/redux-3.7.2.tgz#06b73123215901d25d065be342eb026bc1c8537b"
@@ -4648,7 +4656,7 @@ safe-buffer@^5.0.1:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/safe-buffer/-/safe-buffer-5.0.1.tgz#d263ca54696cd8a306b5ca6551e92de57918fbe7"
 
-sax@^1.2.1, sax@~1.2.1:
+sax@>=0.6.0, sax@^1.2.1, sax@~1.2.1:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
 
@@ -5449,15 +5457,26 @@ write@^0.2.1:
   dependencies:
     mkdirp "^0.5.1"
 
-xmlcreate@^1.0.1:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/xmlcreate/-/xmlcreate-1.0.2.tgz#fa6bf762a60a413fb3dd8f4b03c5b269238d308f"
-  
 xml-js@^1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/xml-js/-/xml-js-1.4.1.tgz#b34fface0c6d89804aaf0a182821ac1ed08a01e9"
   dependencies:
     sax "^1.2.1"
+
+xml2js@^0.4.19:
+  version "0.4.19"
+  resolved "https://registry.yarnpkg.com/xml2js/-/xml2js-0.4.19.tgz#686c20f213209e94abf0d1bcf1efaa291c7827a7"
+  dependencies:
+    sax ">=0.6.0"
+    xmlbuilder "~9.0.1"
+
+xmlbuilder@~9.0.1:
+  version "9.0.4"
+  resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-9.0.4.tgz#519cb4ca686d005a8420d3496f3f0caeecca580f"
+
+xmlcreate@^1.0.1:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/xmlcreate/-/xmlcreate-1.0.2.tgz#fa6bf762a60a413fb3dd8f4b03c5b269238d308f"
 
 xmldom@0.1.x:
   version "0.1.27"

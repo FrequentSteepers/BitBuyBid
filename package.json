@@ -5,7 +5,7 @@
     "postinstall": "curl -s https://raw.githubusercontent.com/reactorcore/pomander/master/bin/install | bash",
     "start": "nodemon server",
     "test": "NODE_ENV=test grunt test",
-    "travis": "NODE_ENV=travis grunt test",
+    "travis": "NODE_ENV=test grunt test",
     "build": "webpack --watch",
     "docs": "jsdoc client/src/ server/ -r -c conf.json -d docs/"
   },
@@ -49,7 +49,8 @@
     "redux": "^3.7.2",
     "redux-thunk": "^2.2.0",
     "style-loader": "^0.18.2",
-    "xml-js": "^1.4.1"
+    "xml-js": "^1.4.1",
+    "xml2js": "^0.4.19"
   },
   "devDependencies": {
     "babel-loader": "^7.0.0",

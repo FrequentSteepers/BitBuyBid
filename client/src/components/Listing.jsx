@@ -11,7 +11,7 @@ const Listing = ({item, addToCart}) => {
       <Card>
         <div>
           {item.title}<br/>
-          <Link to={`/product?id=${item.id}`}><img src={item.img}/></Link>
+          <Link to={`/product?id=${item.id}`}><img src={item.imgs.small}/></Link>
           Rating: {item.rating}
           <button onClick={ () => { addToCart(item); } }>Add to Cart!</button>
         </div>

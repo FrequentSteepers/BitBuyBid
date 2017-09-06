@@ -7,6 +7,20 @@ import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import {setProducts, selectProduct} from '../store/modules/products.js';
 
+const style = {
+  search: {
+    width: '50%', 
+    position: 'relative', 
+    float: 'center', 
+    margin: '0 auto',
+    paddingRight: 15
+  },
+  form: {
+    textAlign: 'center', 
+    paddingBottom: '10px'
+  }
+};
+
 const mapStateToProps = (state) => {
   return {
     term: state.search.term
@@ -34,9 +48,9 @@ class Search extends Component {
 
   render() {
     return (
-      <div style={{width: '50%', margin: '0 auto'}}>
+      <div style={style.search}>
         <Card>
-          <form style={{textAlign: 'center', paddingBottom: '10px'}} onChange={(e) => this.handleSearch(e)}>
+          <form style={style.form} onChange={(e) => this.handleSearch(e)}>
             <TextField floatingLabelText="search for a product!"/>
           </form>
         </Card>

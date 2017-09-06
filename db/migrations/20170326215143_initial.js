@@ -59,11 +59,10 @@ exports.up = function (knex, Promise) {
     }),
     knex.schema.createTableIfNotExists('reviews', function(table) {
       table.increments('id').primary();
+      table.text('body').notNullable();
+      table.integer('score').notNullable();
     }),
     knex.schema.createTableIfNotExists('tags', function(table) {
-      table.increments('id').primary();
-    }),
-    knex.schema.createTableIfNotExists('recommendations', function(table) {
       table.increments('id').primary();
     }),
   ]);
@@ -79,7 +78,7 @@ exports.down = function (knex, Promise) {
     knex.schema.dropTable('address'),
     knex.schema.dropTable('reviews'),
     knex.schema.dropTable('tags'),
-    knex.schema.dropTable('recommendations'),
+    knex.schema.dropTable('recommendations')
   ]);
 };
 

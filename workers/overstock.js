@@ -5,7 +5,7 @@ axios.defaults.headers.common['Authorization'] = overstock.Authorization;
 const convert = require('xml-js');
 
 /**
- * Query overstock api with each category and insert the resulting 
+ * Query overstock api with each category and insert the resulting
  * data into the database.
  */
 module.exports = ({Product}) => {
@@ -17,26 +17,27 @@ module.exports = ({Product}) => {
     }
   })
     .then(results => {
-      const parsed = JSON.parse(convert.xml2json(results.data, 
+      const parsed = JSON.parse(convert.xml2json(results.data,
         {
-          compact: true, 
-          spaces: 2, 
+          compact: true,
+          spaces: 2,
           instructionHasAttributes: true
         }
       ))['cj-api'].products.product;
       parsed.forEach(p => {
         try {
           Product.forge(
-            { 
+            {
+              'prod_id': p['ad-id']._text + p['sku']._text + p['upc']._text + '|OVSOCK',
               'ad-id': Number.parseInt(p['ad-id']._text) || null,
               'sku': Number.parseInt(p['sku']._text) || null,
               'upc': Number.parseInt(p['upc']._text) || null,
-              'catalog_id': p['catalog-id']._text.replace(/\D/g, ''), 
+              'catalog_id': p['catalog-id']._text.replace(/\D/g, ''),
               'price': Number(p.price['_text']),
               'buy_url': p['buy-url']._text,
               'type': 'ovsock',
               'title': p.name._text,
-              'description': p.description._text.slice(0, 1000),
+              'description': p.description._text
             }
           )
             .save()

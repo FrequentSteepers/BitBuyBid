@@ -7,10 +7,6 @@ module.exports = (models) => {
 
   new CronJob('0 * * * *', function() {
     require('./overstock')(models);
-  }, null, true, 'America/Los_Angeles');
-
-  new CronJob('0 * * * *', function() {
     require('./amazon')(models);
   }, null, true, 'America/Los_Angeles');
-
 };

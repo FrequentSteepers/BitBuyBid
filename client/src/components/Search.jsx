@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
+import {setProducts, selectProduct} from '../store/modules/products.js';
 
 const mapStateToProps = (state) => {
   return {
@@ -13,7 +14,8 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({
-    setSearchTerm
+    setSearchTerm,
+    setProducts
   }, dispatch);
 };
 
@@ -27,6 +29,7 @@ class Search extends Component {
     e.preventDefault();
     let text = e.target.value;
     this.props.setSearchTerm(text);
+    this.props.setProducts();
   }
 
   render() {

@@ -5,7 +5,7 @@
     "postinstall": "curl -s https://raw.githubusercontent.com/reactorcore/pomander/master/bin/install | bash",
     "start": "nodemon server",
     "test": "NODE_ENV=test grunt test",
-    "travis": "NODE_ENV=travis grunt test",
+    "travis": "NODE_ENV=test grunt test",
     "build": "webpack --watch",
     "docs": "jsdoc client/src/ server/ -r -c conf.json -d docs/"
   },

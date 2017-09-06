@@ -18,7 +18,7 @@ module.exports.search = (req, res) => {
     }
   })
     .then(results => {
-      res.json(convert.xml2json(results.data));
+      res.json(JSON.parse(convert.xml2json(results.data)));
     })
     .catch(err => {
       console.log(err);

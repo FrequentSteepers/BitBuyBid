@@ -7,6 +7,9 @@ const User = db.Model.extend({
   },
   activeCart: function() {
     return this.belongsTo('Transaction');
+  },
+  address: function() {
+    return this.hasOne('Address');
   }
 });
 

@@ -1,3 +1,4 @@
 module.exports = {
-  overstock: require('./overstock') 
+  overstock: require('./overstock'),
+  amazon: require('./amazon') 
 };

@@ -21,7 +21,8 @@ const generateMockData = number => {
           sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt 
           mollit anim id est laborum.`,
       rating: Math.random() * 5,
-      seller: 50 * Math.random()
+      seller: 50 * Math.random(),
+      price: 50 * Math.random()
     });
   }
   return results;

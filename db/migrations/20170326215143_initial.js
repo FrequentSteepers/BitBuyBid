@@ -29,6 +29,8 @@ exports.up = function (knex, Promise) {
     }),
     knex.schema.createTableIfNotExists('products', function(table) {
       table.increments('id').unsigned().primary();
+      table.string('prod_id', 200).notNullable();
+      table.string('asin', 200).nullable();
       table.bigint('ad-id').unsigned().nullable();
       table.bigint('sku').unsigned().nullable();
       table.bigint('upc').unsigned().nullable();
@@ -40,11 +42,13 @@ exports.up = function (knex, Promise) {
       table.string('img_url_lg', 500).nullable();
       table.string('type', 20).notNullable();
       table.string('title', 500).notNullable();
-      table.string('description', 1000).notNullable();
+      table.text('description').nullable();
       table.integer('user_id').references('users.id').onDelete('CASCADE');
       table.integer('category_id').references('categories.id').onDelete('CASCADE');
       table.boolean('in-stock').nullable();
       table.timestamps(true, true);
+      // table.unique('prod_id');
+      table.unique(['sku', 'upc', 'ad-id', 'asin', 'type']);
     }),
     knex.schema.createTableIfNotExists('categories', function(table) {
       table.increments('id').unsigned().primary();
@@ -81,4 +85,3 @@ exports.down = function (knex, Promise) {
     knex.schema.dropTable('recommendations')
   ]);
 };
-

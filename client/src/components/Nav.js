@@ -2,6 +2,7 @@ import React from 'react';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import AppBar from 'material-ui/AppBar';
+import {Link} from 'react-router-dom';
 
 const myNavStyle = {
   'backgroundColor': 'teal',
@@ -52,10 +53,10 @@ class Navbar extends React.Component {
           onLeftIconButtonTouchTap={this.handleToggle}
         />
         <Drawer docked={false} width={250} open={this.state.open} onRequestChange={(open) => this.setState({open})}>
-          <MenuItem onClick={this.redirectTo.bind(this, '/')}>Search</MenuItem>
-          <MenuItem onClick={this.redirectTo.bind(this, '/profile')}>Profile</MenuItem>
-          <MenuItem onClick={this.redirectTo.bind(this, '/cart')}>Cart</MenuItem>
-          <MenuItem onClick={this.redirectTo.bind(this, '/logout')}>Logout</MenuItem>
+          <Link to='/'><MenuItem>Search</MenuItem></ Link>
+          <Link to='/profile'><MenuItem>Profile</MenuItem></ Link>
+          <Link to='/cart'><MenuItem >Cart</MenuItem></ Link>
+          <Link to='/logout'><MenuItem>Logout</MenuItem></ Link>
         </Drawer>
       </div>
     );

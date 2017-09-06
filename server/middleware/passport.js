@@ -12,7 +12,7 @@ passport.serializeUser((profile, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-  return models.Profile.where({ id }).fetch()
+  return models.User.where({ id }).fetch()
     .then(profile => {
       if (!profile) {
         throw profile;

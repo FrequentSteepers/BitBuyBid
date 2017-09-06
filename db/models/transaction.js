@@ -9,7 +9,7 @@ const Transaction = db.Model.extend({
     return this.belongsTo('User', 'seller_id');
   },
   review: function() {
-    return this.hasMany('Tag');
+    return this.hasOne('Product');
   }
 });
 

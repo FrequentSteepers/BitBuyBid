@@ -9,6 +9,9 @@ cache:
   directories:
     - "node_modules"
 
+env:
+  - CLIENT_ID="DEFAULT CLIENT ID HERE" CLIENT_SECRET="DEFAULT CLIENT SECRET HERE" CALLBACK_URL="DEFAULT CLIENT URL HERE",
+
 before_install:
   - psql -c 'create database thesis;' -U postgres
   - npm install -g grunt-cli

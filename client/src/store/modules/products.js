@@ -36,16 +36,12 @@ export default (state = initialState, {type, payload}) => {
       cart: payload || []
     };
   case ADD_TO_CART:
-    let newCart = state.cart.concat([payload]);
-    newCart = newCart.filter((val, i, self) => {
-      if (self.indexOf(val) === i) {
-        //pass a key/value pair (uniqueId, quantity === 1)
-        return true;
-      } else {
-        //here is where I'll be incrementing the quantity in the quantity tracking table
-        return false;
-      }
-    });
+
+    let newCart = state.cart.concat([payload]).filter((val, i, self) => self.indexOf(val) === i);
+    [payload].map(product => 
+      state.quantities[product.id] > 0 ? 
+        state.quantities[product.id] += 1 :
+        state.quantities[product.id] = 1);
     return {
       ...state,
       cart: newCart

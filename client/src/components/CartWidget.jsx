@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import Subtotal from './Subtotal.jsx';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
@@ -47,25 +48,35 @@ const style = {
     margin: '0 auto'
   },
   price: {
-    color: 'red',
+    color: 'seagreen',
     float: 'left'
   },
   priceCol: {
     display: 'inline-block'
   },
   delete: {
+    display: 'inline-block',
     float: 'right',
-    color: 'teal',
+    color: 'maroon',
   },
   gridList: {
     overflowY: 'auto',
     height: '500px'
+  },
+  subTitle: {
+    color: 'black'
+  },
+  subtotal: {
+    border: '2px solid black',
+    borderTop: 'none',
+    padding: '2px'
   }
 };
 
 const mapStateToProps = state => {
   return {
-    cart: state.products.cart
+    cart: state.products.cart,
+    quantities: state.products.quantities
   };
 };
 
@@ -78,6 +89,7 @@ class CartWidget extends Component {
     super(props);
   }
   render() {
+    console.log('props: ', this.props);
     return (
       <div id='cartWidget' style={style.root}>
         {this.props.cart.length ? 
@@ -103,9 +115,9 @@ class CartWidget extends Component {
                               <CardText style={style.price}>
                                 ${product.price.toFixed(12)}
                               </CardText>
-                              <div style={style.delete}>
+                              <CardText style={style.delete}>
                                 delete
-                              </div>
+                              </CardText>
                             </Col>
                           </Row>
                         </Row>
@@ -114,6 +126,15 @@ class CartWidget extends Component {
                   }) : false}
                 </Col>
               </Grid>
+              <div style={style.subtotal}>
+                <div style={style.subTitle}>
+                  <b><i>Subtotal:</i></b> 
+                  <Subtotal/>
+                  <div style={{display: 'inline-block', float: 'right'}}>
+                    Checkout!
+                  </div>
+                </div>
+              </div>
             </Paper>
           </GridList> : false}
       </div>

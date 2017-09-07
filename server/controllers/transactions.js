@@ -12,7 +12,9 @@ module.exports.create = (req, res) => {
   Transaction.forge(
     { 
       transaction: req.body.status,
-      user_Id: req.body.user_id,
+      status: req.body.status,
+      buyer_id: req.body.bodyId,
+      seller_id: req.body.sellerId,
       session: req.session
     }
   )

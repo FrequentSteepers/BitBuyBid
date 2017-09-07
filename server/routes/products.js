@@ -5,12 +5,13 @@ const {
   getAll, 
   getOne, 
   update, 
-  deleteOne
+  deleteOne,
+  create
 } = require('../controllers').Products;
 
 router.route('/')
   .get(getAll)
-  // .post(ProfileController.create)
+  .post(create)
 ;
 
 router.route('/:id')

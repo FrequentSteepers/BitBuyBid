@@ -68,8 +68,6 @@ const mapStateToProps = state => {
   };
 };
 
-// will be using this dispatch once the listings are connected to 
-// increment/decrement/remove functionality:
 // const mapDispatchToProps = state => {
 //   return bindActionCreators({}, dispatch);
 // }

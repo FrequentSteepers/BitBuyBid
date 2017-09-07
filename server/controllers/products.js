@@ -2,14 +2,7 @@ const { Product } = require('../../db/models');
 
 
 module.exports.create = (req, res) => {
-  Product.create(req.body)
-    .then(status => {
-      res.status(201);
-    })
-    .catch(err => {
-      console.log(err);
-      res.status(405);
-    });
+  res.status(500);
 };
 
 module.exports.getAll = (req, res) => {

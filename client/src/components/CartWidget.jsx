@@ -34,7 +34,8 @@ const style = {
     overflow: 'hidden',
   },
   text: {
-    padding: '0px'
+    padding: '0px',
+    fontStyle: 'italic'
   },
   grid: {
     border: '2px solid black',
@@ -124,7 +125,7 @@ class CartWidget extends Component {
                                 ${product.price ? Number(product.price).toFixed(6) : null}
                               </CardText>
                               <CardText style={style.delete}>
-                                delete quantity:{this.props.quantities[product.id]}
+                                delete&nbsp;&nbsp;quantity:{this.props.quantities[product.id]}
                               </CardText>
                             </Col>
                           </Row>

@@ -10,9 +10,12 @@ router.route('/')
   });
 
 router.route('/login')
+  .get((req, res) => {
+    res.render('login.ejs', { message: req.flash('loginMessage') });
+  })
   .post(middleware.passport.authenticate('local-login', {
     successRedirect: '/',
-    failureRedirect: '#',
+    failureRedirect: '/login',
     failureFlash: true
   }));
 

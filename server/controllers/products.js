@@ -19,12 +19,13 @@ module.exports.getAll = (req, res) => {
       if (!product) {
         throw product;
       }
-      res.status(200).send(product);
+      res.status(200).send({results: product});
     })
     .error(err => {
       res.status(500).send(err);
     })
-    .catch(() => {
+    .catch(err => {
+      console.error(err);
       res.sendStatus(404);
     });
 };
@@ -36,12 +37,13 @@ module.exports.getOne = (req, res) => {
       if (!product) {
         throw product;
       }
-      res.status(200).send(product);
+      res.status(200).send({results: product});
     })
     .error(err => {
       res.status(500).send(err);
     })
-    .catch(() => {
+    .catch(err => {
+      console.error(err);
       res.sendStatus(404);
     });
 };

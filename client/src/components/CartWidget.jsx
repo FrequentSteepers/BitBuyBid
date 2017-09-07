@@ -94,8 +94,6 @@ class CartWidget extends Component {
     super(props);
   }
   render() {
-    // <Link to={`/product?id=${item.id}`}><img src={item.img_url_sm}/></Link>
-    console.log('check the props: ', this.props);
     return (
       <div id='cartWidget' style={style.root}>
         {this.props.cart.length ? 

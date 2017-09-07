@@ -6,7 +6,6 @@ import {addToCart} from '../store/modules/products.js';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 
 const Listing = ({item, addToCart}) => {
-  console.log('product: ', item);
   return (
     <div>
       <Card>

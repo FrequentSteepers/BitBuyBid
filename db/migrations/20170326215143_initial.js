@@ -6,9 +6,8 @@ exports.up = function (knex, Promise) {
       table.string('first', 100).notNullable();
       table.string('last', 100).notNullable();
       table.string('username', 100).notNullable();
-      table.string('email', 100).nullable().unique();
+      table.string('email', 100).nullable();
       table.string('phone', 100).nullable();
-      table.boolean('isMerchant').notNullable();
       table.timestamps(true, true);
     }),
     knex.schema.createTableIfNotExists('addresses', function (table) {
@@ -17,7 +16,7 @@ exports.up = function (knex, Promise) {
       table.string('line2', 100).notNullable();
       table.string('city', 100).notNullable();
       table.string('stateOrProvince', 100).notNullable();
-      table.integer('postalCode');
+      table.integer('postalCode').nullable();
     }),
     knex.schema.createTableIfNotExists('auths', function(table) {
       table.increments('id').unsigned().primary();
@@ -25,7 +24,7 @@ exports.up = function (knex, Promise) {
       table.string('oauth_id', 30).nullable();
       table.string('password', 100).nullable();
       table.string('salt', 100).nullable();
-      table.integer('user_id').references('users.id').onDelete('CASCADE');
+      table.integer('user_id').unsigned().notNullable().references('users.id').onDelete('CASCADE');
     }),
     knex.schema.createTableIfNotExists('products', function(table) {
       table.increments('id').unsigned().primary();
@@ -43,11 +42,10 @@ exports.up = function (knex, Promise) {
       table.string('type', 20).notNullable();
       table.string('title', 500).notNullable();
       table.text('description').nullable();
-      table.integer('user_id').references('users.id').onDelete('CASCADE');
-      table.integer('category_id').references('categories.id').onDelete('CASCADE');
+      table.integer('user_id').references('users.id').nullable().onDelete('CASCADE');
+      table.integer('category_id').references('categories.id').nullable().onDelete('CASCADE');
       table.boolean('in-stock').nullable();
       table.timestamps(true, true);
-      // table.unique('prod_id');
       table.unique(['sku', 'upc', 'ad-id', 'asin', 'type']);
     }),
     knex.schema.createTableIfNotExists('categories', function(table) {
@@ -68,7 +66,7 @@ exports.up = function (knex, Promise) {
     }),
     knex.schema.createTableIfNotExists('tags', function(table) {
       table.increments('id').primary();
-    }),
+    })
   ]);
 };
 
@@ -79,9 +77,8 @@ exports.down = function (knex, Promise) {
     knex.schema.dropTable('products'),
     knex.schema.dropTable('transactions'),
     knex.schema.dropTable('categories'),
-    knex.schema.dropTable('address'),
+    knex.schema.dropTable('addresses'),
     knex.schema.dropTable('reviews'),
-    knex.schema.dropTable('tags'),
-    knex.schema.dropTable('recommendations')
+    knex.schema.dropTable('tags')
   ]);
 };

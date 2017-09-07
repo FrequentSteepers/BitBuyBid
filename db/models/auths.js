@@ -7,7 +7,6 @@ const Auth = db.Model.extend({
   profile: function() {
     return this.belongsTo('User');
   },
-
   initialize: function() {
     this.on('saving', (user, attrs, options) => {
       if (user.get('type') === 'local') {
@@ -19,11 +18,9 @@ const Auth = db.Model.extend({
       }
     });
   },
-
   comparePassword: function(attempted) {
     return bcrypt.compareAsync(attempted, this.get('password'));
   },
-
   generatePassword: function(password) {
     return bcrypt.genSaltAsync(null)
       .then(salt => {

@@ -11,9 +11,8 @@ var convert = require('xml-js');
 module.exports.create = (req, res) => {
   Transaction.forge(
     { 
-      transaction: req.body.status,
-      user_Id: req.body.user_id,
-      session: req.session
+      transaction: req.body.transaction_id,
+      user_Id: req.body.user		
     }
   )
     .save()

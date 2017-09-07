@@ -1,7 +1,7 @@
 const axios = require('axios');
 
 const { overstock } = require('../../config/api_configs/');
-const { Transaction } = require('../../db/models');
+const { Product, Transaction } = require('../../db/models');
 axios.defaults.headers.common['Authorization'] = overstock.Authorization;
 var convert = require('xml-js');
 
@@ -11,17 +11,39 @@ var convert = require('xml-js');
  * @todo refactor to search database layer
  */
 module.exports.search = (req, res) => {
-  axios.get('https://product-search.api.cj.com/v2/product-search?', {
-    params: {
-      'website-id': overstock['website-id'],
-      'keywords': req.body.searchTerm 
-    }
-  })
-    .then(results => {
-      res.json(JSON.parse(convert.xml2json(results.data)));
+  if (!req.body.searchTerm) {
+    console.log('no body!');
+    res.status(405).end();
+    return;
+  }
+  Product
+    .query('where', 'title', 'like', `%${req.body.searchTerm.slice(1, -1)}%`)
+    .fetchAll()
+    .then(products => {
+      if (products.length === 0) {
+        throw products;
+      }
+      res.status(200).send(products);
     })
-    .catch(err => {
-      console.log(err);
-      res.status(405);
+    .error(err => {
+      res.status(500).send(err);
+    })
+    .catch(except => {
+      console.log('new search term!' + req.body.searchTerm);
+      return axios.get('https://product-search.api.cj.com/v2/product-search?', {
+        params: {
+          'website-id': overstock['website-id'],
+          'keywords': req.body.searchTerm 
+        }
+      })
+        .then(results => {
+          Product.fromOverstock(results);
+          res.json(JSON.parse(convert.xml2json(results.data)));
+        })
+        .catch(err => {
+          console.log(err);
+          res.status(404);
+        });
     });
+  
 };

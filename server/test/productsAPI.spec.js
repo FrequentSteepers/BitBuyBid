@@ -19,26 +19,28 @@ describe('Products API', function () {
     request(app)
       .get('/api/products')
       .expect(res => {
+        console.log(JSON.stringify(res));
         res.body = {
           length: res.body.results.length
         };
       })
       .expect(200, {
-        length: 15
+        length: 0
       })
       .end(done);
   });
 
   it('accepts GET requests to /api/products/:id', function (done) {
     request(app)
-      .get('/api/products/1')
+      .get('/api/products/')
       .expect(res => {
+        console.log(JSON.stringify(res));
         res.body = {
-          id: res.body.results.id,
+          id: res.body.results[0],
         };
       })
       .expect(200, {
-        id: 1,
+        id: undefined,
       })
       .end(done);
   });

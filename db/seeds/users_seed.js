@@ -2,7 +2,7 @@ const models = require('../models');
 
 exports.seed = function (knex, Promise) {
 
-  return models.Profile.where({ email: 'admin@domain.com' }).fetch()
+  return models.User.where({ email: 'admin@domain.com' }).fetch()
     .then((profile) => {
       if (profile) {
         throw profile;

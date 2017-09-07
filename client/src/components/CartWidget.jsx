@@ -69,6 +69,13 @@ class CartWidget extends Component {
                         <CardTitle style={style.title} title={`${product.title}`}/>
                         <CardText style={style.text}>This is where the description of the product will go! :D</CardText>
                       </Col>
+                      <Row>
+                        <Col>
+                          <CardText style={{color: 'red'}}>
+                            ${product.price}
+                          </CardText>
+                        </Col>
+                      </Row>
                     </Row>
                   </div>
                 );

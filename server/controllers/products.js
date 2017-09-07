@@ -7,6 +7,7 @@ module.exports.create = (req, res) => {
 
 module.exports.getAll = (req, res) => {
   Product.where({})
+    .query(qb => qb.limit(10))
     .fetchAll()
     .then(product => {
       if (!product) {

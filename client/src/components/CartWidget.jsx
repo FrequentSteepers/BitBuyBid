@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import Subtotal from './Subtotal.jsx';
+import { Link } from 'react-router-dom';
+import {selectProduct} from '../store/modules/products.js';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
@@ -70,6 +72,9 @@ const style = {
     border: '2px solid black',
     borderTop: 'none',
     padding: '2px'
+  },
+  link: {
+    textDecoration: 'none'
   }
 };
 
@@ -80,16 +85,17 @@ const mapStateToProps = state => {
   };
 };
 
-// const mapDispatchToProps = state => {
-//   return bindActionCreators({}, dispatch);
-// }
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({selectProduct}, dispatch);
+};
 
 class CartWidget extends Component {
   constructor(props) {
     super(props);
   }
   render() {
-    console.log('props: ', this.props);
+    // <Link to={`/product?id=${item.id}`}><img src={item.img_url_sm}/></Link>
+    console.log('check the props: ', this.props);
     return (
       <div id='cartWidget' style={style.root}>
         {this.props.cart.length ? 
@@ -102,21 +108,25 @@ class CartWidget extends Component {
                     return (
                       <div key={i}>
                         {i > 0 ? <hr/> : null}
-                        <Row style={style.row} start="xs">
+                        <Row onClick={() => this.props.selectProduct(product.id)} style={style.row} start="xs">
                           <Col style={style.imgHold} xs={4}>
-                            <img style={style.img} src={product.imgs.small} alt="" />
+                            <Link style={style.link} to={`/product?id=${product.id}`}>  
+                              <img style={style.img} src={product.img_url_sm} alt="" />
+                            </Link>
                           </Col>
                           <Col xs={8}>
-                            <CardTitle style={style.title} title={product.title}/>
+                            <Link style={style.link} to={`/product?id=${product.id}`}>  
+                              <CardTitle style={style.title} title={product.title}/>
+                            </Link>
                             <CardText style={style.text}>{product.description.slice(0, 25) + '...'}</CardText>
                           </Col>
                           <Row>
                             <Col style={style.priceCol}>
                               <CardText style={style.price}>
-                                ${product.price.toFixed(12)}
+                                ${product.price ? Number(product.price).toFixed(6) : null}
                               </CardText>
                               <CardText style={style.delete}>
-                                delete
+                                delete quantity:{this.props.quantities[product.id]}
                               </CardText>
                             </Col>
                           </Row>
@@ -130,9 +140,6 @@ class CartWidget extends Component {
                 <div style={style.subTitle}>
                   <b><i>Subtotal:</i></b> 
                   <Subtotal/>
-                  <div style={{display: 'inline-block', float: 'right'}}>
-                    Checkout!
-                  </div>
                 </div>
               </div>
             </Paper>
@@ -142,4 +149,4 @@ class CartWidget extends Component {
   }
 }
 
-export default connect(mapStateToProps)(CartWidget);
+export default connect(mapStateToProps, mapDispatchToProps)(CartWidget);

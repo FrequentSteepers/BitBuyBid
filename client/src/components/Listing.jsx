@@ -6,12 +6,13 @@ import {addToCart} from '../store/modules/products.js';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 
 const Listing = ({item, addToCart}) => {
+  console.log('product: ', item);
   return (
     <div>
       <Card>
         <div>
           {item.title}<br/>
-          <Link to={`/product?id=${item.id}`}><img src={item.imgs.small}/></Link>
+          <Link to={`/product?id=${item.id}`}><img src={item.img_url_sm}/></Link>
           Rating: {item.rating}
           <button onClick={ () => { addToCart(item); } }>Add to Cart!</button>
         </div>

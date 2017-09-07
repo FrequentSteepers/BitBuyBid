@@ -32,7 +32,7 @@ class FeatListing extends Component {
       <div>
         {selected ? 
           <div>
-            <Card><img src={selected.imgs.large} style={style.image}/></Card>
+            <Card><img src={selected.img_url_lg} style={style.image}/></Card>
             <Card><h2 style={style.title}>{selected.title}</h2></Card>
             <Card><div style={style.rating}>Rating: {selected.rating}</div></Card>
             <Card><div style={style.description}>{selected.description}</div></Card>

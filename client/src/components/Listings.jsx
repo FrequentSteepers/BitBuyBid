@@ -24,10 +24,10 @@ const Listings = (props) => {
       <Grid fluid>
         <Row>
           {props.products.length ? props.products.map((product, i) => {
-            return (
+            return ( product.img_url_sm ?
               <Col key={i} xs={6} sm={6} md={4} lg={3} onClick={() => props.selectProduct(product.id)}>
                 <Listing id={product.id} item={product}/>
-              </Col>
+              </Col> : null
             );
           }) : null}
         </Row>

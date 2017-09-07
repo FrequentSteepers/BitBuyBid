@@ -65,6 +65,7 @@ class Navbar extends React.Component {
           <Link to='/profile'><MenuItem>Profile</MenuItem></ Link>
           <Link to='/cart'><MenuItem >Cart</MenuItem></ Link>
           <Link to='/logout'><MenuItem>Logout</MenuItem></ Link>
+          <Link to='/login'><MenuItem>Login</MenuItem></ Link>
         </Drawer>
       </div>
     );

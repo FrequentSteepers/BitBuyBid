@@ -3,6 +3,7 @@ import Search from '../components/Search.jsx';
 import Listings from '../components/Listings.jsx';
 import CartWidget from '../components/CartWidget.jsx';
 
+
 /*
   here is where we will update the redux state, dispatching an event 
   with the id of the item that was clicked

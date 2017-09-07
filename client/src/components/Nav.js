@@ -5,10 +5,11 @@ import AppBar from 'material-ui/AppBar';
 import {Link} from 'react-router-dom';
 
 const myNavStyle = {
-  'backgroundColor': 'teal',
-  'fontFamily': 'Palatino,serif',
-  'fontStyle': 'oblique',
-  'textAlign': 'center',
+  backgroundColor: 'teal',
+  fontFamily: 'Palatino,serif',
+  fontStyle: 'oblique',
+  textAlign: 'center',
+  zIndex: 2
 };
 
 class Navbar extends React.Component {
@@ -46,7 +47,7 @@ class Navbar extends React.Component {
 
   render () {
     return (
-      <div style={{'paddingBottom': '20px'}}>
+      <div id='nav' style={{'paddingBottom': '20px'}}>
         <AppBar
           style={myNavStyle}
           title="Bit Buy"

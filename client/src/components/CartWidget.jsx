@@ -2,23 +2,27 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import {GridList} from 'material-ui/GridList';
 import Paper from 'material-ui/Paper';
 import { Grid, Row, Col } from 'react-flexbox-grid';
+import 'sticky-kit/dist/sticky-kit.min.js';
 
 const style = {
   root: {
     position: 'fixed',
     top: '10%',
     right: '5%',
+    float: 'right',
     zIndex: 2,
   },
   paper: {
-    border: '2px solid black',
     width: '250px'
   },
   header: {
     textAlign: 'center',
-    margin: '0 auto'
+    margin: '0 auto',
+    border: '2px solid black',
+    borderBottom: 'none'
   },
   title: {
     padding: '0px',
@@ -29,7 +33,32 @@ const style = {
     padding: '0px'
   },
   grid: {
-    border: '2px solid black'
+    border: '2px solid black',
+    padding: '0px',
+    paddingTop: '5px'
+  },
+  img: {
+    position: 'relative',
+    width: '100%'
+  },
+  imgHold: {
+    padding: '0px',
+    margin: '0 auto'
+  },
+  price: {
+    color: 'red',
+    float: 'left'
+  },
+  priceCol: {
+    display: 'inline-block'
+  },
+  delete: {
+    float: 'right',
+    color: 'teal',
+  },
+  gridList: {
+    overflowY: 'auto',
+    height: '500px'
   }
 };
 
@@ -51,38 +80,43 @@ class CartWidget extends Component {
   }
   render() {
     return (
-      <div style={style.root}>
-        {this.props.cart.length ? <Paper style={style.paper}>
-          <h2 style={style.header}>Cart</h2>
-          <Grid style={style.grid} fluid>
-            <Col xs={12}>
-              {this.props.cart ? this.props.cart.map((product, i) => {
-                return (
-                  <div key={i}>
-                    <Row style={style.row} start="xs">
-                      <Col xs={4}>
-                        <CardMedia>
-                          <img src={`${product.imgs.small}`} alt="" />
-                        </CardMedia>
-                      </Col>
-                      <Col xs={8}>
-                        <CardTitle style={style.title} title={`${product.title}`}/>
-                        <CardText style={style.text}>This is where the description of the product will go! :D</CardText>
-                      </Col>
-                      <Row>
-                        <Col>
-                          <CardText style={{color: 'red'}}>
-                            ${product.price}
-                          </CardText>
-                        </Col>
-                      </Row>
-                    </Row>
-                  </div>
-                );
-              }) : false}
-            </Col>
-          </Grid>
-        </Paper> : false}
+      <div id='cartWidget' style={style.root}>
+        {this.props.cart.length ? 
+          <GridList style={style.gridList}>
+            <Paper style={style.paper}>
+              <h2 style={style.header}>Cart</h2>
+              <Grid style={style.grid} fluid>
+                <Col xs={12}>
+                  {this.props.cart ? this.props.cart.map((product, i) => {
+                    return (
+                      <div key={i}>
+                        {i > 0 ? <hr/> : null}
+                        <Row style={style.row} start="xs">
+                          <Col style={style.imgHold} xs={4}>
+                            <img style={style.img} src={product.imgs.small} alt="" />
+                          </Col>
+                          <Col xs={8}>
+                            <CardTitle style={style.title} title={product.title}/>
+                            <CardText style={style.text}>{product.description.slice(0, 25) + '...'}</CardText>
+                          </Col>
+                          <Row>
+                            <Col style={style.priceCol}>
+                              <CardText style={style.price}>
+                                ${product.price.toFixed(12)}
+                              </CardText>
+                              <div style={style.delete}>
+                                delete
+                              </div>
+                            </Col>
+                          </Row>
+                        </Row>
+                      </div>
+                    );
+                  }) : false}
+                </Col>
+              </Grid>
+            </Paper>
+          </GridList> : false}
       </div>
     );
   }

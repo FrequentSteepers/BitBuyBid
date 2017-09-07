@@ -27,10 +27,15 @@ class App extends React.Component {
     kind of catch-all. 
   */
 
+  componentDidMount() {
+    $('#nav').stick_in_parent();
+  }
+
   render() {
+
     return (
       <div>
-        <Nav />
+        <Nav/>
         <Switch>
           <Route path='/cart'>
             <Cart />

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import axios from 'axios';
-import {setProducts, selectProduct} from '../store/modules/products.js';
+import {selectProduct} from '../store/modules/products.js';
 import {bindActionCreators} from 'redux';
 import {GridList, GridTile} from 'material-ui/GridList';
 import Listing from './Listing.jsx';
@@ -21,7 +21,6 @@ const styles = {
 const Listings = (props) => {
   return ( 
     <div style={styles.root}>
-      <button onClick={() => props.setProducts()}>Click</button>
       <Grid fluid>
         <Row>
           {props.products.length ? props.products.map((product, i) => {
@@ -47,7 +46,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({setProducts, selectProduct}, dispatch);
+  return bindActionCreators({selectProduct}, dispatch);
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Listings);

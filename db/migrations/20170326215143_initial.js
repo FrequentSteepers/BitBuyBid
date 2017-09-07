@@ -24,7 +24,7 @@ exports.up = function (knex, Promise) {
       table.string('oauth_id', 30).nullable();
       table.string('password', 100).nullable();
       table.string('salt', 100).nullable();
-      // table.integer('user_id').unsigned().notNullable().references('users.id').onDelete('CASCADE');
+      table.integer('user_id').unsigned().notNullable().references('users.id').onDelete('CASCADE');
     }),
     knex.schema.createTableIfNotExists('products', function(table) {
       table.increments('id').unsigned().primary();
@@ -42,11 +42,11 @@ exports.up = function (knex, Promise) {
       table.string('type', 20).notNullable();
       table.string('title', 500).notNullable();
       table.text('description').nullable();
-      // table.integer('user_id').references('users.id').nullable().onDelete('CASCADE');
-      // table.integer('category_id').references('categories.id').nullable().onDelete('CASCADE');
+      table.integer('user_id').references('users.id').nullable().onDelete('CASCADE');
+      table.integer('category_id').references('categories.id').nullable().onDelete('CASCADE');
       table.boolean('in-stock').nullable();
       table.timestamps(true, true);
-      // table.unique(['sku', 'upc', 'ad-id', 'asin', 'type']);
+      table.unique(['sku', 'upc', 'ad-id', 'asin', 'type']);
     }),
     knex.schema.createTableIfNotExists('categories', function(table) {
       table.increments('id').unsigned().primary();
@@ -55,8 +55,8 @@ exports.up = function (knex, Promise) {
     knex.schema.createTableIfNotExists('transactions', function(table) {
       table.increments('id').unsigned().primary();
       table.string('status', 8).notNullable();
-      // table.integer('buyer_id').references('users.id').onDelete('CASCADE');
-      // table.integer('seller_id').references('users.id').onDelete('CASCADE');
+      table.integer('buyer_id').references('users.id').onDelete('CASCADE');
+      table.integer('seller_id').references('users.id').onDelete('CASCADE');
       table.integer('session');
     }),
     knex.schema.createTableIfNotExists('reviews', function(table) {

@@ -11,7 +11,13 @@ const Product = db.Model.extend({
   }
 });
 
-Product.fromOverstock = (results, tagId) => {
+/**
+ * Bulk create products by fetching product data from overstock api
+ * and converting the data to json from xml. 
+ * 
+ * @todo associate inserted products to category/ tag.
+ */
+Product.fromOverstock = (results) => {
   const parsed = JSON.parse(convert.xml2json(results.data,
     {
       compact: true,

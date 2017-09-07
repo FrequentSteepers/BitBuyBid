@@ -1,14 +1,14 @@
 export const appTypes = {
-  SET_HELLO: 'app/SET_HELLO'
+  SET_USER: 'app/SET_USER'
 };
 
 const initialState = {
-  hello: 'world'
+  user: null
 };
 
 export default (state = initialState, {type, payload}) => {
   switch (type) {
-  case appTypes.SET_HELLO: 
+  case appTypes.SET_USER: 
     return {
       ...state, 
       hello: payload
@@ -17,9 +17,13 @@ export default (state = initialState, {type, payload}) => {
   }
 };
 
-export const setHello = payload => {
+export const setUser = payload => {
   return {
-    type: appTypes.SET_HELLO,
+    type: appTypes.SET_USER,
     payload
   };
+};
+
+export const handleLogin = (user) => {
+  console.log(user);
 };

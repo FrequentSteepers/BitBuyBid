@@ -14,6 +14,7 @@ const style = {
     right: '5%',
     float: 'right',
     zIndex: 2,
+    paddingTop: '10px'
   },
   paper: {
     width: '250px'

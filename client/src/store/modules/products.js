@@ -12,7 +12,8 @@ export const REMOVE_FROM_CART = 'products/REMOVE_FROM_CART';
 const initialState = {
   products: [],
   selectedId: null,
-  cart: []
+  cart: [],
+  quantities: {}
 };
 /**
  * Listings reducer function
@@ -35,9 +36,19 @@ export default (state = initialState, {type, payload}) => {
       cart: payload || []
     };
   case ADD_TO_CART:
+    let newCart = state.cart.concat([payload]);
+    newCart = newCart.filter((val, i, self) => {
+      if (self.indexOf(val) === i) {
+        //pass a key/value pair (uniqueId, quantity === 1)
+        return true;
+      } else {
+        //here is where I'll be incrementing the quantity in the quantity tracking table
+        return false;
+      }
+    });
     return {
       ...state,
-      cart: state.cart.concat([payload])
+      cart: newCart
     };
   case REMOVE_FROM_CART:
     return {
@@ -85,6 +96,7 @@ export const createCart = (payload) => {
 };
 
 export const addToCart = (payload) => {
+
   return {
     type: ADD_TO_CART,
     payload

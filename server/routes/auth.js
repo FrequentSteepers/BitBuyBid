@@ -12,16 +12,13 @@ router.route('/')
 
 router.route('/login')
   .get((req, res) => {
-    console.log('REQ********', req.user, res.user);
     res.render('login.ejs', { message: req.flash('loginMessage') });
   })
   .post(urlencodedParser, middleware.passport.authenticate('local-login'), 
     (req, res) => {
-      console.log('req********', req.user, res.user);
       if (req.user) {
         res.json(req.user);
       } else {
-        console.log('REDIRECT HIT');
         res.status(401);
       }
     

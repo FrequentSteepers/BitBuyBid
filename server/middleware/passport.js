@@ -8,12 +8,10 @@ const config = require('config')['passport'];
 const models = require('../../db/models');
 
 passport.serializeUser((profile, done) => {
-  console.log('serializing user');
   done(null, profile.id);
 });
 
 passport.deserializeUser((id, done) => {
-  console.log('deserializing user');
   return models.User.where({ id }).fetch()
     .then(profile => {
       if (!profile) {
@@ -67,9 +65,7 @@ passport.use('local-signup', new LocalStrategy({
       done(error, null);
     })
     .catch(() => {
-      console.log('Sign up is broken');
       done();
-      // done(null, false, req.flash('signupMessage', 'An account with this email address already exists.'));
     });
 }));
 
@@ -86,10 +82,8 @@ passport.use('local-login', new LocalStrategy({
     }]
   })
     .then((profile) => {
-      console.log('PROFILE', profile);
       // if there is no profile with that email or if there is no local auth account with profile
       if (!profile || !profile.related('auths').at(0)) {
-        console.log('no profile');
         throw Error('User not Found');
       }
 
@@ -108,16 +102,13 @@ passport.use('local-login', new LocalStrategy({
       done(null, profile.serialize());
     })
     .error(err => {
-      console.log('I am here');
       done();
     })
     .catch((e) => {
-      console.log('I am in CATCH');  
       done(null, null, {
         'message': 'Signing up requires an email address, \
           please be sure there is an email address associated with your Facebook account \
           and grant access when you register.' });   
-      // done(null, null, req.flash('loginMessage', 'Incorrect username or password'));
     });
 }));
 

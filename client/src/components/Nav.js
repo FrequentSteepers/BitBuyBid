@@ -5,6 +5,7 @@ import AppBar from 'material-ui/AppBar';
 import {Link} from 'react-router-dom';
 
 const myNavStyle = {
+  position: 'fixed',
   backgroundColor: 'teal',
   fontFamily: 'Palatino,serif',
   fontStyle: 'oblique',

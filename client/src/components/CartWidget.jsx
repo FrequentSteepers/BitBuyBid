@@ -8,7 +8,6 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 import {GridList} from 'material-ui/GridList';
 import Paper from 'material-ui/Paper';
 import { Grid, Row, Col } from 'react-flexbox-grid';
-import 'sticky-kit/dist/sticky-kit.min.js';
 
 const style = {
   root: {

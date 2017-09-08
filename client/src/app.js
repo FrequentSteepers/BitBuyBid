@@ -13,7 +13,6 @@ import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import Nav from './components/Nav.js';
 import Product from './views/Product.jsx';
 import Cart from './views/Cart.jsx';
-import Recipt from './views/Recipt.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -38,9 +37,6 @@ class App extends React.Component {
           </Route>
           <Route path='/product'> 
             <Product />
-          </Route>
-          <Route path='/recipt'>
-            <Recipt />
           </Route>
           <Route path='/'>
             <Home />

@@ -20,9 +20,11 @@ passport.deserializeUser((id, done) => {
       done(null, profile.serialize());
     })
     .error(error => {
+      console.log('Error: ', error);
       done(error, null);
     })
     .catch(() => {
+      console.log('failed deserialization no user found');
       done(null, null, { message: 'No user found' });
     });
 });
@@ -63,7 +65,7 @@ passport.use('local-signup', new LocalStrategy({
       done(error, null);
     })
     .catch(() => {
-      done(null, false, req.flash('signupMessage', 'An account with this email address already exists.'));
+      done();
     });
 }));
 
@@ -79,10 +81,10 @@ passport.use('local-login', new LocalStrategy({
       auths: query => query.where({ type: 'local' })
     }]
   })
-    .then(profile => {
+    .then((profile) => {
       // if there is no profile with that email or if there is no local auth account with profile
       if (!profile || !profile.related('auths').at(0)) {
-        throw profile;
+        throw Error('User not Found');
       }
 
       // check password and pass through account
@@ -100,10 +102,13 @@ passport.use('local-login', new LocalStrategy({
       done(null, profile.serialize());
     })
     .error(err => {
-      done(err, null);
+      done();
     })
-    .catch(() => {
-      done(null, null, req.flash('loginMessage', 'Incorrect username or password'));
+    .catch((e) => {
+      done(null, null, {
+        'message': 'Signing up requires an email address, \
+          please be sure there is an email address associated with your Facebook account \
+          and grant access when you register.' });   
     });
 }));
 

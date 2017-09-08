@@ -13,7 +13,7 @@ const style = {
     position: 'relative', 
     float: 'center', 
     margin: '0 auto',
-    paddingRight: 15
+    paddingRight: '15px'
   },
   form: {
     textAlign: 'center', 

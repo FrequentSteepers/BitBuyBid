@@ -8,10 +8,12 @@ const config = require('config')['passport'];
 const models = require('../../db/models');
 
 passport.serializeUser((profile, done) => {
+  console.log('serializing user');
   done(null, profile.id);
 });
 
 passport.deserializeUser((id, done) => {
+  console.log('deserializing user');
   return models.User.where({ id }).fetch()
     .then(profile => {
       if (!profile) {
@@ -20,9 +22,11 @@ passport.deserializeUser((id, done) => {
       done(null, profile.serialize());
     })
     .error(error => {
+      console.log('Error: ', error);
       done(error, null);
     })
     .catch(() => {
+      console.log('failed deserialization no user found');
       done(null, null, { message: 'No user found' });
     });
 });
@@ -34,7 +38,7 @@ passport.use('local-signup', new LocalStrategy({
 },
 (req, email, password, done) => {
   // check to see if there is any account with this email address
-  return models.Profile.where({ email }).fetch()
+  return models.User.where({ email }).fetch()
     .then(profile => {
       // create a new profile if a profile does not exist
       if (!profile) {
@@ -63,7 +67,9 @@ passport.use('local-signup', new LocalStrategy({
       done(error, null);
     })
     .catch(() => {
-      done(null, false, req.flash('signupMessage', 'An account with this email address already exists.'));
+      console.log('Sign up is broken');
+      done();
+      // done(null, false, req.flash('signupMessage', 'An account with this email address already exists.'));
     });
 }));
 
@@ -74,15 +80,17 @@ passport.use('local-login', new LocalStrategy({
 },
 (req, email, password, done) => {
   // fetch any profiles that have a local auth account with this email address
-  return models.Profile.where({ email }).fetch({
+  return models.User.where({ email }).fetch({
     withRelated: [{
       auths: query => query.where({ type: 'local' })
     }]
   })
-    .then(profile => {
+    .then((profile) => {
+      console.log('PROFILE', profile);
       // if there is no profile with that email or if there is no local auth account with profile
       if (!profile || !profile.related('auths').at(0)) {
-        throw profile;
+        console.log('no profile');
+        throw Error('User not Found');
       }
 
       // check password and pass through account
@@ -100,10 +108,16 @@ passport.use('local-login', new LocalStrategy({
       done(null, profile.serialize());
     })
     .error(err => {
-      done(err, null);
+      console.log('I am here');
+      done();
     })
-    .catch(() => {
-      done(null, null, req.flash('loginMessage', 'Incorrect username or password'));
+    .catch((e) => {
+      console.log('I am in CATCH');  
+      done(null, null, {
+        'message': 'Signing up requires an email address, \
+          please be sure there is an email address associated with your Facebook account \
+          and grant access when you register.' });   
+      // done(null, null, req.flash('loginMessage', 'Incorrect username or password'));
     });
 }));
 
@@ -129,7 +143,7 @@ const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
         // FB users can register with a phone number, which is not exposed by Passport
         throw null;
       }
-      return models.Profile.where({ email: oauthProfile.emails[0].value }).fetch();
+      return models.User.where({ email: oauthProfile.emails[0].value }).fetch();
     })
     .then(profile => {
 
@@ -145,7 +159,7 @@ const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
         return profile.save(profileInfo, { method: 'update' });
       }
       // otherwise create new profile
-      return models.Profile.forge(profileInfo).save();
+      return models.User.forge(profileInfo).save();
     })
     .tap(profile => {
       return models.Auth.forge({

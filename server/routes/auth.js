@@ -1,5 +1,6 @@
 const express = require('express');
 const middleware = require('../middleware');
+const urlencodedParser = require('body-parser').urlencoded({extended: false});
 
 const router = express.Router();
 // middleware.auth.verify, 
@@ -11,13 +12,20 @@ router.route('/')
 
 router.route('/login')
   .get((req, res) => {
+    console.log('REQ********', req.user, res.user);
     res.render('login.ejs', { message: req.flash('loginMessage') });
   })
-  .post(middleware.passport.authenticate('local-login', {
-    successRedirect: '/',
-    failureRedirect: '/login',
-    failureFlash: true
-  }));
+  .post(urlencodedParser, middleware.passport.authenticate('local-login'), 
+    (req, res) => {
+      console.log('req********', req.user, res.user);
+      if (req.user) {
+        res.json(req.user);
+      } else {
+        console.log('REDIRECT HIT');
+        res.status(401);
+      }
+    
+    });
 
 router.route('/signup')
   .get((req, res) => {

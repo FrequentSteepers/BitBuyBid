@@ -52,6 +52,7 @@ export const handleSignup = (user) => {
     axios.post('/auth/signup', user)
       .then((results) => {
         console.log(results);
-      });
+      })
+      .catch(console.error);
   };
 };

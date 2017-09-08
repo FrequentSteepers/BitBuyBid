@@ -117,7 +117,7 @@ class CartWidget extends Component {
                             <Link style={style.link} to={`/product?id=${product.id}`}>  
                               <CardTitle style={style.title} title={product.title}/>
                             </Link>
-                            <CardText style={style.text}>{product.description.slice(0, 25) + '...'}</CardText>
+                            <CardText style={style.text}>{product.description.slice(0, 40) + '...'}</CardText>
                           </Col>
                           <Row>
                             <Col style={style.priceCol}>

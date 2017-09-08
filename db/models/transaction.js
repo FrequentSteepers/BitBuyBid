@@ -5,11 +5,8 @@ const Transaction = db.Model.extend({
   buyer: function() {
     return this.belongsTo('User', 'buyer_id');
   },
-  seller: function() {
-    return this.belongsTo('User', 'seller_id');
-  },
-  review: function() {
-    return this.hasOne('Product');
+  cart: function() {
+    return this.belongsToMany('Product').through('Purchase');
   }
 });
 

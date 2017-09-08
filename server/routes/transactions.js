@@ -10,11 +10,25 @@ const {
 } = require('../controllers').Transactions;
 
 router.route('/')
+  .all((req, res, next) => {
+    if (req.isAuthenticated()) {
+      next();
+    } else {
+      res.status(401).end();
+    }
+  })
   .get(getAll)
   .post(create)
 ;
 
 router.route('/:id')
+  .all((req, res, next) => {
+    if (req.isAuthenticated()) {
+      next();
+    } else {
+      res.status(401).end();
+    }
+  })
   .get(getOne)
   .put(update)
   .delete(deleteOne);

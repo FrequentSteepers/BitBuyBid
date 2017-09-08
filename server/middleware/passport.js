@@ -34,11 +34,11 @@ passport.use('local-signup', new LocalStrategy({
 },
 (req, email, password, done) => {
   // check to see if there is any account with this email address
-  return models.Profile.where({ email }).fetch()
+  return models.User.where({ email }).fetch()
     .then(profile => {
       // create a new profile if a profile does not exist
       if (!profile) {
-        return models.Profile.forge({ email }).save();
+        return models.User.forge({ email }).save();
       }
       // throw if any auth account already exists
       if (profile) {
@@ -74,7 +74,7 @@ passport.use('local-login', new LocalStrategy({
 },
 (req, email, password, done) => {
   // fetch any profiles that have a local auth account with this email address
-  return models.Profile.where({ email }).fetch({
+  return models.User.where({ email }).fetch({
     withRelated: [{
       auths: query => query.where({ type: 'local' })
     }]
@@ -129,7 +129,7 @@ const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
         // FB users can register with a phone number, which is not exposed by Passport
         throw null;
       }
-      return models.Profile.where({ email: oauthProfile.emails[0].value }).fetch();
+      return models.User.where({ email: oauthProfile.emails[0].value }).fetch();
     })
     .then(profile => {
 
@@ -145,7 +145,7 @@ const getOrCreateOAuthProfile = (type, oauthProfile, done) => {
         return profile.save(profileInfo, { method: 'update' });
       }
       // otherwise create new profile
-      return models.Profile.forge(profileInfo).save();
+      return models.User.forge(profileInfo).save();
     })
     .tap(profile => {
       return models.Auth.forge({

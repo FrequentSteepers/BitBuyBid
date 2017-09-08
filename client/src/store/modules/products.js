@@ -12,7 +12,8 @@ export const REMOVE_FROM_CART = 'products/REMOVE_FROM_CART';
 const initialState = {
   products: [],
   selectedId: null,
-  cart: []
+  cart: [],
+  quantities: {}
 };
 /**
  * Listings reducer function
@@ -35,9 +36,15 @@ export default (state = initialState, {type, payload}) => {
       cart: payload || []
     };
   case ADD_TO_CART:
+
+    let newCart = state.cart.concat([payload]).filter((val, i, self) => self.indexOf(val) === i);
+    [payload].map(product => 
+      state.quantities[product.id] > 0 ? 
+        state.quantities[product.id] += 1 :
+        state.quantities[product.id] = 1);
     return {
       ...state,
-      cart: state.cart.concat([payload])
+      cart: newCart
     };
   case REMOVE_FROM_CART:
     return {
@@ -85,6 +92,7 @@ export const createCart = (payload) => {
 };
 
 export const addToCart = (payload) => {
+
   return {
     type: ADD_TO_CART,
     payload

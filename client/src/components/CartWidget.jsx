@@ -1,33 +1,94 @@
 import React, {Component} from 'react';
+import Subtotal from './Subtotal.jsx';
+import { Link } from 'react-router-dom';
+import {selectProduct} from '../store/modules/products.js';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import {GridList} from 'material-ui/GridList';
 import Paper from 'material-ui/Paper';
 import { Grid, Row, Col } from 'react-flexbox-grid';
+import 'sticky-kit/dist/sticky-kit.min.js';
 
 const style = {
   root: {
     position: 'fixed',
     top: '10%',
     right: '5%',
-    'zIndex': 2,
-    width: 200
+    float: 'right',
+    zIndex: 2,
+    paddingTop: '10px'
   },
   paper: {
-    position: 'relative',
+    width: '250px'
+  },
+  header: {
     textAlign: 'center',
+    margin: '0 auto',
+    border: '2px solid black',
+    borderBottom: 'none'
+  },
+  title: {
+    padding: '0px',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+  },
+  text: {
+    padding: '0px',
+    fontStyle: 'italic'
+  },
+  grid: {
+    border: '2px solid black',
+    padding: '0px',
+    paddingTop: '5px'
+  },
+  img: {
+    position: 'relative',
+    width: '100%'
+  },
+  imgHold: {
+    padding: '0px',
+    margin: '0 auto'
+  },
+  price: {
+    color: 'seagreen',
+    float: 'left'
+  },
+  priceCol: {
+    display: 'inline-block'
+  },
+  delete: {
+    display: 'inline-block',
+    float: 'right',
+    color: 'maroon',
+  },
+  gridList: {
+    overflowY: 'auto',
+    height: '500px'
+  },
+  subTitle: {
+    color: 'black'
+  },
+  subtotal: {
+    border: '2px solid black',
+    borderTop: 'none',
+    padding: '2px'
+  },
+  link: {
+    textDecoration: 'none'
   }
 };
 
 const mapStateToProps = state => {
   return {
-    cart: state.products.cart
+    cart: state.products.cart,
+    quantities: state.products.quantities
   };
 };
 
-// const mapDispatchToProps = state => {
-//   return bindActionCreators({}, dispatch);
-// }
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({selectProduct}, dispatch);
+};
 
 class CartWidget extends Component {
   constructor(props) {
@@ -35,35 +96,56 @@ class CartWidget extends Component {
   }
   render() {
     return (
-      <div style={style.root}>
-        <Paper style={style.paper}>
-          <h2>Cart</h2>
-          <Grid fluid>
-            <Row >
-              {this.props.cart ? this.props.cart.map((product, i) => {
-                <Col key={i} xs={6} sm={6} md={4} lg={3}>
-                  <div>Title: {this.props.title}</div>
-                  <Card>
-                    <CardHeader
-                      title="URL Avatar"
-                      subtitle="Subtitle"
-                      avatar={`${product.imgs.small}`}
-                    />
-                    <CardMedia
-                      overlay={<CardTitle title="Overlay title" subtitle="Overlay subtitle" />}
-                    >
-                      <img src={`${product.imgs.small}`} alt="" />
-                    </CardMedia>
-                    <CardTitle title="Card title" subtitle="Card subtitle" />
-                  </Card>
-                </Col>;
-              }) : false}
-            </Row>
-          </Grid>
-        </Paper>
+      <div id='cartWidget' style={style.root}>
+        {this.props.cart.length ? 
+          <GridList style={style.gridList}>
+            <Paper style={style.paper}>
+              <h2 style={style.header}>Cart</h2>
+              <Grid style={style.grid} fluid>
+                <Col xs={12}>
+                  {this.props.cart ? this.props.cart.map((product, i) => {
+                    return (
+                      <div key={i}>
+                        {i > 0 ? <hr/> : null}
+                        <Row onClick={() => this.props.selectProduct(product.id)} style={style.row} start="xs">
+                          <Col style={style.imgHold} xs={4}>
+                            <Link style={style.link} to={`/product?id=${product.id}`}>  
+                              <img style={style.img} src={product.img_url_sm} alt="" />
+                            </Link>
+                          </Col>
+                          <Col xs={8}>
+                            <Link style={style.link} to={`/product?id=${product.id}`}>  
+                              <CardTitle style={style.title} title={product.title}/>
+                            </Link>
+                            <CardText style={style.text}>{product.description.slice(0, 40) + '...'}</CardText>
+                          </Col>
+                          <Row>
+                            <Col style={style.priceCol}>
+                              <CardText style={style.price}>
+                                ${product.price ? Number(product.price).toFixed(6) : null}
+                              </CardText>
+                              <CardText style={style.delete}>
+                                delete&nbsp;&nbsp;quantity:{this.props.quantities[product.id]}
+                              </CardText>
+                            </Col>
+                          </Row>
+                        </Row>
+                      </div>
+                    );
+                  }) : false}
+                </Col>
+              </Grid>
+              <div style={style.subtotal}>
+                <div style={style.subTitle}>
+                  <b><i>Subtotal:</i></b> 
+                  <Subtotal/>
+                </div>
+              </div>
+            </Paper>
+          </GridList> : false}
       </div>
     );
   }
 }
 
-export default connect(mapStateToProps)(CartWidget);
+export default connect(mapStateToProps, mapDispatchToProps)(CartWidget);

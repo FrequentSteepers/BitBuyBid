@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { push } from 'react-router-redux';
 
 export const appTypes = {
   SET_USER: 'app/SET_USER'
@@ -36,6 +37,9 @@ export const handleLogin = (user) => {
           type: appTypes.SET_USER,
           payload: results.data
         });
+      })
+      .then(() => {
+        dispatch(push('/'));
       })
       .catch((err) => {
         alert('Incorrect user information or user does not exist');

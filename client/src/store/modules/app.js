@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export const appTypes = {
   SET_USER: 'app/SET_USER'
 };
@@ -11,7 +13,7 @@ export default (state = initialState, {type, payload}) => {
   case appTypes.SET_USER: 
     return {
       ...state, 
-      hello: payload
+      user: payload
     };
   default: return state;
   }
@@ -25,5 +27,19 @@ export const setUser = payload => {
 };
 
 export const handleLogin = (user) => {
-  console.log(user);
+  return (dispatch) => {
+    
+    axios.post('/auth/login', user)
+      .then((results) => {
+        console.log(results.data);
+        dispatch({
+          type: appTypes.SET_USER,
+          payload: results.data
+        });
+      })
+      .catch((err) => {
+        alert('Incorrect user information or user does not exist');
+        console.log(err);
+      });
+  };
 };

@@ -37,13 +37,21 @@ export const handleLogin = (user) => {
           type: appTypes.SET_USER,
           payload: results.data
         });
-      })
-      .then(() => {
+        //figure out redirect
         dispatch(push('/'));
       })
       .catch((err) => {
         alert('Incorrect user information or user does not exist');
         console.log(err);
+      });
+  };
+};
+
+export const handleSignup = (user) => {
+  return (dispatch) => {
+    axios.post('/auth/signup', user)
+      .then((results) => {
+        console.log(results);
       });
   };
 };

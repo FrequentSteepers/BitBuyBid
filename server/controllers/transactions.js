@@ -25,6 +25,7 @@ module.exports.create = (req, res) => {
       res.status(201);
     })
     .catch(err => {
+      console.error(err);
       res.status(500).send(err);
     });
 };

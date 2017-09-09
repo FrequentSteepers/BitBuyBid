@@ -30,7 +30,7 @@ Product.fromOverstock = (results) => {
     try {
       Product.forge(
         {
-          'prod_id': p['ad-id']._text + p['sku']._text + p['upc']._text + '|OVSOCK',
+          'prod_id': (p['ad-id']._text || '') + (p['sku']._text || '') + (p['upc']._text || '') + '|OVSOCK',
           'ad-id': Number.parseInt(p['ad-id']._text || 0) || null,
           'sku': Number.parseInt(p['sku']._text) || null,
           'upc': Number.parseInt(p['upc']._text) || null,

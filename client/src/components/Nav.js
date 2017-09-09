@@ -64,8 +64,15 @@ class Navbar extends React.Component {
           title="Bit Buy"
           onLeftIconButtonTouchTap={this.handleToggle}
           iconElementRight={
-            this.props.user ? <Link to ='/profile'><FlatButton labelStyle={{color: 'white'}} /></Link> : 
-              <Link to ='/login' ><FlatButton label="Login" labelStyle={{color: 'white'}} /></Link>
+            this.props.user ? 
+              <div>
+                <Link to ='/profile'><FlatButton label={this.props.user.username} labelStyle={{color: 'white'}} /></Link> 
+                <Link to ='/logout' ><FlatButton label="Logout" labelStyle={{color: 'white'}} /></Link>
+              </div> :
+              <div>
+                <Link to ='/signup' ><FlatButton label="Signup" labelStyle={{color: 'white'}} /></Link>
+                <Link to ='/login' ><FlatButton label="Login" labelStyle={{color: 'white'}} /></Link>
+              </div>
           }
         />
         <Drawer docked={false} width={250} open={this.state.open} onRequestChange={(open) => this.setState({open})}>

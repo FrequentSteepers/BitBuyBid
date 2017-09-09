@@ -35,7 +35,6 @@ export const handleLogin = (user) => {
           type: appTypes.SET_USER,
           payload: results.data
         });
-        alert(`you are logged in as ${results.data.first}!`);
       })
       .catch((err) => {
         alert('Incorrect user information or user does not exist');

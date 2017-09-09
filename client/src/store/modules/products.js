@@ -42,7 +42,7 @@ export default (state = initialState, {type, payload}) => {
       state.quantities[product.id] > 0 ?
         state.quantities[product.id] += 1 :
         state.quantities[product.id] = 1;
-      });
+    });
     return {
       ...state,
       cart: newCart

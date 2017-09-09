@@ -2,9 +2,10 @@ import React, {Component} from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import Transactions from '../components/Transactions.jsx';
+import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
+import Paper from 'material-ui/Paper';
 
 const mapStateToProps = state => {
-
   return {
     user: state.app.user
   };
@@ -16,11 +17,21 @@ class Profile extends Component {
   }
 
   render() {
-    console.log('props: ', this.props.user);
     return (
       <div>
-        {/*we will either be rendering their profile picture, or a component that allows them to upload one*/}
-        <Transactions />
+        <Paper>
+          <Card>
+            <CardHeader>
+              <h1>{this.props.user.first + ' ' + this.props.user.last}</h1>
+            </CardHeader>
+            <CardMedia>
+              <img style={{height: '50px'}} src='../images/pexels-photo-315788.jpg'/>
+            </CardMedia>
+          </Card>
+          <Card>
+            <Transactions />
+          </Card>
+        </Paper>
       </div>
     );
   }

@@ -59,7 +59,7 @@ class CartWidget extends Component {
                           <Row>
                             <Col style={style.priceCol}>
                               <CardText style={style.price}>
-                                ${product.price ? Number(product.price).toFixed(6) : null}
+                                ${product.price ? Number(product.price).toFixed(2) : null}
                               </CardText>
                               <CardText style={style.delete}>
                                 delete&nbsp;&nbsp;&nbsp;quantity:{this.props.quantities[product.prod_id] || this.props.quantities[product.id]}

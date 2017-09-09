@@ -33,7 +33,6 @@ module.exports.search = (req, res) => {
   console.log('req.body.searchTerm.length ', req.body.searchTerm);
   if (!req.body.searchTerm || req.body.searchTerm.trim().length < 2) {
     console.log('no body!');
-    // res.status(405).end();
     return;
   }
 
@@ -42,10 +41,8 @@ module.exports.search = (req, res) => {
     .fetchAll()
     .then(products => {
       if (products.length === 0) {
-        console.log('yo dawg', amazon.secret_key);
         throw products;
       }
-      console.log('i am bad man');
       res.status(200).send({results: products});
     })
     .error(err => {

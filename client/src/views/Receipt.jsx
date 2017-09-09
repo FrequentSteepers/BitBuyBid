@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-class Recipt extends Component {
+class Receipt extends Component {
   constructor(props) {
     super(props);
   }

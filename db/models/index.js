@@ -6,5 +6,6 @@ module.exports = {
   Transaction: require('./transaction'),
   Review: require('./review'),
   Address: require('./address'),
-  Tag: require('./tag')
+  Tag: require('./tag'),
+  Purchase: require('./purchase')
 };

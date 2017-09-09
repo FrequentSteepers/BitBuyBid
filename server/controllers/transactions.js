@@ -1,13 +1,10 @@
-const {Transaction} = require('../../db/models');
+const {Transaction, Purchase} = require('../../db/models');
 const axios = require('axios');
 const {overstock} = require('../../config/api_configs/');
 axios.defaults.headers.common['Authorization'] = overstock.Authorization;
 var convert = require('xml-js');
 
 
-/**
- * 
- */
 module.exports.create = (req, res) => {
   Transaction.forge(
     { 
@@ -17,22 +14,38 @@ module.exports.create = (req, res) => {
   )
     .save()
     .then(result => {
-      res.status(201).send(result.omit('password'));
+      return Promise.all(
+        req.body.cart.map(
+          p => Purchase.forge({transaction_id: result.id, product_id: p.id})
+        )
+      )
+        .save();
+    })
+    .then(result => {
+      res.status(201);
     })
     .catch(err => {
-      if (err.constraint === 'users_username_unique') {
-        return res.status(403);
-      }
       res.status(500).send(err);
     });
 };
 
 module.exports.getAll = (req, res) => {
-  res.status(401);
+  Transaction.where({buyer_id: req.user.id})
+    .fetch()
+    .then(transactions => {
+      res.status(200).send(transactions);
+    })
+    .error(err => {
+      res.status(500).send(err);
+    })
+    .catch(() => {
+      res.sendStatus(404);
+    });
 };
 
 module.exports.getOne = (req, res) => {
-  Transaction.where({ id: req.params.id }).fetch()
+  Transaction.where({ id: req.params.id })
+    .fetch()
     .then(transaction => {
       if (!transaction) {
         throw transaction;
@@ -48,7 +61,8 @@ module.exports.getOne = (req, res) => {
 };
 
 module.exports.update = (req, res) => {
-  Transaction.where({ id: req.params.id }).fetch()
+  Transaction.where({ id: req.params.id })
+    .fetch()
     .then(transaction => {
       if (!transaction) {
         throw transaction;
@@ -67,7 +81,8 @@ module.exports.update = (req, res) => {
 };
 
 module.exports.deleteOne = (req, res) => {
-  Transaction.where({ id: req.params.id }).fetch()
+  Transaction.where({ id: req.params.id })
+    .fetch()
     .then(transaction => {
       if (!transaction) {
         throw transaction;

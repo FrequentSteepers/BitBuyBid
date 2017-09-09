@@ -7,7 +7,9 @@
     "test": "NODE_ENV=test grunt test",
     "travis": "NODE_ENV=test grunt test",
     "build": "webpack --watch",
-    "docs": "jsdoc client/src/ server/ -r -c conf.json -d docs/"
+    "docs": "jsdoc client/src/ server/ -r -c conf.json -d docs/",
+    "rebuild": "grunt pgcreatedb:default && knex migrate:latest --env NODE_ENV",
+    "retest": "NODE_ENV=test grunt pgcreatedb:default && knex migrate:latest --env test"
   },
   "author": "Hack Reactor",
   "license": "MIT",

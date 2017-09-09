@@ -25,9 +25,9 @@ export default (state = initialState, {type, payload}) => {
       ...state,
       products: payload
     };
-  case SELECT_PRODUCT: 
+  case SELECT_PRODUCT:
     return {
-      ...state, 
+      ...state,
       selectedId: payload
     };
   case CREATE_CART:
@@ -38,10 +38,12 @@ export default (state = initialState, {type, payload}) => {
   case ADD_TO_CART:
 
     let newCart = state.cart.concat([payload]).filter((val, i, self) => self.indexOf(val) === i);
-    [payload].map(product => 
-      state.quantities[product.id] > 0 ? 
-        state.quantities[product.id] += 1 :
-        state.quantities[product.id] = 1);
+    [payload].map(product => {
+      let which = product.id ? product.id : product.prod_id;
+      state.quantities[which] ?
+        state.quantities[which] += 1 :
+        state.quantities[which] = 1;
+    });
     return {
       ...state,
       cart: newCart
@@ -61,9 +63,9 @@ export default (state = initialState, {type, payload}) => {
  * Listings dispatchers
  */
 
-export const setProducts = (dispatch) => {
+export const setProducts = (searchTerm, dispatch) => {
   return (dispatch) => {
-    axios.get('/api/products')
+    axios.post('/api/search', {searchTerm: searchTerm})
       .then(products => {
         dispatch({
           type: SET_PRODUCTS,

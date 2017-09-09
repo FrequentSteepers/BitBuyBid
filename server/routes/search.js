@@ -2,7 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const {
-  search,
+  search
 } = require('../controllers').Search;
 
 router.route('/')

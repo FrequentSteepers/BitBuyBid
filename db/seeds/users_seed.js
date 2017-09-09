@@ -7,10 +7,10 @@ exports.seed = function (knex, Promise) {
       if (profile) {
         throw profile;
       }
-      return models.Profile.forge({
+      return models.User.forge({
         first: 'System',
         last: 'Admin',
-        display: 'Administrator',
+        username: 'Administrator',
         email: 'admin@domain.com'
       }).save();
     })
@@ -22,13 +22,14 @@ exports.seed = function (knex, Promise) {
       return models.Auth.forge({
         type: 'local',
         password: 'admin123',
-        profile_id: profile.get('id')
+        user_id: profile.get('id')
       }).save();
     })
     .error(err => {
       console.error('ERROR: failed to create auth');
     })
-    .catch(() => {
+    .catch(err => {
+      console.log(err);
       console.log('WARNING: defualt user already exists.');
     });
 

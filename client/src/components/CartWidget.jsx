@@ -46,12 +46,12 @@ class CartWidget extends Component {
                         {i > 0 ? <hr/> : null}
                         <Row onClick={() => this.props.selectProduct(i)} style={style.row} start="xs">
                           <Col style={style.imgHold} xs={4}>
-                            <Link style={style.link} to={`/product?id=${product.id}`}>  
+                            <Link style={style.link} to={`/product?id=${product.prod_id}`}>
                               <img style={style.img} src={product.img_url_sm} alt="" />
                             </Link>
                           </Col>
                           <Col xs={8}>
-                            <Link style={style.link} to={`/product?id=${product.id}`}>  
+                            <Link style={style.link} to={`/product?id=${product.prod_id}`}>
                               <CardTitle style={style.title} title={product.title}/>
                             </Link>
                             <CardText style={style.text}>{product.description.slice(0, 40) + '...'}</CardText>
@@ -62,7 +62,7 @@ class CartWidget extends Component {
                                 ${product.price ? Number(product.price).toFixed(6) : null}
                               </CardText>
                               <CardText style={style.delete}>
-                                delete&nbsp;&nbsp;&nbsp;quantity:{this.props.quantities[product.id]}
+                                delete&nbsp;&nbsp;&nbsp;quantity:{this.props.quantities[product.id ? product.id : product.prod_id]}
                               </CardText>
                             </Col>
                           </Row>
@@ -74,7 +74,7 @@ class CartWidget extends Component {
               </Grid>
               <div style={style.subtotal}>
                 <div style={style.subTitle}>
-                  <b><i>Subtotal:</i></b> 
+                  <b><i>Subtotal:</i></b>
                   <Subtotal/>
                 </div>
               </div>

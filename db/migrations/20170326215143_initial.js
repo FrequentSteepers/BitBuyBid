@@ -8,6 +8,7 @@ exports.up = function (knex, Promise) {
       table.string('username', 100).notNullable();
       table.string('email', 100).nullable();
       table.string('phone', 100).nullable();
+      table.string('picture', 250).nullable();
       table.timestamps(true, true);
     }),
     knex.schema.createTableIfNotExists('addresses', function (table) {
@@ -54,10 +55,7 @@ exports.up = function (knex, Promise) {
     }),
     knex.schema.createTableIfNotExists('transactions', function(table) {
       table.increments('id').unsigned().primary();
-      table.string('status', 8).notNullable();
       table.integer('buyer_id').references('users.id').onDelete('CASCADE');
-      table.integer('seller_id').references('users.id').onDelete('CASCADE');
-      table.integer('session');
     }),
     knex.schema.createTableIfNotExists('reviews', function(table) {
       table.increments('id').primary();
@@ -66,6 +64,14 @@ exports.up = function (knex, Promise) {
     }),
     knex.schema.createTableIfNotExists('tags', function(table) {
       table.increments('id').primary();
+    }),
+    knex.schema.createTableIfNotExists('purchases', function(table) {
+      table.increments('id').primary();
+      table.integer('quantity').notNullable().default(1);
+      table.integer('transaction_id').references('transactions.id').onDelete('CASCADE');
+      table.integer('product_id').references('products.id').onDelete('CASCADE');
+      table.integer('status').notNullable().default(0);
+      table.text('review').nullable();
     })
   ]);
 };
@@ -73,12 +79,13 @@ exports.up = function (knex, Promise) {
 exports.down = function (knex, Promise) {
   return Promise.all([
     knex.schema.dropTable('auths'),
-    knex.schema.dropTable('users'),
-    knex.schema.dropTable('products'),
-    knex.schema.dropTable('transactions'),
-    knex.schema.dropTable('categories'),
     knex.schema.dropTable('addresses'),
     knex.schema.dropTable('reviews'),
-    knex.schema.dropTable('tags')
+    knex.schema.dropTable('tags'),
+    knex.schema.dropTable('purchases'),
+    knex.schema.dropTable('transactions'),
+    knex.schema.dropTable('products'),
+    knex.schema.dropTable('users'),
+    knex.schema.dropTable('categories'),
   ]);
 };

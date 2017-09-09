@@ -13,9 +13,10 @@ const style = {
     position: 'fixed', 
     left: '25%', 
     margin: '0 auto'
+
   },
   form: {
-    textAlign: 'center', 
+    textAlign: 'center',
     paddingBottom: '10px'
   }
 };
@@ -45,6 +46,7 @@ class Search extends Component {
       this.props.setSearchTerm(text);
       this.props.setProducts(text);
     }
+
   }
 
   render() {

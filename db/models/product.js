@@ -1,5 +1,6 @@
 const db = require('../');
 const convert = require('xml-js');
+const parseString = require('xml2js').parseString;
 
 const Product = db.Model.extend({
   tableName: 'products',
@@ -13,8 +14,8 @@ const Product = db.Model.extend({
 
 /**
  * Bulk create products by fetching product data from overstock api
- * and converting the data to json from xml. 
- * 
+ * and converting the data to json from xml.
+ *
  * @todo associate inserted products to category/ tag.
  */
 Product.fromOverstock = (results) => {
@@ -45,6 +46,36 @@ Product.fromOverstock = (results) => {
     } catch (e) {
       console.error(e);
     }
+  });
+};
+
+Product.fromAmzn = (results) => {
+  parseString(results.data, function (err, result) {
+    let productListings = result.ItemSearchResponse.Items[0].Item;
+
+    productListings.forEach((product) => {
+      console.log('forging amazon product');
+      try {
+        Product.forge(
+          {
+            'prod_id': product.ASIN[0] + '|AMZN',
+            'asin': product.ASIN[0],
+            'img_url_sm': product.SmallImage ? product.SmallImage[0].URL[0] : defaultImage,
+            'img_url_md': product.MediumImage ? product.MediumImage[0].URL[0] : defaultImage,
+            'img_url_lg': product.LargeImage ? product.LargeImage[0].URL[0] : defaultImage,
+            'buy_url': product.DetailPageURL[0].substring(0, product.DetailPageURL[0].indexOf('?')),
+            'title': product.ItemAttributes[0].Title[0],
+            'price': product.ItemAttributes[0].ListPrice ? Number(product.ItemAttributes[0].ListPrice[0].FormattedPrice[0].slice(1)) : null,
+            'description': product.ItemAttributes[0].Feature ? product.ItemAttributes[0].Feature.join('; ') : '',
+            'type': 'amzn'
+          }
+        )
+          .save()
+          .then(() => { console.log('success', product.ItemAttributes[0].Title[0]); return productListings; });
+      } catch (e) {
+        console.error(e);
+      }
+    });
   });
 };
 

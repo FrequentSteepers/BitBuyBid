@@ -22,7 +22,9 @@ class Subtotal extends Component {
     return (
       <div style={style.subtotal}>
         ${this.props.cart.reduce((acc, product) => {
-          return acc += product.price * this.props.quantities[product.id];
+          return product.price ? 
+            acc += product.price * this.props.quantities[product.prod_id] : 
+            acc;
         }, 0).toFixed(12)}
       </div>
     );

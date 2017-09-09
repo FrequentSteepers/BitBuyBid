@@ -13,6 +13,7 @@ import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
 import Nav from './components/Nav.js';
 import Product from './views/Product.jsx';
 import Cart from './views/Cart.jsx';
+import Profile from './views/Profile.jsx';
 import Login from './views/Login.jsx';
 import Signup from './views/Signup.jsx';
 
@@ -45,6 +46,9 @@ class App extends React.Component {
           </Route>
           <Route path='/product'> 
             <Product />
+          </Route>
+          <Route path='/profile'> 
+            <Profile />
           </Route>
           <Route path='/'>
             <Home />

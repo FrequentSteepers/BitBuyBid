@@ -11,7 +11,7 @@ import { Grid, Row, Col } from 'react-flexbox-grid';
 
 const styles = {
   root: {
-    paddingTop: '10px',
+    paddingTop: '90px',
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'space-around',
@@ -25,7 +25,7 @@ const Listings = (props) => {
         <Row>
           {props.products.length ? props.products.map((product, i) => {
             return ( product.img_url_sm ?
-              <Col key={i} xs={6} sm={6} md={4} lg={3} onClick={() => props.selectProduct(product.id)}>
+              <Col key={i} xs={6} sm={6} md={4} lg={3} onClick={() => props.selectProduct(i)}>
                 <Listing id={product.id} item={product}/>
               </Col> : null
             );

@@ -96,7 +96,7 @@ class CartWidget extends Component {
   render() {
     return (
       <div id='cartWidget' style={style.root}>
-        {this.props.cart.length ? 
+        {this.props.cart.length ?
           <GridList style={style.gridList}>
             <Paper style={style.paper}>
               <h2 style={style.header}>Cart</h2>
@@ -108,12 +108,12 @@ class CartWidget extends Component {
                         {i > 0 ? <hr/> : null}
                         <Row onClick={() => this.props.selectProduct(product.id)} style={style.row} start="xs">
                           <Col style={style.imgHold} xs={4}>
-                            <Link style={style.link} to={`/product?id=${product.id}`}>  
+                            <Link style={style.link} to={`/product?id=${product.id}`}>
                               <img style={style.img} src={product.img_url_sm} alt="" />
                             </Link>
                           </Col>
                           <Col xs={8}>
-                            <Link style={style.link} to={`/product?id=${product.id}`}>  
+                            <Link style={style.link} to={`/product?id=${product.id}`}>
                               <CardTitle style={style.title} title={product.title}/>
                             </Link>
                             <CardText style={style.text}>{product.description.slice(0, 40) + '...'}</CardText>
@@ -136,7 +136,7 @@ class CartWidget extends Component {
               </Grid>
               <div style={style.subtotal}>
                 <div style={style.subTitle}>
-                  <b><i>Subtotal:</i></b> 
+                  <b><i>Subtotal:</i></b>
                   <Subtotal/>
                 </div>
               </div>

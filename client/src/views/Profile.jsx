@@ -11,9 +11,7 @@ class Profile extends Component {
     return (
       <div>
         <img/>
-        {/**/}
-        <Transactions />
-
+        {/*<Transactions />*/}
       </div>
     );
   }

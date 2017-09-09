@@ -65,7 +65,6 @@ export const setProducts = (dispatch) => {
   return (dispatch) => {
     axios.get('/api/products')
       .then(products => {
-        console.log('products: ', products);
         dispatch({
           type: SET_PRODUCTS,
           payload: products.data.results

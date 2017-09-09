@@ -43,12 +43,14 @@ request_url = `http://${endpoint}${uri}?${canonical_query_string}&Signature=` + 
 
 
 module.exports = ({Product}) => {
+  console.log('API fetch');
   axios.get(request_url)
     .then(results => {
       parseString(results.data, function (err, result) {
         productListings = result.ItemSearchResponse.Items[0].Item;
 
         productListings.forEach((product) => {
+
           try {
             Product.forge(
               {
@@ -59,7 +61,7 @@ module.exports = ({Product}) => {
                 'img_url_lg': product.LargeImage ? product.LargeImage[0].URL[0] : defaultImage,
                 'buy_url': product.DetailPageURL[0].substring(0, product.DetailPageURL[0].indexOf('?')),
                 'title': product.ItemAttributes[0].Title[0],
-                'price': product.ItemAttributes[0].ListPrice[0].FormattedPrice[0].slice(1) || null,
+                'price': product.ItemAttributes[0].ListPrice ? product.ItemAttributes[0].ListPrice[0].FormattedPrice[0].slice(1) : 'N/A',
                 'description': product.ItemAttributes[0].Feature ? product.ItemAttributes[0].Feature.join('; ') : '',
                 'type': 'amzn'
               }
@@ -67,7 +69,7 @@ module.exports = ({Product}) => {
               .save()
               .then(() => console.log('success', product.ItemAttributes[0].Title[0]));
           } catch (e) {
-            console.log('failed', product.ItemAttributes[0].Title[0]);
+            console.error(e);
           }
         });
       });

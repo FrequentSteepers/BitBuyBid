@@ -14,4 +14,4 @@ class Recipt extends Component {
   }
 }
 
-export default Recipt;
+export default Receipt;

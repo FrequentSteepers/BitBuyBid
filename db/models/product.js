@@ -30,18 +30,23 @@ Product.fromOverstock = (results) => {
       Product.forge(
         {
           'prod_id': p['ad-id']._text + p['sku']._text + p['upc']._text + '|OVSOCK',
-          'ad-id': Number.parseInt(p['ad-id']._text) || null,
+          'ad-id': Number.parseInt(p['ad-id']._text || 0) || null,
           'sku': Number.parseInt(p['sku']._text) || null,
           'upc': Number.parseInt(p['upc']._text) || null,
-          'catalog_id': p['catalog-id']._text.replace(/\D/g, ''),
+          'catalog_id': p['catalog-id']._text,
           'price': Number(p.price['_text']),
           'buy_url': p['buy-url']._text,
           'type': 'ovsock',
           'title': p.name._text,
-          'description': p.description._text
+          'description': p.description._text,
+          'img_url_sm': p['image-url']._text || '',
+          'img_url_md': p['image-url']._text || '',
+          'img_url_lg': p['image-url']._text || ''
         }
       )
-        .save();
+        .save()
+        .then(() => console.log('success overstock'))
+        .catch(console.error);
     } catch (e) {
       console.error(e);
     }

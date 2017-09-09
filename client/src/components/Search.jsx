@@ -9,14 +9,14 @@ import {setProducts, selectProduct} from '../store/modules/products.js';
 
 const style = {
   search: {
-    width: '50%', 
-    position: 'relative', 
-    float: 'center', 
+    width: '50%',
+    position: 'relative',
+    float: 'center',
     margin: '0 auto',
     paddingRight: '15px'
   },
   form: {
-    textAlign: 'center', 
+    textAlign: 'center',
     paddingBottom: '10px'
   }
 };
@@ -41,7 +41,7 @@ class Search extends Component {
 
   handleSearch(e) {
     e.preventDefault();
-    let text = e.target.value;
+    let text = document.getElementById('search').value;
     this.props.setSearchTerm(text);
     this.props.setProducts(text);
   }
@@ -50,8 +50,8 @@ class Search extends Component {
     return (
       <div style={style.search}>
         <Card>
-          <form style={style.form} onChange={(e) => this.handleSearch(e)}>
-            <TextField floatingLabelText="search for a product!"/>
+          <form style={style.form} onSubmit={(e) => this.handleSearch(e)}>
+            <TextField floatingLabelText="search for a product!" id='search' />
           </form>
         </Card>
       </div>

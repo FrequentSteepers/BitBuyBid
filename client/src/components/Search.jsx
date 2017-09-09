@@ -46,7 +46,7 @@ class Search extends Component {
     this.props.setProducts(text);
   }
 
-  render(){
+  render() {
     return (
       <div style={style.search}>
         <Card>

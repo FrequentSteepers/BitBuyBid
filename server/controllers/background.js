@@ -7,4 +7,4 @@ module.exports.getOne = (req, res) => {
       return res.data;
     })
     .catch(err => console.log('error getting photo: ', err));
-}
+};

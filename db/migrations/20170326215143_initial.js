@@ -8,6 +8,7 @@ exports.up = function (knex, Promise) {
       table.string('username', 100).notNullable();
       table.string('email', 100).nullable();
       table.string('phone', 100).nullable();
+      table.string('picture', 250).nullable();
       table.timestamps(true, true);
     }),
     knex.schema.createTableIfNotExists('addresses', function (table) {

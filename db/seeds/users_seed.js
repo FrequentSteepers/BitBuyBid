@@ -11,8 +11,7 @@ exports.seed = function (knex, Promise) {
         first: 'System',
         last: 'Admin',
         username: 'Administrator',
-        email: 'admin@domain.com',
-        isMerchant: true
+        email: 'admin@domain.com'
       }).save();
     })
     .error(err => {
@@ -29,7 +28,8 @@ exports.seed = function (knex, Promise) {
     .error(err => {
       console.error('ERROR: failed to create auth');
     })
-    .catch(() => {
+    .catch(err => {
+      console.log(err);
       console.log('WARNING: defualt user already exists.');
     });
 

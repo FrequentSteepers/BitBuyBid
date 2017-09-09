@@ -19,7 +19,6 @@ describe('Products API', function () {
     request(app)
       .get('/api/products')
       .expect(res => {
-        console.log(JSON.stringify(res));
         res.body = {
           length: res.body.results.length
         };
@@ -34,7 +33,6 @@ describe('Products API', function () {
     request(app)
       .get('/api/products/')
       .expect(res => {
-        console.log(JSON.stringify(res));
         res.body = {
           id: res.body.results[0],
         };

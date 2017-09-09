@@ -34,7 +34,7 @@ exports.up = function (knex, Promise) {
       table.bigint('ad-id').unsigned().nullable();
       table.bigint('sku').unsigned().nullable();
       table.bigint('upc').unsigned().nullable();
-      table.bigint('catalog_id').unsigned().nullable();
+      table.string('catalog_id', 200).nullable();
       table.decimal('price').unsigned().nullable();
       table.string('buy_url', 500).nullable();
       table.string('img_url_sm', 500).nullable();

@@ -43,7 +43,6 @@ request_url = `http://${endpoint}${uri}?${canonical_query_string}&Signature=` + 
 
 
 module.exports = ({Product}) => {
-  console.log('API fetch');
   axios.get(request_url)
     .then(results => {
       Product.fromAmzn(results);

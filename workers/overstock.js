@@ -12,7 +12,7 @@ module.exports = ({Product}) => {
   axios.get('https://product-search.api.cj.com/v2/product-search?', {
     params: {
       'website-id': overstock['website-id'],
-      'keywords': 'electronics'
+      'keywords': 'laptop apple windows'
     }
   })
     .then(results => {

@@ -39,10 +39,9 @@ export default (state = initialState, {type, payload}) => {
 
     let newCart = state.cart.concat([payload]).filter((val, i, self) => self.indexOf(val) === i);
     [payload].map(product => {
-      let which = product.id ? product.id : product.prod_id;
-      state.quantities[which] ?
-        state.quantities[which] += 1 :
-        state.quantities[which] = 1;
+      state.quantities[product.prod_id] ?
+        state.quantities[product.prod_id] += 1 :
+        state.quantities[product.prod_id] = 1;
     });
     return {
       ...state,

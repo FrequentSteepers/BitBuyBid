@@ -45,32 +45,7 @@ request_url = `http://${endpoint}${uri}?${canonical_query_string}&Signature=` + 
 module.exports = ({Product}) => {
   axios.get(request_url)
     .then(results => {
-      parseString(results.data, function (err, result) {
-        productListings = result.ItemSearchResponse.Items[0].Item;
-
-        productListings.forEach((product) => {
-          try {
-            Product.forge(
-              {
-                'prod_id': product.ASIN[0] + '|AMZN',
-                'asin': product.ASIN[0],
-                'img_url_sm': product.SmallImage ? product.SmallImage[0].URL[0] : defaultImage,
-                'img_url_md': product.MediumImage ? product.MediumImage[0].URL[0] : defaultImage,
-                'img_url_lg': product.LargeImage ? product.LargeImage[0].URL[0] : defaultImage,
-                'buy_url': product.DetailPageURL[0].substring(0, product.DetailPageURL[0].indexOf('?')),
-                'title': product.ItemAttributes[0].Title[0],
-                'price': product.ItemAttributes[0].ListPrice ? product.ItemAttributes[0].ListPrice[0].FormattedPrice[0].slice(1) : null,
-                'description': product.ItemAttributes[0].Feature ? product.ItemAttributes[0].Feature.join('; ') : '',
-                'type': 'amzn'
-              }
-            )
-              .save()
-              .then(() => console.log('success', product.ItemAttributes[0].Title[0]));
-          } catch (e) {
-            console.log('failed', product.ItemAttributes[0].Title[0]);
-          }
-        });
-      });
+      Product.fromAmzn(results);
     })
     .catch(err => {
       console.log(err);

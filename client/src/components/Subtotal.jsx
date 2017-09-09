@@ -25,7 +25,7 @@ class Subtotal extends Component {
           return product.price ? 
             acc += product.price * this.props.quantities[product.prod_id] : 
             acc;
-        }, 0).toFixed(2)}
+        }, 0).toFixed(12)}
       </div>
     );
   }

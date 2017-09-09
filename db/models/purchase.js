@@ -1,12 +1,12 @@
 const db = require('../');
 
-const Purchase = bookshelf.Model.extend({
+const Purchase = db.Model.extend({
   tableName: 'purchases',
   transaction: function() {
-    return this.belongsTo('Transaction', 'transaction_id');
+    return this.belongsTo('Transactions', 'transaction_id', 'id');
   },
   product: function() {
-    return this.belongsTo('Product', 'product_id');
+    return this.belongsTo('Products', 'product_id', 'id');
   }
 });
 

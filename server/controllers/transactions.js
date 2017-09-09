@@ -8,21 +8,25 @@ var convert = require('xml-js');
 module.exports.create = (req, res) => {
   Transaction.forge(
     { 
-      transaction: req.body.transaction_id,
-      user_Id: req.body.user		
+      buyer_id: req.user.id
     }
   )
     .save()
     .then(result => {
+      console.log('new purchases', req.body.cart);
       return Promise.all(
         req.body.cart.map(
-          p => Purchase.forge({transaction_id: result.id, product_id: p.id})
+          p => Purchase.forge({
+            transaction_id: result.id, 
+            product_id: p.id,
+            quantity: p.quantity || 1
+          })
+            .save()
         )
-      )
-        .save();
+      );
     })
     .then(result => {
-      res.status(201);
+      res.status(201).end();
     })
     .catch(err => {
       console.error(err);

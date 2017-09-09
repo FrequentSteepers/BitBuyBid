@@ -4,7 +4,7 @@ import axios from 'axios';
  * Listings type
 */
 const initialState = {
-  background: null
+  
 };
 
 /**

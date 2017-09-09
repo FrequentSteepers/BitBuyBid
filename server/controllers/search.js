@@ -30,7 +30,6 @@ let keys, canonical_query_string, string_to_sign, hash, signature, request_url, 
  */
 module.exports.search = (req, res) => {
 
-  console.log('req.body.searchTerm.length ', req.body.searchTerm);
   if (!req.body.searchTerm || req.body.searchTerm.trim().length < 2) {
     console.log('no body!');
     return;
@@ -46,7 +45,6 @@ module.exports.search = (req, res) => {
       res.status(200).send({results: products});
     })
     .error(err => {
-      console.log('oh snap');
       res.status(500).send(err);
     })
     .catch(except => {
@@ -86,8 +84,8 @@ module.exports.search = (req, res) => {
         axios.get(url.url)
           .then(results => {
             if (url.url === 'https://product-search.api.cj.com/v2/product-search?') {
-            // Product.fromOverstock(results);
-            // res.json(JSON.parse(convert.xml2json(results.data)));
+              Product.fromOverstock(results);
+              res.json(JSON.parse(convert.xml2json(results.data)));
             } else {
               Product.fromAmzn(results);
               product_list = [];

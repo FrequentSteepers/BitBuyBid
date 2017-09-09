@@ -5,7 +5,7 @@ import {bindActionCreators} from 'redux';
 import {addToCart, removeFromCart} from '../store/modules/products.js';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 
-const CartItem = ({item, addToCart, removeFromCart}) => {
+const CartItem = ({item, addToCart, removeFromCart, quantities}) => {
   return (
     <div>
       <Card>
@@ -13,8 +13,9 @@ const CartItem = ({item, addToCart, removeFromCart}) => {
           <h4>{item.title}</h4> <br/>
           <Link to={`/product?id=${item.id}`}><img src={item.img_url_sm}/></Link>
           <button onClick={ () => { addToCart(item); } }>+</button>
-          <button onClick={ () => { console.log('decriment quantity'); } }>-</button><br/>
-          <p>Quantity: {}</p>
+          <button onClick={ () => { console.log('decriment'); } }>-</button><br/>
+          <button onClick={ () => { removeFromCart(item); } }>Remove from Cart</button><br/>
+          <p>Quantity: {quantities[item.prod_id] || quantities[item.id]}</p>
         </div>
       </Card>
     </div>
@@ -23,7 +24,7 @@ const CartItem = ({item, addToCart, removeFromCart}) => {
 
 const mapStateToProps = (state) => {
   return {
-    cart: state.products.cart
+    quantities: state.products.quantities
   };
 };
 

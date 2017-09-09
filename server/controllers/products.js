@@ -13,6 +13,7 @@ module.exports.getAll = (req, res) => {
       if (!product) {
         throw product;
       }
+      console.log('products: ', product);
       res.status(200).send({results: product});
     })
     .error(err => {

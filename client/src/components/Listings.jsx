@@ -11,7 +11,7 @@ import { Grid, Row, Col } from 'react-flexbox-grid';
 
 const styles = {
   root: {
-    paddingTop: '10px',
+    paddingTop: '90px',
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'space-around',

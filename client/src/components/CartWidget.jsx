@@ -23,7 +23,7 @@ const style = {
   },
   header: {
     textAlign: 'center',
-    margin: '0 auto',
+    padding: '0px',
     border: '2px solid black',
     borderBottom: 'none'
   },
@@ -62,8 +62,7 @@ const style = {
     color: 'maroon',
   },
   gridList: {
-    overflowY: 'auto',
-    height: '500px'
+    overflowY: 'auto'
   },
   subTitle: {
     color: 'black'
@@ -75,6 +74,12 @@ const style = {
   },
   link: {
     textDecoration: 'none'
+  },
+  expand: {
+    float: 'right', 
+    position: 'fixed', 
+    top: '10%', 
+    right: '5%'
   }
 };
 
@@ -92,14 +97,20 @@ const mapDispatchToProps = dispatch => {
 class CartWidget extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      display: true
+    };
   }
   render() {
-    return (
+    return (this.state.display ? 
       <div id='cartWidget' style={style.root}>
         {this.props.cart.length ? 
           <GridList style={style.gridList}>
             <Paper style={style.paper}>
-              <h2 style={style.header}>Cart</h2>
+              <div style={style.header}>
+                <div style={{display: 'inline-block'}}>Cart</div>
+                <button style={{position: 'realtive', display: 'inline-block', float: 'right'}} type='button' onClick={() => this.setState({display: false})}>collapse</button>
+              </div>
               <Grid style={style.grid} fluid>
                 <Col xs={12}>
                   {this.props.cart ? this.props.cart.map((product, i) => {
@@ -124,7 +135,7 @@ class CartWidget extends Component {
                                 ${product.price ? Number(product.price).toFixed(6) : null}
                               </CardText>
                               <CardText style={style.delete}>
-                                delete&nbsp;&nbsp;quantity:{this.props.quantities[product.id]}
+                                delete&nbsp;&nbsp;&nbsp;quantity:{this.props.quantities[product.id]}
                               </CardText>
                             </Col>
                           </Row>
@@ -142,7 +153,7 @@ class CartWidget extends Component {
               </div>
             </Paper>
           </GridList> : false}
-      </div>
+      </div> : <button style={style.expand} type='button' onClick={() => this.setState({display: true})}>expand</button>
     );
   }
 }

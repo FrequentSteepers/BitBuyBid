@@ -35,7 +35,7 @@ Product.fromOverstock = (results) => {
           'sku': Number.parseInt(p['sku']._text) || null,
           'upc': Number.parseInt(p['upc']._text) || null,
           'catalog_id': p['catalog-id']._text,
-          'price': Number(p.price['_text']),
+          'price': Number(p.price._text),
           'buy_url': p['buy-url']._text,
           'type': 'ovsock',
           'title': p.name._text,
@@ -46,7 +46,7 @@ Product.fromOverstock = (results) => {
         }
       )
         .save()
-        .then(() => console.log('success overstock'))
+        .then(() => console.log('success', p['image-url']._text))
         .catch(console.error);
     } catch (e) {
       console.error(e);
@@ -59,7 +59,6 @@ Product.fromAmzn = (results) => {
     let productListings = result.ItemSearchResponse.Items[0].Item;
 
     productListings.forEach((product) => {
-      console.log('forging amazon product');
       try {
         Product.forge(
           {

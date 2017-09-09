@@ -32,7 +32,7 @@ Product.fromOverstock = (results) => {
       .fetchAll()
       .then(products => {
         if (products && products.length > 0) {
-          console.log('item found in db, skipping...');
+          // 'item found in db, skipping...'
         } else {
           // insert new item
           console.log('...adding new overstock product to db with identifier', p['ad-id']._text + p['sku']._text + p['upc']._text);
@@ -70,7 +70,7 @@ Product.fromAmzn = (results) => {
         .fetchAll()
         .then(products => {
           if (products && products.length > 0) {
-            console.log('item found in db, skipping...');
+            // 'item found in db, skipping...'
           } else {
             // insert new item
             console.log('...adding new amazon product to db with identifier', product.ASIN[0]);

@@ -6,14 +6,14 @@ import {
   addToCart, 
   removeFromCart 
 } from '../store/modules/products.js';
-import Listing from '../components/Listing.jsx';
+import CartItem from '../components/CartItem.jsx';
 
 
 
 const Checkout = ({createCart, addToCart, removeFromCart, cart}) => ( 
   <div>
-    {cart.map((item) => {
-      return <Listing key={item.id} item={item} />;
+    {cart.map((item, i) => {
+      return <CartItem key={i} item={item} />;
     })}
     <div>Subtotal: {
       cart.reduce((acc, curr) => {

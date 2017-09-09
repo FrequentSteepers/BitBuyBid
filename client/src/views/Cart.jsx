@@ -18,7 +18,7 @@ const Checkout = ({createCart, addToCart, removeFromCart, cart, quantities}) => 
     <div>Subtotal: ${
       cart.reduce((acc, curr) => {
         return acc + (Number(curr.price)) * quantities[curr.prod_id];
-      }, 0)
+      }, 0).toFixed(2)
     }
     </div>
     <button>Checkout</button>

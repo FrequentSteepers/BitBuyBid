@@ -28,11 +28,13 @@ router.route('/signup')
   .get((req, res) => {
     res.render('signup.ejs', { message: req.flash('signupMessage') });
   })
-  .post(middleware.passport.authenticate('local-signup', {
-    successRedirect: '/',
-    failureRedirect: '/signup',
-    failureFlash: true
-  }));
+  .post(middleware.passport.authenticate('local-signup'), (req, res) => {
+    if (req.user) {
+      res.json(req.user);
+    } else {
+      res.status(401);
+    }
+  });
 
 router.route('/logout')
   .get((req, res) => {

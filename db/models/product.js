@@ -12,6 +12,8 @@ const Product = db.Model.extend({
   }
 });
 
+const defaultImage = '';
+
 /**
  * Bulk create products by fetching product data from overstock api
  * and converting the data to json from xml.

@@ -40,7 +40,14 @@ passport.use('local-signup', new LocalStrategy({
     .then(profile => {
       // create a new profile if a profile does not exist
       if (!profile) {
-        return models.User.forge({ email }).save();
+        return models.User.forge(
+          { 
+            email, 
+            first: req.body.first, 
+            last: req.body.last, 
+            username: req.body.username 
+          }
+        ).save();
       }
       // throw if any auth account already exists
       if (profile) {
@@ -54,7 +61,7 @@ passport.use('local-signup', new LocalStrategy({
       return models.Auth.forge({
         password,
         type: 'local',
-        profile_id: profile.get('id')
+        user_id: profile.get('id')
       }).save();
     })
     .then(profile => {
@@ -62,9 +69,11 @@ passport.use('local-signup', new LocalStrategy({
       done(null, profile.serialize());
     })
     .error(error => {
+      console.error(error);
       done(error, null);
     })
-    .catch(() => {
+    .catch(err => {
+      console.error(err);
       done();
     });
 }));

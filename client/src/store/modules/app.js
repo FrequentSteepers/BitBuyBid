@@ -50,8 +50,18 @@ export const handleLogin = (user) => {
 export const handleSignup = (user) => {
   return (dispatch) => {
     axios.post('/auth/signup', user)
-      .then((results) => {
-        console.log(results);
+      .then(({data}) => {
+        if (data && data.first) {
+          dispatch(
+            {
+              type: appTypes.SET_USER,
+              payload: data 
+            }
+          );
+          alert(`you are logged in as ${data.first}!`);
+        } else {
+          alert('signup failed!');
+        }
       })
       .catch(console.error);
   };

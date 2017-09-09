@@ -47,7 +47,7 @@ exports.up = function (knex, Promise) {
       table.integer('category_id').references('categories.id').nullable().onDelete('CASCADE');
       table.boolean('in-stock').nullable();
       table.timestamps(true, true);
-      table.unique(['sku', 'upc', 'ad-id', 'asin', 'type']);
+      table.unique('prod_id');
     }),
     knex.schema.createTableIfNotExists('categories', function(table) {
       table.increments('id').unsigned().primary();

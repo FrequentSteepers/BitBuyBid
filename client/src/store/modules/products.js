@@ -36,23 +36,26 @@ export default (state = initialState, {type, payload}) => {
       cart: payload || []
     };
   case ADD_TO_CART:
-
+    let newQuantities = {...state.quantities};
     let newCart = state.cart.concat([payload]).filter((val, i, self) => self.indexOf(val) === i);
     [payload].map(product => {
-      state.quantities[product.prod_id] ?
-        state.quantities[product.prod_id] += 1 :
-        state.quantities[product.prod_id] = 1;
+      newQuantities[product.prod_id] = (state.quantities[product.prod_id] || 0) + 1;
     });
     return {
       ...state,
-      cart: newCart
+      cart: newCart,
+      quantities: newQuantities
     };
   case REMOVE_FROM_CART:
+    let newQuant = {...state.quantities};
+    newQuant[payload.prod_id] = undefined;
+    delete newQuant[payload.prod_id];
     return {
       ...state,
       cart: state.cart.filter((item)=>{
         return item !== payload;
-      })
+      }),
+      quantities: newQuant
     };
   default: return state;
   }

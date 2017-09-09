@@ -8,6 +8,7 @@ export const SELECT_PRODUCT = 'listings/SELECT_PRODUCT';
 export const CREATE_CART = 'products/CREATE_CART';
 export const ADD_TO_CART = 'products/ADD_TO_CART';
 export const REMOVE_FROM_CART = 'products/REMOVE_FROM_CART';
+export const DECRIMENT_ITEM = 'products/DECRIMENT_ITEM';
 
 const initialState = {
   products: [],
@@ -57,6 +58,21 @@ export default (state = initialState, {type, payload}) => {
       }),
       quantities: newQuant
     };
+  case DECRIMENT_ITEM:
+    let decQuantities = {...state.quantities};
+    if (decQuantities[payload.prod_id] === 1) {
+      delete decQuantities[payload.prod_id];
+      var freshCart = state.cart.filter((item)=>{
+        return item !== payload;
+      });
+    } else {
+      decQuantities[payload.prod_id] = (decQuantities[payload.prod_id] - 1);
+    }
+    return {
+      ...state,
+      quantities: decQuantities,
+      cart: freshCart || state.cart
+    };
   default: return state;
   }
 };
@@ -96,7 +112,6 @@ export const createCart = (payload) => {
 };
 
 export const addToCart = (payload) => {
-
   return {
     type: ADD_TO_CART,
     payload
@@ -106,6 +121,13 @@ export const addToCart = (payload) => {
 export const removeFromCart = (payload) => {
   return {
     type: REMOVE_FROM_CART,
+    payload
+  };
+};
+
+export const decrimentItem = (payload) => {
+  return {
+    type: DECRIMENT_ITEM,
     payload
   };
 };

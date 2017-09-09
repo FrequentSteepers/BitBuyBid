@@ -12,7 +12,7 @@ const params = {
   'Service': 'AWSECommerceService',
   'Operation': 'ItemSearch',
   'AWSAccessKeyId': amazon.access_key_id,
-  'AssociateTag': amazon.associateTag,
+  'AssociateTag': amazon.associate_tag,
   'SearchIndex': 'All',
   'Keywords': searchTerm,
   'ResponseGroup': 'Images,ItemAttributes'
@@ -61,7 +61,7 @@ module.exports = ({Product}) => {
                 'img_url_lg': product.LargeImage ? product.LargeImage[0].URL[0] : defaultImage,
                 'buy_url': product.DetailPageURL[0].substring(0, product.DetailPageURL[0].indexOf('?')),
                 'title': product.ItemAttributes[0].Title[0],
-                'price': product.ItemAttributes[0].ListPrice ? product.ItemAttributes[0].ListPrice[0].FormattedPrice[0].slice(1) : 'N/A',
+                'price': product.ItemAttributes[0].ListPrice ? product.ItemAttributes[0].ListPrice[0].FormattedPrice[0].slice(1) : null,
                 'description': product.ItemAttributes[0].Feature ? product.ItemAttributes[0].Feature.join('; ') : '',
                 'type': 'amzn'
               }

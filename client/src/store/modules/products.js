@@ -25,9 +25,9 @@ export default (state = initialState, {type, payload}) => {
       ...state,
       products: payload
     };
-  case SELECT_PRODUCT: 
+  case SELECT_PRODUCT:
     return {
-      ...state, 
+      ...state,
       selectedId: payload
     };
   case CREATE_CART:
@@ -61,9 +61,9 @@ export default (state = initialState, {type, payload}) => {
  * Listings dispatchers
  */
 
-export const setProducts = (dispatch) => {
+export const setProducts = (searchTerm, dispatch) => {
   return (dispatch) => {
-    axios.get('/api/products')
+    axios.post('/api/search', {searchTerm: searchTerm})
       .then(products => {
         dispatch({
           type: SET_PRODUCTS,

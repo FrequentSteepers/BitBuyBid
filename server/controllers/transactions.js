@@ -8,30 +8,39 @@ var convert = require('xml-js');
 module.exports.create = (req, res) => {
   Transaction.forge(
     { 
-      transaction: req.body.transaction_id,
-      user_Id: req.body.user		
+      buyer_id: req.user.id		
     }
   )
     .save()
     .then(result => {
       return Promise.all(
         req.body.cart.map(
-          p => Purchase.forge({transaction_id: result.id, product_id: p.id})
+          p => {
+            Purchase.forge({
+              transaction_id: result.id, 
+              product_id: p.id,
+              quantity: req.body.quantities[p.prod_id] || 1
+            })
+              .save();
+            
+          }
         )
-      )
-        .save();
+      );
     })
     .then(result => {
       res.status(201);
     })
     .catch(err => {
+      console.error(err);
       res.status(500).send(err);
     });
 };
 
 module.exports.getAll = (req, res) => {
   Transaction.where({buyer_id: req.user.id})
-    .fetch()
+    .fetchAll({
+      withRelated: ['cart', 'buyer']
+    })
     .then(transactions => {
       res.status(200).send(transactions);
     })
@@ -44,8 +53,10 @@ module.exports.getAll = (req, res) => {
 };
 
 module.exports.getOne = (req, res) => {
-  Transaction.where({ id: req.params.id })
-    .fetch()
+  Transaction.where({ buyer_id: req.params.id })
+    .fetch({
+      withRelated: ['cart', 'buyer']
+    })
     .then(transaction => {
       if (!transaction) {
         throw transaction;
@@ -81,21 +92,22 @@ module.exports.update = (req, res) => {
 };
 
 module.exports.deleteOne = (req, res) => {
-  Transaction.where({ id: req.params.id })
-    .fetch()
-    .then(transaction => {
-      if (!transaction) {
-        throw transaction;
-      }
-      return transaction.destroy();
-    })
-    .then(() => {
-      res.sendStatus(200);
-    })
-    .error(err => {
-      res.status(503).send(err);
-    })
-    .catch(() => {
-      res.sendStatus(404);
-    });
+  res.status(401).end();
+//   Transaction.where({ id: req.params.id })
+//     .fetch()
+//     .then(transaction => {
+//       if (!transaction) {
+//         throw transaction;
+//       }
+//       return transaction.destroy();
+//     })
+//     .then(() => {
+//       res.sendStatus(200);
+//     })
+//     .error(err => {
+//       res.status(503).send(err);
+//     })
+//     .catch(() => {
+//       res.sendStatus(404);
+//     });
 };

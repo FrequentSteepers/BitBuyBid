@@ -97,6 +97,14 @@ export const setProducts = (searchTerm, dispatch) => {
   };
 };
 
+export const checkout = (payload, dispatch) => {
+  return (dispatch, getState) => {
+    axios.post('/api/transactions', {cart: getState().products.cart, quantities: getState().products.quantities})
+      .then(res => console.log('successful checkout: ', res))
+      .catch(err => console.log('error in the checkout: ', err));
+  };
+};
+
 export const selectProduct = payload => {
   return {
     type: SELECT_PRODUCT,

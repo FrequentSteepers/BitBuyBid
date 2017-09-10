@@ -16,6 +16,7 @@ import Cart from './views/Cart.jsx';
 import Profile from './views/Profile.jsx';
 import Login from './views/Login.jsx';
 import Signup from './views/Signup.jsx';
+import Receipt from './views/Receipt.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -40,6 +41,9 @@ class App extends React.Component {
           </Route>
           <Route path='/signup'>
             <Signup />
+          </Route>
+          <Route path='/receipt'> 
+            <Receipt />
           </Route>
           <Route path='/cart'>
             <Cart />

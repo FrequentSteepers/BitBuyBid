@@ -77,6 +77,9 @@ class CartWidget extends Component {
                   <b><i>Subtotal:</i></b>
                   <Subtotal/>
                 </div>
+                <div>
+                  <Link to='/cart'><button>Checkout</button></Link>
+                </div>
               </div>
             </Paper>
           </GridList> : false}

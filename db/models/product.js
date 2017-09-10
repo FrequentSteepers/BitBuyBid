@@ -28,19 +28,21 @@ Product.fromOverstock = (results) => {
       instructionHasAttributes: true
     }
   ))['cj-api'].products.product;
-  parsed.forEach(p => {
-    Product.query((qb) => { qb.whereRaw(`prod_id = '${p['ad-id']._text + p['sku']._text + p['upc']._text}|OVSOCK'`).andWhere('type', '=', 'ovsock').limit(1); })
+  parsed.filter((p) => {
+    return Number(p.price['_text']) && p['image-url']._text;
+  }).forEach(p => {
+    Product.query((qb) => { qb.whereRaw(`prod_id = '${(p['ad-id']._text || '') + (p['sku']._text || '') + (p['upc']._text || '')}|OVSOCK'`).andWhere('type', '=', 'ovsock').limit(1); })
       .fetchAll()
       .then(products => {
         if (products && products.length > 0) {
-          // 'item found in db, skipping...'
+          // ovsock item found in db, skipping
         } else {
           // insert new item
-          console.log('...adding new overstock product to db with identifier', p['ad-id']._text + p['sku']._text + p['upc']._text);
+          // '...adding new overstock product to db with identifier', p['ad-id']._text + p['sku']._text + p['upc']._text
 
           Product.forge(
             {
-              'prod_id': (p['ad-id']._text || '') + (p['sku']._text || '') + (p['upc']._text || '') + '|OVSOCK',              
+              'prod_id': (p['ad-id']._text || '') + (p['sku']._text || '') + (p['upc']._text || '') + '|OVSOCK',
               'ad-id': Number.parseInt(p['ad-id']._text || 0) || null,
               'sku': Number.parseInt(p['sku']._text) || null,
               'upc': Number.parseInt(p['upc']._text) || null,
@@ -49,13 +51,16 @@ Product.fromOverstock = (results) => {
               'buy_url': p['buy-url']._text,
               'type': 'ovsock',
               'title': p.name._text,
-              'description': p.description._text
+              'description': p.description._text,
+              'img_url_sm': p['image-url']._text || defaultImage,
+              'img_url_md': p['image-url']._text || defaultImage,
+              'img_url_lg': p['image-url']._text || defaultImage
             }
           )
             .save();
         }
       }).catch(e => {
-        console.log('error occured querying products');
+        console.log('error occured querying ovsock products');
         console.error(e);
       });
   });
@@ -65,15 +70,17 @@ Product.fromAmzn = (results) => {
   parseString(results.data, function (err, result) {
     let productListings = result.ItemSearchResponse.Items[0].Item;
 
-    productListings.forEach((product) => {
+    productListings.filter((p) => {
+      return p.ItemAttributes[0].ListPrice && p.SmallImage && p.MediumImage && p.LargeImage;
+    }).forEach((product) => {
       Product.query((qb) => { qb.whereRaw(`prod_id = '${product.ASIN[0]}|AMZN'`).andWhere('type', '=', 'amzn').limit(1); })
         .fetchAll()
         .then(products => {
           if (products && products.length > 0) {
-            // 'item found in db, skipping...'
+            // 'amzn item found in db, skipping...'
           } else {
             // insert new item
-            console.log('...adding new amazon product to db with identifier', product.ASIN[0]);
+            // ...adding new amazon product to db with title and ASIN:', product.ItemAttributes[0].Title[0], product.ASIN[0]
 
             Product.forge(
               {
@@ -93,7 +100,7 @@ Product.fromAmzn = (results) => {
               .then(() => { console.log('success', product.ItemAttributes[0].Title[0]); return productListings; });
           }
         }).catch(e => {
-          console.log('error occured querying products');
+          console.log('error occured querying amzn products');
           console.error(e);
         });
     });

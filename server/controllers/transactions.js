@@ -22,7 +22,7 @@ module.exports.create = (req, res) => {
           })
             .save()
         )
-      )
+      );
     })
     .then(result => {
       res.status(201);

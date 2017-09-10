@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Subtotal from './Subtotal.jsx';
 import { Link } from 'react-router-dom';
-import {selectProduct, checkout} from '../store/modules/products.js';
+import {selectProduct} from '../store/modules/products.js';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
@@ -18,7 +18,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({selectProduct, checkout}, dispatch);
+  return bindActionCreators({selectProduct}, dispatch);
 };
 
 class CartWidget extends Component {
@@ -78,7 +78,7 @@ class CartWidget extends Component {
                   <Subtotal/>
                 </div>
                 <div>
-                  <button onClick={() => this.props.checkout()}><Link to='/cart'>Checkout</Link></button>
+                  <Link to='/cart'><button>Checkout</button></Link>
                 </div>
               </div>
             </Paper>

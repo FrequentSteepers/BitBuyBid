@@ -9,6 +9,8 @@ class Receipt extends Component {
       <div>
         <h2>Thank you!</h2>
         <h3>Your product should be shipping shortly.</h3>
+        <button>Get Bitcoits</button>
+        <button>Return to cart</button>
       </div>
     );
   }

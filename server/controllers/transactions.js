@@ -15,12 +15,15 @@ module.exports.create = (req, res) => {
     .then(result => {
       return Promise.all(
         req.body.cart.map(
-          p => Purchase.forge({
-            transaction_id: result.id, 
-            product_id: p.id,
-            quantity: p.quantity || 1
-          })
-            .save()
+          p => {
+            Purchase.forge({
+              transaction_id: result.id, 
+              product_id: p.id,
+              quantity: req.body.quantities[p.prod_id] || 1
+            })
+              .save();
+            
+          }
         )
       );
     })
@@ -34,7 +37,6 @@ module.exports.create = (req, res) => {
 };
 
 module.exports.getAll = (req, res) => {
-  console.log('userid: ', req.user.id);
   Transaction.where({buyer_id: req.user.id})
     .fetchAll({
       withRelated: ['cart', 'buyer']

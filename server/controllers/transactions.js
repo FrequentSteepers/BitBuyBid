@@ -8,12 +8,11 @@ var convert = require('xml-js');
 module.exports.create = (req, res) => {
   Transaction.forge(
     { 
-      buyer_id: req.user.id
+      buyer_id: req.user.id		
     }
   )
     .save()
     .then(result => {
-      console.log('new purchases', req.body.cart);
       return Promise.all(
         req.body.cart.map(
           p => Purchase.forge({
@@ -23,10 +22,10 @@ module.exports.create = (req, res) => {
           })
             .save()
         )
-      );
+      )
     })
     .then(result => {
-      res.status(201).end();
+      res.status(201);
     })
     .catch(err => {
       console.error(err);
@@ -35,8 +34,11 @@ module.exports.create = (req, res) => {
 };
 
 module.exports.getAll = (req, res) => {
+  console.log('userid: ', req.user.id);
   Transaction.where({buyer_id: req.user.id})
-    .fetch()
+    .fetchAll({
+      withRelated: ['cart', 'buyer']
+    })
     .then(transactions => {
       res.status(200).send(transactions);
     })
@@ -49,8 +51,10 @@ module.exports.getAll = (req, res) => {
 };
 
 module.exports.getOne = (req, res) => {
-  Transaction.where({ id: req.params.id })
-    .fetch()
+  Transaction.where({ buyer_id: req.params.id })
+    .fetch({
+      withRelated: ['cart', 'buyer']
+    })
     .then(transaction => {
       if (!transaction) {
         throw transaction;
@@ -86,21 +90,22 @@ module.exports.update = (req, res) => {
 };
 
 module.exports.deleteOne = (req, res) => {
-  Transaction.where({ id: req.params.id })
-    .fetch()
-    .then(transaction => {
-      if (!transaction) {
-        throw transaction;
-      }
-      return transaction.destroy();
-    })
-    .then(() => {
-      res.sendStatus(200);
-    })
-    .error(err => {
-      res.status(503).send(err);
-    })
-    .catch(() => {
-      res.sendStatus(404);
-    });
+  res.status(401).end();
+//   Transaction.where({ id: req.params.id })
+//     .fetch()
+//     .then(transaction => {
+//       if (!transaction) {
+//         throw transaction;
+//       }
+//       return transaction.destroy();
+//     })
+//     .then(() => {
+//       res.sendStatus(200);
+//     })
+//     .error(err => {
+//       res.status(503).send(err);
+//     })
+//     .catch(() => {
+//       res.sendStatus(404);
+//     });
 };

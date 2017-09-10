@@ -80,6 +80,7 @@ export const setProducts = (searchTerm, dispatch) => {
 
 export const checkout = (payload, dispatch) => {
   return (dispatch, getState) => {
+    // , quantities: getState().products.quantities
     axios.post('/api/transactions', {cart: getState().products.cart})
       .then(res => console.log('successful checkout: ', res))
       .catch(err => console.log('error in the checkout: ', err));

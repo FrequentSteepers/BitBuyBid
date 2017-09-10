@@ -2,7 +2,9 @@ import React from 'react';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import AppBar from 'material-ui/AppBar';
+import FlatButton from 'material-ui/FlatButton';
 import {Link} from 'react-router-dom';
+import {connect} from 'react-redux';
 
 const style = {
   nav: {
@@ -12,11 +14,13 @@ const style = {
     fontStyle: 'oblique',
     textAlign: 'center',
     zIndex: 2
-    
   },
   navHolder: {
     paddingBottom: '80px'
-  }
+  },
+  FlatButton: {
+    color: 'white'
+  }  
 };
 
 class Navbar extends React.Component {
@@ -59,6 +63,17 @@ class Navbar extends React.Component {
           style={style.nav}
           title="Bit Buy"
           onLeftIconButtonTouchTap={this.handleToggle}
+          iconElementRight={
+            this.props.user ? 
+              <div>
+                <Link to ='/profile'><FlatButton label={this.props.user.username} labelStyle={{color: 'white'}} /></Link> 
+                <Link to ='/logout' ><FlatButton label="Logout" labelStyle={{color: 'white'}} /></Link>
+              </div> :
+              <div>
+                <Link to ='/signup' ><FlatButton label="Signup" labelStyle={{color: 'white'}} /></Link>
+                <Link to ='/login' ><FlatButton label="Login" labelStyle={{color: 'white'}} /></Link>
+              </div>
+          }
         />
         <Drawer docked={false} width={250} open={this.state.open} onRequestChange={(open) => this.setState({open})}>
           <Link to='/'><MenuItem>Search</MenuItem></ Link>
@@ -71,5 +86,8 @@ class Navbar extends React.Component {
     );
   }
 }
+const mapStateToProps = ({app}) => ({
+  user: app.user
+});
 
-export default Navbar;
+export default connect(mapStateToProps)(Navbar);

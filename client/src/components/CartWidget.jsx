@@ -78,7 +78,7 @@ class CartWidget extends Component {
                   <Subtotal/>
                 </div>
                 <div>
-                  <button onClick={() => this.props.checkout()}>Checkout</button>
+                  <button onClick={() => this.props.checkout()}><Link to='/cart'>Checkout</Link></button>
                 </div>
               </div>
             </Paper>

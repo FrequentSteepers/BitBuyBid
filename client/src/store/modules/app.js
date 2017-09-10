@@ -50,16 +50,12 @@ export const setUser = payload => {
 
 export const handleLogin = (user) => {
   return (dispatch) => {
-    
     axios.post('/auth/login', user)
       .then((results) => {
-        console.log(results.data);
         dispatch({
           type: appTypes.SET_USER,
           payload: results.data
         });
-        //figure out redirect
-        // dispatch(push('/'));
       })
       .catch((err) => {
         alert('Incorrect user information or user does not exist');

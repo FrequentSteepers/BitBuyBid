@@ -49,7 +49,6 @@ class Checkout extends Component {
   }
 }
 
-
 const mapStateToProps = (state) => {
   return {
     cart: state.products.cart,

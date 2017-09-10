@@ -21,7 +21,6 @@ class Transactions extends Component {
   }
   render() {
     this.props.setTransactions();
-    console.log('props: ', this.props);
     return (
       <div>This will be the transactions!</div>
     );

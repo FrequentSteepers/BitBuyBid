@@ -31,7 +31,6 @@ export const setTransactions = payload => {
   return dispatch => {
     axios.get('/api/transactions')
       .then(transactions => {
-        console.log('got em: ', transactions);
         dispatch({
           type: appTypes.SET_TRANSACTIONS,
           transactions

@@ -24,9 +24,6 @@ class Profile extends Component {
             <CardHeader>
               <h1>{this.props.user.first + ' ' + this.props.user.last}</h1>
             </CardHeader>
-            <CardMedia>
-              <img style={{height: '50px'}} src='../images/pexels-photo-315788.jpg'/>
-            </CardMedia>
           </Card>
           <Card>
             <Transactions />

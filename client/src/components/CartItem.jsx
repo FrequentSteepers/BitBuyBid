@@ -13,10 +13,10 @@ const CartItem = ({item, addToCart, removeFromCart, quantities, decrimentItem}) 
           <h4>{item.title}</h4> <br/>
           <Link to={`/product?id=${item.id}`}><img src={item.img_url_sm}/></Link>
           <button onClick={ () => { addToCart(item); } }>+</button>
+          <span> {quantities[item.prod_id] || quantities[item.id]} </span>
           <button onClick={ () => { decrimentItem(item); } }>-</button><br/>
-          <button onClick={ () => { removeFromCart(item); } }>Remove from Cart</button><br/>
+          <button onClick={ () => { removeFromCart(item); } }>Remove from Cart</button>
           <p>${item.price ? Number(item.price).toFixed(2) : 0}</p>
-          <p>Quantity: {quantities[item.prod_id] || quantities[item.id]}</p>
         </div>
       </Card>
     </div>

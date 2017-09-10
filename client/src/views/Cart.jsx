@@ -6,19 +6,19 @@ import {
   addToCart, 
   removeFromCart 
 } from '../store/modules/products.js';
-import Listing from '../components/Listing.jsx';
+import CartItem from '../components/CartItem.jsx';
 
 
 
-const Checkout = ({createCart, addToCart, removeFromCart, cart}) => ( 
+const Checkout = ({createCart, addToCart, removeFromCart, cart, quantities}) => ( 
   <div>
-    {cart.map((item) => {
-      return <Listing key={item.id} item={item} />;
+    {cart.map((item, i) => {
+      return <CartItem key={i} item={item} />;
     })}
-    <div>Subtotal: {
+    <div>Subtotal: ${
       cart.reduce((acc, curr) => {
-        return acc + curr.price;
-      }, 0)
+        return acc + (Number(curr.price)) * quantities[curr.prod_id];
+      }, 0).toFixed(2)
     }
     </div>
     <button>Checkout</button>
@@ -28,7 +28,8 @@ const Checkout = ({createCart, addToCart, removeFromCart, cart}) => (
 
 const mapStateToProps = (state) => {
   return {
-    cart: state.products.cart
+    cart: state.products.cart,
+    quantities: state.products.quantities
   };
 };
 

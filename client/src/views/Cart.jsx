@@ -10,6 +10,7 @@ import {
 import Listing from '../components/Listing.jsx';
 import Receipt from '../views/Receipt.jsx';
 import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
+import CartItem from '../components/CartItem.jsx';
 
 class Checkout extends Component {
   constructor(props) {
@@ -19,12 +20,12 @@ class Checkout extends Component {
     return (
       <BrowserRouter> 
         <div>
-          {this.props.cart.map((item) => {
-            return <Listing key={item.id} item={item} />;
+          {this.props.cart.map((item, i) => {
+            return <CartItem key={i} item={item} />;
           })}
           <div>Subtotal: {
             this.props.cart.reduce((acc, curr) => {
-              return acc + curr.price;
+              return acc + (Number(curr.price)) * quantities[curr.prod_id];
             }, 0)
           }
           </div>
@@ -48,10 +49,10 @@ class Checkout extends Component {
   }
 }
 
-
 const mapStateToProps = (state) => {
   return {
-    cart: state.products.cart
+    cart: state.products.cart,
+    quantities: state.products.quantities
   };
 };
 

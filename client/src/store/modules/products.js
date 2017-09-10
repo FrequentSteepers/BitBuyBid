@@ -8,6 +8,7 @@ export const SELECT_PRODUCT = 'listings/SELECT_PRODUCT';
 export const CREATE_CART = 'products/CREATE_CART';
 export const ADD_TO_CART = 'products/ADD_TO_CART';
 export const REMOVE_FROM_CART = 'products/REMOVE_FROM_CART';
+export const DECREMENT_ITEM = 'products/DECREMENT_ITEM';
 
 const initialState = {
   products: [],
@@ -36,23 +37,41 @@ export default (state = initialState, {type, payload}) => {
       cart: payload || []
     };
   case ADD_TO_CART:
-
+    let newQuantities = {...state.quantities};
     let newCart = state.cart.concat([payload]).filter((val, i, self) => self.indexOf(val) === i);
     [payload].map(product => {
-      state.quantities[product.prod_id] ?
-        state.quantities[product.prod_id] += 1 :
-        state.quantities[product.prod_id] = 1;
+      newQuantities[product.prod_id] = (state.quantities[product.prod_id] || 0) + 1;
     });
     return {
       ...state,
-      cart: newCart
+      cart: newCart,
+      quantities: newQuantities
     };
   case REMOVE_FROM_CART:
+    let newQuant = {...state.quantities};
+    newQuant[payload.prod_id] = undefined;
+    delete newQuant[payload.prod_id];
     return {
       ...state,
       cart: state.cart.filter((item)=>{
         return item !== payload;
-      })
+      }),
+      quantities: newQuant
+    };
+  case DECREMENT_ITEM:
+    let decQuantities = {...state.quantities};
+    if (decQuantities[payload.prod_id] === 1) {
+      delete decQuantities[payload.prod_id];
+      var freshCart = state.cart.filter((item)=>{
+        return item !== payload;
+      });
+    } else {
+      decQuantities[payload.prod_id] = (decQuantities[payload.prod_id] - 1);
+    }
+    return {
+      ...state,
+      quantities: decQuantities,
+      cart: freshCart || state.cart
     };
   default: return state;
   }
@@ -102,7 +121,6 @@ export const createCart = (payload) => {
 };
 
 export const addToCart = (payload) => {
-
   return {
     type: ADD_TO_CART,
     payload
@@ -112,6 +130,13 @@ export const addToCart = (payload) => {
 export const removeFromCart = (payload) => {
   return {
     type: REMOVE_FROM_CART,
+    payload
+  };
+};
+
+export const decrementItem = (payload) => {
+  return {
+    type: DECREMENT_ITEM,
     payload
   };
 };

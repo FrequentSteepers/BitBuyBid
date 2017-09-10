@@ -93,7 +93,9 @@ module.exports.search = (req, res) => {
               parseString(results.data, function (err, result) {
                 productListings = result.ItemSearchResponse.Items[0].Item;
 
-                productListings.forEach((product) => {
+                productListings.filter((p) => {
+                  return p.ItemAttributes[0].ListPrice && p.SmallImage && p.MediumImage && p.LargeImage;
+                }).forEach((product) => {
                   product_list.push({
                     'prod_id': product.ASIN[0] + '|AMZN',
                     'asin': product.ASIN[0],

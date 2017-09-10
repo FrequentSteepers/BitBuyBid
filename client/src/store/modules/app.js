@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { push } from 'react-router-redux';
+import { createHashHistory } from 'history';
+
 
 export const appTypes = {
   SET_USER: 'app/SET_USER',
@@ -51,10 +53,14 @@ export const handleLogin = (user) => {
   return (dispatch) => {
     axios.post('/auth/login', user)
       .then((results) => {
-        dispatch({
+        return dispatch({
           type: appTypes.SET_USER,
           payload: results.data
         });
+        
+      })
+      .then((res)=>{
+        dispatch(push('/'));
       })
       .catch((err) => {
         alert('Incorrect user information or user does not exist');
@@ -82,3 +88,5 @@ export const handleSignup = (user) => {
       .catch(console.error);
   };
 };
+
+export const redirect = endpoint => push(endpoint);

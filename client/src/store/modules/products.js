@@ -8,7 +8,7 @@ export const SELECT_PRODUCT = 'listings/SELECT_PRODUCT';
 export const CREATE_CART = 'products/CREATE_CART';
 export const ADD_TO_CART = 'products/ADD_TO_CART';
 export const REMOVE_FROM_CART = 'products/REMOVE_FROM_CART';
-export const DECRIMENT_ITEM = 'products/DECRIMENT_ITEM';
+export const DECREMENT_ITEM = 'products/DECREMENT_ITEM';
 
 const initialState = {
   products: [],
@@ -58,7 +58,7 @@ export default (state = initialState, {type, payload}) => {
       }),
       quantities: newQuant
     };
-  case DECRIMENT_ITEM:
+  case DECREMENT_ITEM:
     let decQuantities = {...state.quantities};
     if (decQuantities[payload.prod_id] === 1) {
       delete decQuantities[payload.prod_id];
@@ -125,9 +125,9 @@ export const removeFromCart = (payload) => {
   };
 };
 
-export const decrimentItem = (payload) => {
+export const decrementItem = (payload) => {
   return {
-    type: DECRIMENT_ITEM,
+    type: DECREMENT_ITEM,
     payload
   };
 };

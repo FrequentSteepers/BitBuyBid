@@ -1,10 +1,11 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {addToCart, removeFromCart, decrimentItem} from '../store/modules/products.js';
+import {addToCart, removeFromCart, decrementItem} from '../store/modules/products.js';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 
-const CartItem = ({item, addToCart, removeFromCart, quantities, decrimentItem}) => {
+const CartItem = ({item, addToCart, removeFromCart, quantities, decrementItem}) => {
   return (
     <div>
       <Card>
@@ -13,7 +14,7 @@ const CartItem = ({item, addToCart, removeFromCart, quantities, decrimentItem}) 
           <Link to={`/product?id=${item.id}`}><img src={item.img_url_sm}/></Link>
           <button onClick={ () => { addToCart(item); } }>+</button>
           <span> {quantities[item.prod_id] || quantities[item.id]} </span>
-          <button onClick={ () => { decrimentItem(item); } }>-</button><br/>
+          <button onClick={ () => { decrementItem(item); } }>-</button><br/>
           <button onClick={ () => { removeFromCart(item); } }>Remove from Cart</button>
           <p>${item.price ? Number(item.price).toFixed(2) : 0}</p>
         </div>
@@ -29,7 +30,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({addToCart, removeFromCart, decrimentItem}, dispatch);
+  return bindActionCreators({addToCart, removeFromCart, decrementItem}, dispatch);
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartItem);

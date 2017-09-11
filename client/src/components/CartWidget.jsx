@@ -9,6 +9,7 @@ import {GridList} from 'material-ui/GridList';
 import Paper from 'material-ui/Paper';
 import { Grid, Row, Col } from 'react-flexbox-grid';
 import {style} from '../styles.js';
+import {decrementItem} from '../store/modules/products.js';
 
 const mapStateToProps = state => {
   return {
@@ -18,7 +19,11 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({selectProduct}, dispatch);
+  return bindActionCreators(
+    {
+      selectProduct,
+      decrementItem
+    }, dispatch);
 };
 
 class CartWidget extends Component {
@@ -27,6 +32,7 @@ class CartWidget extends Component {
     this.state = {
       display: true
     };
+    this.decrementItem = this.props.decrementItem.bind(this);
   }
   render() {
     return (this.state.display ? 
@@ -62,7 +68,7 @@ class CartWidget extends Component {
                                 ${product.price ? Number(product.price).toFixed(2) : 0}
                               </CardText>
                               <CardText style={style.delete}>
-                                delete&nbsp;&nbsp;&nbsp;quantity:{this.props.quantities[product.prod_id] || this.props.quantities[product.id]}
+                                <button onClick={() => this.decrementItem(product)}>delete</button>&nbsp;&nbsp;&nbsp;quantity:{this.props.quantities[product.prod_id] || this.props.quantities[product.id]}
                               </CardText>
                             </Col>
                           </Row>

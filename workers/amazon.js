@@ -45,7 +45,8 @@ request_url = `http://${endpoint}${uri}?${canonical_query_string}&Signature=` + 
 module.exports = ({Product}) => {
   axios.get(request_url)
     .then(results => {
-      Product.fromAmzn(results);
+      Product.fromAmazon(results)
+        .then(console.log);
     })
     .catch(err => {
       console.log(err);

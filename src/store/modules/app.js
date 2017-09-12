@@ -82,3 +82,16 @@ export const handleSignup = (user) => {
       .catch(console.error);
   };
 };
+
+export const handleLogout = () => {
+  return (dispatch) => {
+    axios.get('/logout')
+      .then(res => {
+        console.log(res);
+        dispatch({
+          type: appTypes.SET_USER,
+          payload: null
+        });
+      });
+  };
+};

@@ -14,6 +14,16 @@ import { matchRoutes, renderRoutes } from 'react-router-config';
 import routes from '../src/routes.js';
 import reducers from '../src/store/modules';
 
+// routes/controllers
+import {
+  auth,
+  api,
+  users,
+  products,
+  transactions,
+  search
+} from './routes/index.js';
+
 import middleware from './middleware';
 import router from './routes/router.jsx';
 
@@ -34,12 +44,12 @@ app.use(middleware.passport.session());
 app.use(middleware.flash());
 
 
-// app.use('/auth', routes.auth);
-// app.use('/api', routes.api);
-// app.use('/api/users', routes.users);
-// app.use('/api/products', routes.products);
-// app.use('/api/transactions', routes.transactions);
-// app.use('/api/search', routes.search);
+app.use('/auth', auth);
+app.use('/api', api);
+app.use('/api/users', users);
+app.use('/api/products', products);
+app.use('/api/transactions', transactions);
+app.use('/api/search', search);
 
 app.disable('x-powered-by');
 app.use('/images', express.static(path.join(__dirname, '../src/assets/images')));

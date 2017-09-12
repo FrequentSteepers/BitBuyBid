@@ -14,6 +14,7 @@ import Login from '../views/Login.jsx';
 import Signup from '../views/Signup.jsx';
 import Receipt from '../views/Receipt.jsx';
 import Home from '../views/Home.jsx';
+import Logout from '../views/Logout.jsx';
 
 import Nav from './Nav.js';
 
@@ -23,6 +24,9 @@ export default ({route}) => (
     <Switch>
       <Route path='/login'>
         <Login />
+      </Route>
+      <Route path='/logout'> 
+        <Profile />
       </Route>
       <Route path='/signup'>
         <Signup />

@@ -61,7 +61,7 @@
 	'use strict';
 
 	var app = __webpack_require__(3);
-	var models = __webpack_require__(65);
+	var models = __webpack_require__(69);
 	var PORT = Number(process.env.PORT) || 3000;
 
 	app.listen(PORT, function () {
@@ -69,7 +69,7 @@
 	});
 
 	// start cronjobs
-	__webpack_require__(89)(models);
+	__webpack_require__(106)(models);
 
 /***/ }),
 /* 3 */
@@ -101,11 +101,11 @@
 
 	var _app2 = _interopRequireDefault(_app);
 
-	var _path = __webpack_require__(52);
+	var _path = __webpack_require__(53);
 
 	var _path2 = _interopRequireDefault(_path);
 
-	var _StaticRouter = __webpack_require__(53);
+	var _StaticRouter = __webpack_require__(54);
 
 	var _StaticRouter2 = _interopRequireDefault(_StaticRouter);
 
@@ -119,17 +119,22 @@
 
 	var _modules2 = _interopRequireDefault(_modules);
 
-	var _middleware = __webpack_require__(54);
+	var _index3 = __webpack_require__(55);
+
+	var _middleware = __webpack_require__(58);
 
 	var _middleware2 = _interopRequireDefault(_middleware);
 
-	var _router = __webpack_require__(88);
+	var _router = __webpack_require__(105);
 
 	var _router2 = _interopRequireDefault(_router);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	global.navigator = { userAgent: 'all' };
+
+	// routes/controllers
+
 
 	var app = (0, _express2.default)();
 
@@ -145,12 +150,12 @@
 	app.use(_middleware2.default.passport.session());
 	app.use(_middleware2.default.flash());
 
-	// app.use('/auth', routes.auth);
-	// app.use('/api', routes.api);
-	// app.use('/api/users', routes.users);
-	// app.use('/api/products', routes.products);
-	// app.use('/api/transactions', routes.transactions);
-	// app.use('/api/search', routes.search);
+	app.use('/auth', _index3.auth);
+	app.use('/api', _index3.api);
+	app.use('/api/users', _index3.users);
+	app.use('/api/products', _index3.products);
+	app.use('/api/transactions', _index3.transactions);
+	app.use('/api/search', _index3.search);
 
 	app.disable('x-powered-by');
 	app.use('/images', _express2.default.static(_path2.default.join(__dirname, '../src/assets/images')));
@@ -292,7 +297,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.handleSignup = exports.handleLogin = exports.setUser = exports.setTransactions = exports.appTypes = undefined;
+	exports.handleLogout = exports.handleSignup = exports.handleLogin = exports.setUser = exports.setTransactions = exports.appTypes = undefined;
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
@@ -383,6 +388,18 @@
 	        alert('signup failed!');
 	      }
 	    }).catch(console.error);
+	  };
+	};
+
+	var handleLogout = exports.handleLogout = function handleLogout() {
+	  return function (dispatch) {
+	    _axios2.default.get('/logout').then(function (res) {
+	      console.log(res);
+	      dispatch({
+	        type: appTypes.SET_USER,
+	        payload: null
+	      });
+	    });
 	  };
 	};
 
@@ -720,7 +737,7 @@
 
 	var _Receipt2 = _interopRequireDefault(_Receipt);
 
-	var _Nav = __webpack_require__(47);
+	var _Nav = __webpack_require__(48);
 
 	var _Nav2 = _interopRequireDefault(_Nav);
 
@@ -842,6 +859,10 @@
 
 	var _Signup2 = _interopRequireDefault(_Signup);
 
+	var _Logout = __webpack_require__(47);
+
+	var _Logout2 = _interopRequireDefault(_Logout);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var routes = [{ component: _appRoot2.default,
@@ -852,6 +873,8 @@
 	    component: _Login2.default
 	  }, { path: '/signup',
 	    component: _Signup2.default
+	  }, { path: '/logout',
+	    component: _Logout2.default
 	  }]
 	}];
 
@@ -932,13 +955,16 @@
 
 	var _Home2 = _interopRequireDefault(_Home);
 
-	var _Nav = __webpack_require__(47);
+	var _Logout = __webpack_require__(47);
+
+	var _Logout2 = _interopRequireDefault(_Logout);
+
+	var _Nav = __webpack_require__(48);
 
 	var _Nav2 = _interopRequireDefault(_Nav);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	// import Listings from '../components/Listings.jsx';
 	exports.default = function (_ref) {
 	  var route = _ref.route;
 	  return _react2.default.createElement(
@@ -952,6 +978,11 @@
 	        _reactRouterDom.Route,
 	        { path: '/login' },
 	        _react2.default.createElement(_Login2.default, null)
+	      ),
+	      _react2.default.createElement(
+	        _reactRouterDom.Route,
+	        { path: '/logout' },
+	        _react2.default.createElement(_Profile2.default, null)
 	      ),
 	      _react2.default.createElement(
 	        _reactRouterDom.Route,
@@ -986,6 +1017,7 @@
 	    )
 	  );
 	};
+	// import Listings from '../components/Listings.jsx';
 
 /***/ }),
 /* 26 */
@@ -2618,8 +2650,6 @@
 	/*
 	  here is where we will update the redux state, dispatching an event 
 	  with the id of the item that was clicked
-	        <CartWidget />
-	        <Search/> 
 	*/
 
 	var Home = function (_React$Component) {
@@ -2637,7 +2667,8 @@
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        'home view'
+	        _react2.default.createElement(_CartWidget2.default, null),
+	        _react2.default.createElement(_Search2.default, null)
 	      );
 	    }
 	  }], [{
@@ -2662,25 +2693,84 @@
 	  value: true
 	});
 
+	var _react = __webpack_require__(5);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(7);
+
+	var _redux = __webpack_require__(9);
+
+	var _app = __webpack_require__(11);
+
+	var _app2 = _interopRequireDefault(_app);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Logout = function Logout(_ref) {
+	  var user = _ref.user,
+	      handleLogout = _ref.handleLogout;
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    _react2.default.createElement(
+	      'h3',
+	      null,
+	      'click to logout ' + user.first
+	    ),
+	    _react2.default.createElement(
+	      'button',
+	      { onClick: handleLogout.bind(undefined) },
+	      ' Logout '
+	    )
+	  );
+	};
+
+	var mapStateToProps = function mapStateToProps(_ref2) {
+	  var user = _ref2.user;
+
+	  return {
+	    user: user.user
+	  };
+	};
+
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return (0, _redux.bindActionCreators)({
+	    handleLogout: _app2.default
+	  }, dispatch);
+	};
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Logout);
+
+/***/ }),
+/* 48 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 	var _react = __webpack_require__(5);
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Drawer = __webpack_require__(48);
+	var _Drawer = __webpack_require__(49);
 
 	var _Drawer2 = _interopRequireDefault(_Drawer);
 
-	var _MenuItem = __webpack_require__(49);
+	var _MenuItem = __webpack_require__(50);
 
 	var _MenuItem2 = _interopRequireDefault(_MenuItem);
 
-	var _AppBar = __webpack_require__(50);
+	var _AppBar = __webpack_require__(51);
 
 	var _AppBar2 = _interopRequireDefault(_AppBar);
 
-	var _FlatButton = __webpack_require__(51);
+	var _FlatButton = __webpack_require__(52);
 
 	var _FlatButton2 = _interopRequireDefault(_FlatButton);
 
@@ -2869,53 +2959,40 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps)(Navbar);
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports) {
 
 	module.exports = require("material-ui/Drawer");
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports) {
 
 	module.exports = require("material-ui/MenuItem");
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports) {
 
 	module.exports = require("material-ui/AppBar");
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports) {
 
 	module.exports = require("material-ui/FlatButton");
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports) {
 
 	module.exports = require("path");
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react-router-dom/StaticRouter");
-
-/***/ }),
-/* 54 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	module.exports.auth = __webpack_require__(55);
-	module.exports.passport = __webpack_require__(59);
-	module.exports.morgan = __webpack_require__(84);
-	module.exports.bodyParser = __webpack_require__(85);
-	module.exports.flash = __webpack_require__(86);
-	module.exports.cookieParser = __webpack_require__(87);
 
 /***/ }),
 /* 55 */
@@ -2923,9 +3000,123 @@
 
 	'use strict';
 
-	var session = __webpack_require__(56);
-	var RedisStore = __webpack_require__(57)(session);
-	var redisClient = __webpack_require__(58).createClient();
+	module.exports.api = __webpack_require__(56);
+	module.exports.auth = __webpack_require__(57);
+	module.exports.users = __webpack_require__(92);
+	module.exports.products = __webpack_require__(102);
+	module.exports.transactions = __webpack_require__(103);
+	module.exports.search = __webpack_require__(104);
+
+/***/ }),
+/* 56 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var express = __webpack_require__(4);
+	var router = express.Router();
+
+	router.route('/').get(function (req, res) {
+	  res.status(200).send('Hello World!');
+	}).post(function (req, res) {
+	  console.log('in the correct route');
+	  res.status(201).send({ data: 'Posted!' });
+	});
+
+	module.exports = router;
+
+/***/ }),
+/* 57 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var express = __webpack_require__(4);
+	var middleware = __webpack_require__(58);
+	var urlencodedParser = __webpack_require__(89).urlencoded({ extended: false });
+
+	var router = express.Router();
+	// middleware.auth.verify, 
+	// reenable middleware
+	router.route('/').get(function (req, res) {
+	  res.render('index.ejs');
+	});
+
+	router.route('/login').get(function (req, res) {
+	  res.render('login.ejs', { message: req.flash('loginMessage') });
+	}).post(urlencodedParser, middleware.passport.authenticate('local-login'), function (req, res) {
+	  if (req.user) {
+	    res.json(req.user);
+	  } else {
+	    res.status(401);
+	  }
+	});
+
+	router.route('/signup').get(function (req, res) {
+	  res.render('signup.ejs', { message: req.flash('signupMessage') });
+	}).post(middleware.passport.authenticate('local-signup'), function (req, res) {
+	  if (req.user) {
+	    res.json(req.user);
+	  } else {
+	    res.status(401);
+	  }
+	});
+
+	router.route('/logout').get(function (req, res) {
+	  req.logout();
+	  res.redirect('/');
+	});
+
+	router.get('/auth/google', middleware.passport.authenticate('google', {
+	  scope: ['email', 'profile']
+	}));
+
+	router.get('/auth/google/callback', middleware.passport.authenticate('google', {
+	  successRedirect: '/home',
+	  failureRedirect: '/login'
+	}));
+
+	router.get('/auth/facebook', middleware.passport.authenticate('facebook', {
+	  scope: ['public_profile', 'email']
+	}));
+
+	router.get('/auth/facebook/callback', middleware.passport.authenticate('facebook', {
+	  successRedirect: '/home',
+	  failureRedirect: '/login',
+	  failureFlash: true
+	}));
+
+	router.get('/auth/twitter', middleware.passport.authenticate('twitter'));
+
+	router.get('/auth/twitter/callback', middleware.passport.authenticate('twitter', {
+	  successRedirect: '/profile',
+	  failureRedirect: '/login'
+	}));
+
+	module.exports = router;
+
+/***/ }),
+/* 58 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	module.exports.auth = __webpack_require__(59);
+	module.exports.passport = __webpack_require__(63);
+	module.exports.morgan = __webpack_require__(88);
+	module.exports.bodyParser = __webpack_require__(89);
+	module.exports.flash = __webpack_require__(90);
+	module.exports.cookieParser = __webpack_require__(91);
+
+/***/ }),
+/* 59 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var session = __webpack_require__(60);
+	var RedisStore = __webpack_require__(61)(session);
+	var redisClient = __webpack_require__(62).createClient();
 
 	module.exports.verify = function (req, res, next) {
 	  if (req.isAuthenticated()) {
@@ -2946,38 +3137,38 @@
 	});
 
 /***/ }),
-/* 56 */
+/* 60 */
 /***/ (function(module, exports) {
 
 	module.exports = require("express-session");
 
 /***/ }),
-/* 57 */
+/* 61 */
 /***/ (function(module, exports) {
 
 	module.exports = require("connect-redis");
 
 /***/ }),
-/* 58 */
+/* 62 */
 /***/ (function(module, exports) {
 
 	module.exports = require("redis");
 
 /***/ }),
-/* 59 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
-	var passport = __webpack_require__(60);
-	var LocalStrategy = __webpack_require__(61).Strategy;
-	var GoogleStrategy = __webpack_require__(62).OAuth2Strategy;
-	var FacebookStrategy = __webpack_require__(63).Strategy;
-	var TwitterStrategy = __webpack_require__(64).Strategy;
+	var passport = __webpack_require__(64);
+	var LocalStrategy = __webpack_require__(65).Strategy;
+	var GoogleStrategy = __webpack_require__(66).OAuth2Strategy;
+	var FacebookStrategy = __webpack_require__(67).Strategy;
+	var TwitterStrategy = __webpack_require__(68).Strategy;
 	// const config = require('config')['passport'];
-	var models = __webpack_require__(65);
+	var models = __webpack_require__(69);
 
 	passport.serializeUser(function (profile, done) {
 	  done(null, profile.id);
@@ -3085,62 +3276,62 @@
 	module.exports = passport;
 
 /***/ }),
-/* 60 */
+/* 64 */
 /***/ (function(module, exports) {
 
 	module.exports = require("passport");
 
 /***/ }),
-/* 61 */
+/* 65 */
 /***/ (function(module, exports) {
 
 	module.exports = require("passport-local");
 
 /***/ }),
-/* 62 */
+/* 66 */
 /***/ (function(module, exports) {
 
 	module.exports = require("passport-google-oauth");
 
 /***/ }),
-/* 63 */
+/* 67 */
 /***/ (function(module, exports) {
 
 	module.exports = require("passport-facebook");
 
 /***/ }),
-/* 64 */
+/* 68 */
 /***/ (function(module, exports) {
 
 	module.exports = require("passport-twitter");
 
 /***/ }),
-/* 65 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	module.exports = {
-	  Auth: __webpack_require__(66),
-	  User: __webpack_require__(74),
-	  Product: __webpack_require__(75),
-	  Category: __webpack_require__(78),
-	  Transaction: __webpack_require__(79),
-	  Review: __webpack_require__(80),
-	  Address: __webpack_require__(81),
-	  Tag: __webpack_require__(82),
-	  Purchase: __webpack_require__(83)
+	  Auth: __webpack_require__(70),
+	  User: __webpack_require__(78),
+	  Product: __webpack_require__(79),
+	  Category: __webpack_require__(82),
+	  Transaction: __webpack_require__(83),
+	  Review: __webpack_require__(84),
+	  Address: __webpack_require__(85),
+	  Tag: __webpack_require__(86),
+	  Purchase: __webpack_require__(87)
 	};
 
 /***/ }),
-/* 66 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var db = __webpack_require__(67);
-	var Promise = __webpack_require__(72);
-	var bcrypt = Promise.promisifyAll(__webpack_require__(73));
+	var db = __webpack_require__(71);
+	var Promise = __webpack_require__(76);
+	var bcrypt = Promise.promisifyAll(__webpack_require__(77));
 
 	var Auth = db.Model.extend({
 	  tableName: 'auths',
@@ -3176,65 +3367,65 @@
 	module.exports = db.model('Auth', Auth);
 
 /***/ }),
-/* 67 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var knex = __webpack_require__(68)(__webpack_require__(69));
-	var db = __webpack_require__(71)(knex);
+	var knex = __webpack_require__(72)(__webpack_require__(73));
+	var db = __webpack_require__(75)(knex);
 
 	db.plugin('registry');
 
 	module.exports = db;
 
 /***/ }),
-/* 68 */
+/* 72 */
 /***/ (function(module, exports) {
 
 	module.exports = require("knex");
 
 /***/ }),
-/* 69 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var config = __webpack_require__(70);
+	var config = __webpack_require__(74);
 
 	module.exports = config['knex'];
 
 /***/ }),
-/* 70 */
+/* 74 */
 /***/ (function(module, exports) {
 
 	module.exports = require("config");
 
 /***/ }),
-/* 71 */
+/* 75 */
 /***/ (function(module, exports) {
 
 	module.exports = require("bookshelf");
 
 /***/ }),
-/* 72 */
+/* 76 */
 /***/ (function(module, exports) {
 
 	module.exports = require("bluebird");
 
 /***/ }),
-/* 73 */
+/* 77 */
 /***/ (function(module, exports) {
 
 	module.exports = require("bcrypt-nodejs");
 
 /***/ }),
-/* 74 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var db = __webpack_require__(67);
+	var db = __webpack_require__(71);
 
 	var User = db.Model.extend({
 	  tableName: 'users',
@@ -3252,14 +3443,14 @@
 	module.exports = db.model('User', User);
 
 /***/ }),
-/* 75 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var db = __webpack_require__(67);
-	var convert = __webpack_require__(76);
-	var parseString = __webpack_require__(77).parseString;
+	var db = __webpack_require__(71);
+	var convert = __webpack_require__(80);
+	var parseString = __webpack_require__(81).parseString;
 
 	var Product = db.Model.extend({
 	  tableName: 'products',
@@ -3396,24 +3587,24 @@
 	module.exports = db.model('Product', Product);
 
 /***/ }),
-/* 76 */
+/* 80 */
 /***/ (function(module, exports) {
 
 	module.exports = require("xml-js");
 
 /***/ }),
-/* 77 */
+/* 81 */
 /***/ (function(module, exports) {
 
 	module.exports = require("xml2js");
 
 /***/ }),
-/* 78 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var db = __webpack_require__(67);
+	var db = __webpack_require__(71);
 
 	var Category = db.Model.extend({
 	  tableName: 'categories',
@@ -3425,12 +3616,12 @@
 	module.exports = db.model('Category', Category);
 
 /***/ }),
-/* 79 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var db = __webpack_require__(67);
+	var db = __webpack_require__(71);
 
 	var Transaction = db.Model.extend({
 	  tableName: 'transactions',
@@ -3445,12 +3636,12 @@
 	module.exports = db.model('Transaction', Transaction);
 
 /***/ }),
-/* 80 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var db = __webpack_require__(67);
+	var db = __webpack_require__(71);
 
 	var Review = db.Model.extend({
 	  tableName: 'reviews',
@@ -3468,12 +3659,12 @@
 	module.exports = db.model('Review', Review);
 
 /***/ }),
-/* 81 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var db = __webpack_require__(67);
+	var db = __webpack_require__(71);
 
 	var Address = db.Model.extend({
 	  tableName: 'addresses'
@@ -3482,12 +3673,12 @@
 	module.exports = db.model('Address', Address);
 
 /***/ }),
-/* 82 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var db = __webpack_require__(67);
+	var db = __webpack_require__(71);
 
 	var Tag = db.Model.extend({
 	  tableName: 'tags'
@@ -3496,12 +3687,12 @@
 	module.exports = db.model('Tag', Tag);
 
 /***/ }),
-/* 83 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var db = __webpack_require__(67);
+	var db = __webpack_require__(71);
 
 	var Purchase = db.Model.extend({
 	  tableName: 'purchases',
@@ -3516,31 +3707,554 @@
 	module.exports = db.model('Purchase', Purchase);
 
 /***/ }),
-/* 84 */
+/* 88 */
 /***/ (function(module, exports) {
 
 	module.exports = require("morgan");
 
 /***/ }),
-/* 85 */
+/* 89 */
 /***/ (function(module, exports) {
 
 	module.exports = require("body-parser");
 
 /***/ }),
-/* 86 */
+/* 90 */
 /***/ (function(module, exports) {
 
 	module.exports = require("connect-flash");
 
 /***/ }),
-/* 87 */
+/* 91 */
 /***/ (function(module, exports) {
 
 	module.exports = require("cookie-parser");
 
 /***/ }),
-/* 88 */
+/* 92 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var express = __webpack_require__(4);
+	var router = express.Router();
+
+	var _require$Users = __webpack_require__(93).Users,
+	    getAll = _require$Users.getAll,
+	    getOne = _require$Users.getOne,
+	    update = _require$Users.update;
+
+	router.route('/').get(getAll);
+
+	router.route('/:id').get(getOne).put(update);
+
+	module.exports = router;
+
+/***/ }),
+/* 93 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	module.exports = {
+	  Users: __webpack_require__(94),
+	  Products: __webpack_require__(95),
+	  Transactions: __webpack_require__(96),
+	  Search: __webpack_require__(100)
+	};
+
+/***/ }),
+/* 94 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var models = __webpack_require__(69);
+
+	module.exports.getAll = function (req, res) {
+	  models.Users.fetchAll().then(function (profiles) {
+	    res.status(200).send(profiles);
+	  }).catch(function (err) {
+	    // This code indicates an outside service (the database) did not respond in time
+	    res.status(503).send(err);
+	  });
+	};
+
+	module.exports.create = function (req, res) {
+	  models.User.forge(req.body).save().then(function (result) {
+	    res.status(201).send(result.omit('password'));
+	  }).catch(function (err) {
+	    if (err.constraint === 'users_username_unique') {
+	      return res.status(403);
+	    }
+	    res.status(500).send(err);
+	  });
+	};
+
+	module.exports.getOne = function (req, res) {
+	  models.User.where({ id: req.params.id }).fetch().then(function (profile) {
+	    if (!profile) {
+	      throw profile;
+	    }
+	    res.status(200).send(profile);
+	  }).error(function (err) {
+	    res.status(500).send(err);
+	  }).catch(function () {
+	    res.sendStatus(404);
+	  });
+	};
+
+	module.exports.update = function (req, res) {
+	  models.User.where({ id: req.params.id }).fetch().then(function (profile) {
+	    if (!profile) {
+	      throw profile;
+	    }
+	    return profile.save(req.body, { method: 'update' });
+	  }).then(function () {
+	    res.sendStatus(201);
+	  }).error(function (err) {
+	    res.status(500).send(err);
+	  }).catch(function () {
+	    res.sendStatus(404);
+	  });
+	};
+
+	// module.exports.deleteOne = (req, res) => {
+	//   models.Profile.where({ id: req.params.id }).fetch()
+	//     .then(profile => {
+	//       if (!profile) {
+	//         throw profile;
+	//       }
+	//       return profile.destroy();
+	//     })
+	//     .then(() => {
+	//       res.sendStatus(200);
+	//     })
+	//     .error(err => {
+	//       res.status(503).send(err);
+	//     })
+	//     .catch(() => {
+	//       res.sendStatus(404);
+	//     });
+	// };
+
+/***/ }),
+/* 95 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _require = __webpack_require__(69),
+	    Product = _require.Product;
+
+	module.exports.create = function (req, res) {
+	  res.status(500);
+	};
+
+	module.exports.getAll = function (req, res) {
+	  Product.where({}).query(function (qb) {
+	    return qb.limit(100);
+	  }).fetchAll().then(function (product) {
+	    if (!product) {
+	      throw product;
+	    }
+	    res.status(200).send({ results: product });
+	  }).error(function (err) {
+	    res.status(500).send(err);
+	  }).catch(function (err) {
+	    console.error(err);
+	    res.sendStatus(404);
+	  });
+	};
+
+	module.exports.getOne = function (req, res) {
+	  Product.where({ id: req.params.id }).fetch().then(function (product) {
+	    if (!product) {
+	      throw product;
+	    }
+	    res.status(200).send({ results: product });
+	  }).error(function (err) {
+	    res.status(500).send(err);
+	  }).catch(function (err) {
+	    console.error(err);
+	    res.sendStatus(404);
+	  });
+	};
+
+	module.exports.update = function (req, res) {
+	  Product.where({ id: req.params.id }).fetch().then(function (product) {
+	    if (!product) {
+	      throw product;
+	    }
+	    return product.save(req.body, { method: 'update' });
+	  }).then(function () {
+	    res.sendStatus(201);
+	  }).error(function (err) {
+	    res.status(500).send(err);
+	  }).catch(function () {
+	    res.sendStatus(404);
+	  });
+	};
+
+	module.exports.deleteOne = function (req, res) {
+	  models.Product.where({ id: req.params.id }).fetch().then(function (product) {
+	    if (!product) {
+	      throw product;
+	    }
+	    return product.destroy();
+	  }).then(function () {
+	    res.sendStatus(200);
+	  }).error(function (err) {
+	    res.status(503).send(err);
+	  }).catch(function () {
+	    res.sendStatus(404);
+	  });
+	};
+
+/***/ }),
+/* 96 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _require = __webpack_require__(69),
+	    Transaction = _require.Transaction,
+	    Purchase = _require.Purchase;
+
+	var axios = __webpack_require__(12);
+
+	var _require2 = __webpack_require__(97),
+	    overstock = _require2.overstock;
+
+	axios.defaults.headers.common['Authorization'] = overstock.Authorization;
+	var convert = __webpack_require__(80);
+
+	module.exports.create = function (req, res) {
+	  Transaction.forge({
+	    buyer_id: req.user.id
+	  }).save().then(function (result) {
+	    return Promise.all(req.body.cart.map(function (p) {
+	      Purchase.forge({
+	        transaction_id: result.id,
+	        product_id: p.id,
+	        quantity: req.body.quantities[p.prod_id] || 1
+	      }).save();
+	    }));
+	  }).then(function (result) {
+	    res.status(201);
+	  }).catch(function (err) {
+	    console.error(err);
+	    res.status(500).send(err);
+	  });
+	};
+
+	module.exports.getAll = function (req, res) {
+	  Transaction.where({ buyer_id: req.user.id }).fetchAll({
+	    withRelated: ['cart', 'buyer']
+	  }).then(function (transactions) {
+	    res.status(200).send(transactions);
+	  }).error(function (err) {
+	    res.status(500).send(err);
+	  }).catch(function () {
+	    res.sendStatus(404);
+	  });
+	};
+
+	module.exports.getOne = function (req, res) {
+	  Transaction.where({ buyer_id: req.params.id }).fetch({
+	    withRelated: ['cart', 'buyer']
+	  }).then(function (transaction) {
+	    if (!transaction) {
+	      throw transaction;
+	    }
+	    res.status(200).send(transaction);
+	  }).error(function (err) {
+	    res.status(500).send(err);
+	  }).catch(function () {
+	    res.sendStatus(404);
+	  });
+	};
+
+	module.exports.update = function (req, res) {
+	  Transaction.where({ id: req.params.id }).fetch().then(function (transaction) {
+	    if (!transaction) {
+	      throw transaction;
+	    }
+	    return transaction.save(req.body, { method: 'update' });
+	  }).then(function () {
+	    res.sendStatus(201);
+	  }).error(function (err) {
+	    res.status(500).send(err);
+	  }).catch(function () {
+	    res.sendStatus(404);
+	  });
+	};
+
+	module.exports.deleteOne = function (req, res) {
+	  res.status(401).end();
+	  //   Transaction.where({ id: req.params.id })
+	  //     .fetch()
+	  //     .then(transaction => {
+	  //       if (!transaction) {
+	  //         throw transaction;
+	  //       }
+	  //       return transaction.destroy();
+	  //     })
+	  //     .then(() => {
+	  //       res.sendStatus(200);
+	  //     })
+	  //     .error(err => {
+	  //       res.status(503).send(err);
+	  //     })
+	  //     .catch(() => {
+	  //       res.sendStatus(404);
+	  //     });
+	};
+
+/***/ }),
+/* 97 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	if (!process.env.TRAVIS) {
+	  module.exports = {
+	    overstock: __webpack_require__(98),
+	    amazon: __webpack_require__(99)
+	  };
+	} else {
+	  module.exports = {
+	    overstock: {
+	      'website-id': 'travis',
+	      Authorization: 'travis'
+	    },
+	    amazon: {
+	      associate_tag: 'travis',
+	      access_key_id: 'travis',
+	      secret_key: 'travis'
+	    }
+	  };
+	}
+
+/***/ }),
+/* 98 */
+/***/ (function(module, exports) {
+
+	"use strict";
+
+	module.exports = {
+	  'website-id': 8425112,
+	  Authorization: "00c32bd17328626a8b1a039e3c5786ed500ad7ecc0806ffc8668e3b037b042c7821f808b16e6fda92b32a16cfdd2e31cc1f7255ed343aeed47748a027e87715bd3/4531ccd13a192252ecc7299b9520861461b3ca0139c7fa4ca0f5506d7df53f0bd84aede7bea54b036c1f0288141e4ce1a43f81dae61d9411d2843684875515d9"
+	};
+
+/***/ }),
+/* 99 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	module.exports = {
+	  associate_tag: 'clarencebowen-20',
+	  access_key_id: 'AKIAISDV5IAQ3ZVZKZAQ',
+	  secret_key: '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'
+	};
+
+/***/ }),
+/* 100 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var axios = __webpack_require__(12);
+
+	var _require = __webpack_require__(97),
+	    overstock = _require.overstock,
+	    amazon = _require.amazon;
+
+	var _require2 = __webpack_require__(69),
+	    Product = _require2.Product,
+	    Transaction = _require2.Transaction;
+
+	var convert = __webpack_require__(80);
+	var parseString = __webpack_require__(81).parseString;
+	var CryptoJS = __webpack_require__(101);
+	var endpoint = 'webservices.amazon.com';
+	var uri = '/onca/xml';
+	var pairs = [];
+	var product_list = [];
+
+	var params = {
+	  'Service': 'AWSECommerceService',
+	  'Operation': 'ItemSearch',
+	  'AWSAccessKeyId': amazon.access_key_id,
+	  'AssociateTag': amazon.associate_tag,
+	  'SearchIndex': 'All',
+	  'Keywords': '',
+	  'ResponseGroup': 'Images,ItemAttributes'
+	};
+
+	var defaultImage = '';
+
+	var keys = void 0,
+	    canonical_query_string = void 0,
+	    string_to_sign = void 0,
+	    hash = void 0,
+	    signature = void 0,
+	    request_url = void 0,
+	    productListings = void 0;
+
+	/**
+	 * Search all apis with a given search term specified in the request body.
+	 */
+	module.exports.search = function (req, res) {
+
+	  if (!req.body.searchTerm || req.body.searchTerm.trim().length < 2) {
+	    console.log('search failed: requires body!');
+	    res.status(400).end(); // bad request
+	  }
+
+	  Product.query(function (qb) {
+	    qb.whereRaw('TRIM(LOWER(title)) LIKE \'%' + req.body.searchTerm.trim().toLowerCase() + '%\'').limit(20);
+	  }).fetchAll().then(function (products) {
+	    if (products.length === 0) {
+	      console.log('searching foreign');
+	      throw products;
+	    }
+	    console.log('searching local');
+	    res.status(200).send({ results: products });
+	  }).error(function (err) {
+	    res.status(500).send(err);
+	  }).catch(function (except) {
+	    return searchAmazon(req.body.searchTerm);
+	  }).then(function (responses) {
+	    if (!responses) {
+	      throw new Error('no response from amazon!');
+	    }
+	    return Product.fromAmazon(responses);
+	  }).then(function (results) {
+	    console.log('search results: ', results);
+	    res.json({ results: results }).status(200);
+	  }).catch(function () {
+	    var _console;
+
+	    (_console = console).error.apply(_console, arguments);
+	    res.status(500).end();
+	  }).error(function () {
+	    var _console2;
+
+	    (_console2 = console).error.apply(_console2, arguments);
+	    res.status(500).end();
+	  });
+	};
+
+	/**
+	 * Search Amazon given a search term.
+	 *  
+	 * @param {string} searchTerm 
+	 * @param {Promise} - Promise that resolves with a response from amazon
+	 */
+	var searchAmazon = function searchAmazon(searchTerm) {
+	  params.Timestamp = new Date().toISOString();
+	  params.Keywords = searchTerm;
+
+	  pairs = [];
+	  var keys = Object.keys(params);
+	  keys.sort().forEach(function (key) {
+	    return pairs.push(encodeURIComponent(key) + '=' + encodeURIComponent(params[key]));
+	  });
+
+	  canonical_query_string = pairs.join('&');
+
+	  string_to_sign = 'GET\n' + endpoint + '\n' + uri + '\n' + canonical_query_string;
+
+	  hash = CryptoJS.HmacSHA256(string_to_sign, amazon.secret_key);
+
+	  signature = hash.toString(CryptoJS.enc.Base64);
+
+	  request_url = 'http://' + endpoint + uri + '?' + canonical_query_string + '&Signature=' + encodeURIComponent(signature);
+
+	  return axios.get(request_url);
+	};
+
+/***/ }),
+/* 101 */
+/***/ (function(module, exports) {
+
+	module.exports = require("crypto-js");
+
+/***/ }),
+/* 102 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var express = __webpack_require__(4);
+	var router = express.Router();
+
+	var _require$Products = __webpack_require__(93).Products,
+	    getAll = _require$Products.getAll,
+	    getOne = _require$Products.getOne,
+	    update = _require$Products.update,
+	    deleteOne = _require$Products.deleteOne,
+	    create = _require$Products.create;
+
+	router.route('/').get(getAll).post(create);
+
+	router.route('/:id').get(getOne).put(update).delete(deleteOne);
+
+	module.exports = router;
+
+/***/ }),
+/* 103 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var express = __webpack_require__(4);
+	var router = express.Router();
+
+	var _require$Transactions = __webpack_require__(93).Transactions,
+	    create = _require$Transactions.create,
+	    getAll = _require$Transactions.getAll,
+	    getOne = _require$Transactions.getOne,
+	    update = _require$Transactions.update,
+	    deleteOne = _require$Transactions.deleteOne;
+
+	router.route('/').all(function (req, res, next) {
+	  if (req.isAuthenticated()) {
+	    next();
+	  } else {
+	    res.status(401).end();
+	  }
+	}).get(getAll).post(create);
+
+	router.route('/:id').all(function (req, res, next) {
+	  if (req.isAuthenticated()) {
+	    next();
+	  } else {
+	    res.status(401).end();
+	  }
+	}).get(getOne).put(update).delete(deleteOne);
+
+	module.exports = router;
+
+/***/ }),
+/* 104 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var express = __webpack_require__(4);
+	var router = express.Router();
+
+	var search = __webpack_require__(93).Search.search;
+
+	router.route('/').get(search).post(search);
+
+	module.exports = router;
+
+/***/ }),
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3561,7 +4275,7 @@
 
 	var _reactRedux = __webpack_require__(7);
 
-	var _path = __webpack_require__(52);
+	var _path = __webpack_require__(53);
 
 	var _path2 = _interopRequireDefault(_path);
 
@@ -3577,7 +4291,7 @@
 
 	var _app2 = _interopRequireDefault(_app);
 
-	var _StaticRouter = __webpack_require__(53);
+	var _StaticRouter = __webpack_require__(54);
 
 	var _StaticRouter2 = _interopRequireDefault(_StaticRouter);
 
@@ -3597,7 +4311,7 @@
 
 	var _routes2 = _interopRequireDefault(_routes);
 
-	var _middleware = __webpack_require__(54);
+	var _middleware = __webpack_require__(58);
 
 	var _middleware2 = _interopRequireDefault(_middleware);
 
@@ -3669,7 +4383,7 @@
 	exports.default = router;
 
 /***/ }),
-/* 89 */
+/* 106 */
 /***/ (function(module, exports) {
 
 	"use strict";

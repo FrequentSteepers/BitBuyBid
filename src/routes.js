@@ -2,6 +2,7 @@ import AppRoot from './components/app-root.jsx';
 import Home from './views/Home.jsx';
 import Login from './views/Login.jsx';
 import Signup from './views/Signup.jsx';
+import Logout from './views/Logout.jsx';
 
 const routes = [
   { component: AppRoot,
@@ -15,6 +16,9 @@ const routes = [
       },
       { path: '/signup',
         component: Signup 
+      },
+      { path: '/logout',
+        component: Logout 
       },
     ]
   }

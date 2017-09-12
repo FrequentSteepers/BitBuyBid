@@ -72,9 +72,9 @@ class CartWidget extends Component {
                           <Col xs={4} style={style.priceCol}>
                             <CardText style={style.delete}>
                               <div>
-                                <button style={{display:'inline-block'}} onClick={() => this.props.addToCart(product)}>+</button>
-                                <div style={{display:'inline-block'}}>{this.props.quantities[product.prod_id] || this.props.quantities[product.id]}</div>
-                                <button style={{display:'inline-block'}} onClick={() => this.props.decrementItem(product)}>-</button>
+                                <button style={style.inline} onClick={() => this.props.addToCart(product)}>+</button>
+                                <div style={style.inline}>{this.props.quantities[product.prod_id] || this.props.quantities[product.id]}</div>
+                                <button style={style.inline} onClick={() => this.props.decrementItem(product)}>-</button>
                               </div>
                               <button onClick={() => this.props.removeFromCart(product)}>remove</button>
                             </CardText>

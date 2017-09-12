@@ -86,5 +86,8 @@ export const style = {
   },
   cart: {
     display: 'inline-block'
+  },
+  inline: {
+    display:'inline-block'
   }
 };

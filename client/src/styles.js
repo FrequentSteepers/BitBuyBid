@@ -6,11 +6,7 @@ export const style = {
     float: 'right',
     zIndex: 2,
     paddingTop: '10px',
-    height: '300px',
-    display: 'flex',
-    flexWrap: 'wrap',
-    overflow: 'hidden',
-    justifyContent: 'space-around'
+    height: '300px'
   },
   paper: {
     width: '250px'
@@ -24,7 +20,7 @@ export const style = {
   title: {
     padding: '0px',
     whiteSpace: 'nowrap',
-    overflow: 'hidden',
+    overflow: 'hidden'
   },
   text: {
     padding: '0px',
@@ -60,7 +56,7 @@ export const style = {
   },
   gridList: {
     maxHeight: '100%',
-    overflowY: 'scroll',
+    overflowY: 'scroll'
   },
   subTitle: {
     color: 'black'

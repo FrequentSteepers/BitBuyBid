@@ -60,7 +60,7 @@ const serverConfig = {
   target: 'node',
   externals: [nodeExternals()],
   entry: ['babel-polyfill',
-    './lib/server.js',
+    './server/index.js',
   ],
   output: {
     path: __dirname + '/built',

@@ -8904,11 +8904,7 @@
 	_reactDom2.default.render(_react2.default.createElement(
 	  _reactRedux.Provider,
 	  { store: store },
-	  _react2.default.createElement(
-	    _reactRouterDom.BrowserRouter,
-	    null,
-	    _react2.default.createElement(_app2.default, null)
-	  )
+	  _react2.default.createElement(_app2.default, null)
 	), document.getElementById('root'));
 
 /***/ }),
@@ -33688,31 +33684,31 @@
 
 	var _routes2 = _interopRequireDefault(_routes);
 
-	var _Home = __webpack_require__(828);
+	var _Home = __webpack_require__(838);
 
 	var _Home2 = _interopRequireDefault(_Home);
 
-	var _Product = __webpack_require__(831);
+	var _Product = __webpack_require__(828);
 
 	var _Product2 = _interopRequireDefault(_Product);
 
-	var _Cart = __webpack_require__(833);
+	var _Cart = __webpack_require__(830);
 
 	var _Cart2 = _interopRequireDefault(_Cart);
 
-	var _Profile = __webpack_require__(837);
+	var _Profile = __webpack_require__(834);
 
 	var _Profile2 = _interopRequireDefault(_Profile);
 
-	var _Login = __webpack_require__(829);
+	var _Login = __webpack_require__(836);
 
 	var _Login2 = _interopRequireDefault(_Login);
 
-	var _Signup = __webpack_require__(830);
+	var _Signup = __webpack_require__(837);
 
 	var _Signup2 = _interopRequireDefault(_Signup);
 
-	var _Receipt = __webpack_require__(835);
+	var _Receipt = __webpack_require__(832);
 
 	var _Receipt2 = _interopRequireDefault(_Receipt);
 
@@ -33764,14 +33760,9 @@
 	            }
 	          }) },
 	        _react2.default.createElement(
-	          'div',
+	          _reactRouterDom.BrowserRouter,
 	          null,
-	          _react2.default.createElement(_Nav2.default, null),
-	          _react2.default.createElement(
-	            _reactRouterDom.BrowserRouter,
-	            null,
-	            (0, _reactRouterConfig.renderRoutes)(_routes2.default)
-	          )
+	          (0, _reactRouterConfig.renderRoutes)(_routes2.default)
 	        )
 	      );
 	    }
@@ -44600,15 +44591,15 @@
 
 	var _appRoot2 = _interopRequireDefault(_appRoot);
 
-	var _Home = __webpack_require__(828);
+	var _Home = __webpack_require__(838);
 
 	var _Home2 = _interopRequireDefault(_Home);
 
-	var _Login = __webpack_require__(829);
+	var _Login = __webpack_require__(836);
 
 	var _Login2 = _interopRequireDefault(_Login);
 
-	var _Signup = __webpack_require__(830);
+	var _Signup = __webpack_require__(837);
 
 	var _Signup2 = _interopRequireDefault(_Signup);
 
@@ -44666,19 +44657,96 @@
 
 	var _CartWidget2 = _interopRequireDefault(_CartWidget);
 
-	var _Route = __webpack_require__(586);
+	var _reactRouterDom = __webpack_require__(567);
 
-	var _Route2 = _interopRequireDefault(_Route);
+	var _MuiThemeProvider = __webpack_require__(604);
+
+	var _MuiThemeProvider2 = _interopRequireDefault(_MuiThemeProvider);
 
 	var _reactRouterConfig = __webpack_require__(825);
 
+	var _Product = __webpack_require__(828);
+
+	var _Product2 = _interopRequireDefault(_Product);
+
+	var _Cart = __webpack_require__(830);
+
+	var _Cart2 = _interopRequireDefault(_Cart);
+
+	var _Profile = __webpack_require__(834);
+
+	var _Profile2 = _interopRequireDefault(_Profile);
+
+	var _Login = __webpack_require__(836);
+
+	var _Login2 = _interopRequireDefault(_Login);
+
+	var _Signup = __webpack_require__(837);
+
+	var _Signup2 = _interopRequireDefault(_Signup);
+
+	var _Receipt = __webpack_require__(832);
+
+	var _Receipt2 = _interopRequireDefault(_Receipt);
+
+	var _Home = __webpack_require__(838);
+
+	var _Home2 = _interopRequireDefault(_Home);
+
+	var _Nav = __webpack_require__(839);
+
+	var _Nav2 = _interopRequireDefault(_Nav);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	// import Listings from '../components/Listings.jsx';
 	exports.default = function (_ref) {
 	  var route = _ref.route;
-	  return _react2.default.createElement('div', null);
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    _react2.default.createElement(_Nav2.default, null),
+	    _react2.default.createElement(
+	      _reactRouterDom.Switch,
+	      null,
+	      _react2.default.createElement(
+	        _reactRouterDom.Route,
+	        { path: '/login' },
+	        _react2.default.createElement(_Login2.default, null)
+	      ),
+	      _react2.default.createElement(
+	        _reactRouterDom.Route,
+	        { path: '/signup' },
+	        _react2.default.createElement(_Signup2.default, null)
+	      ),
+	      _react2.default.createElement(
+	        _reactRouterDom.Route,
+	        { path: '/receipt' },
+	        _react2.default.createElement(_Receipt2.default, null)
+	      ),
+	      _react2.default.createElement(
+	        _reactRouterDom.Route,
+	        { path: '/cart' },
+	        _react2.default.createElement(_Cart2.default, null)
+	      ),
+	      _react2.default.createElement(
+	        _reactRouterDom.Route,
+	        { path: '/product' },
+	        _react2.default.createElement(_Product2.default, null)
+	      ),
+	      _react2.default.createElement(
+	        _reactRouterDom.Route,
+	        { path: '/profile' },
+	        _react2.default.createElement(_Profile2.default, null)
+	      ),
+	      _react2.default.createElement(
+	        _reactRouterDom.Route,
+	        { path: '/' },
+	        _react2.default.createElement(_Home2.default, null)
+	      )
+	    )
+	  );
 	};
-	// import Listings from '../components/Listings.jsx';
 
 /***/ }),
 /* 748 */
@@ -53364,13 +53432,13 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Search = __webpack_require__(748);
+	var _axios = __webpack_require__(536);
 
-	var _Search2 = _interopRequireDefault(_Search);
+	var _axios2 = _interopRequireDefault(_axios);
 
-	var _CartWidget = __webpack_require__(818);
+	var _FeatListing = __webpack_require__(829);
 
-	var _CartWidget2 = _interopRequireDefault(_CartWidget);
+	var _FeatListing2 = _interopRequireDefault(_FeatListing);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -53379,47 +53447,714 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	// import Listings from '../components/Listings.jsx';
-
 
 	/*
-	  here is where we will update the redux state, dispatching an event 
-	  with the id of the item that was clicked
+	  we need a way indicate which product to retrieve
+	  detailed information on. 
+	  Proposal: save the id in the redux store as 'currentProductId'
+	  which can then be used to retrieve data from the servers
+	  or our database
 	*/
 
-	var Home = function (_React$Component) {
-	  _inherits(Home, _React$Component);
+	var Product = function (_Component) {
+	  _inherits(Product, _Component);
 
-	  function Home() {
-	    _classCallCheck(this, Home);
+	  function Product() {
+	    _classCallCheck(this, Product);
 
-	    return _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this));
+	    return _possibleConstructorReturn(this, (Product.__proto__ || Object.getPrototypeOf(Product)).apply(this, arguments));
 	  }
 
-	  _createClass(Home, [{
+	  _createClass(Product, [{
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(_CartWidget2.default, null),
-	        _react2.default.createElement(_Search2.default, null)
+	        _react2.default.createElement(_FeatListing2.default, null)
 	      );
-	    }
-	  }], [{
-	    key: 'fetchData',
-	    value: function fetchData(store) {
-	      return store;
 	    }
 	  }]);
 
-	  return Home;
-	}(_react2.default.Component);
+	  return Product;
+	}(_react.Component);
 
-	exports.default = Home;
+	exports.default = Product;
 
 /***/ }),
 /* 829 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(327);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(485);
+
+	var _Card = __webpack_require__(749);
+
+	var _reactRouterDom = __webpack_require__(567);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	// import { Grid, Row, Col } from 'react-flexbox-grid';
+
+
+	var style = {
+	  image: {
+	    float: 'left',
+	    left: '10px',
+	    top: '10px',
+	    margin: '0 auto',
+	    maxHeight: '300px',
+	    display: 'inline-block'
+	  },
+	  title: {
+	    display: 'inline-block'
+	  },
+	  rating: {},
+	  description: {}
+	};
+
+	var FeatListing = function (_Component) {
+	  _inherits(FeatListing, _Component);
+
+	  function FeatListing() {
+	    _classCallCheck(this, FeatListing);
+
+	    return _possibleConstructorReturn(this, (FeatListing.__proto__ || Object.getPrototypeOf(FeatListing)).apply(this, arguments));
+	  }
+
+	  _createClass(FeatListing, [{
+	    key: 'render',
+	    value: function render() {
+	      var selected = this.props.products[this.props.selectedId];
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        selected ? _react2.default.createElement(
+	          'div',
+	          null,
+	          _react2.default.createElement(
+	            _Card.Card,
+	            null,
+	            _react2.default.createElement('img', { src: selected.img_url_lg, style: style.image })
+	          ),
+	          _react2.default.createElement(
+	            _Card.Card,
+	            null,
+	            _react2.default.createElement(
+	              'h2',
+	              { style: style.title },
+	              selected.title
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _Card.Card,
+	            null,
+	            _react2.default.createElement(
+	              'div',
+	              { style: style.rating },
+	              'Rating: ',
+	              selected.rating
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _Card.Card,
+	            null,
+	            _react2.default.createElement(
+	              'div',
+	              { style: style.description },
+	              selected.description
+	            )
+	          )
+	        ) : _react2.default.createElement(
+	          'div',
+	          null,
+	          'Product not found'
+	        )
+	      );
+	    }
+	  }]);
+
+	  return FeatListing;
+	}(_react.Component);
+
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    products: state.products.products,
+	    selectedId: state.products.selectedId
+	  };
+	};
+
+	// const mapDispatchToProps = (dispatch) => {
+	//   return bindActionCreators({}, dispatch);
+	// };
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps)(FeatListing);
+
+/***/ }),
+/* 830 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(327);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(485);
+
+	var _redux = __webpack_require__(500);
+
+	var _products = __webpack_require__(563);
+
+	var _Listing = __webpack_require__(831);
+
+	var _Listing2 = _interopRequireDefault(_Listing);
+
+	var _Receipt = __webpack_require__(832);
+
+	var _Receipt2 = _interopRequireDefault(_Receipt);
+
+	var _CartItem = __webpack_require__(833);
+
+	var _CartItem2 = _interopRequireDefault(_CartItem);
+
+	var _reactRouterDom = __webpack_require__(567);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Checkout = function (_Component) {
+	  _inherits(Checkout, _Component);
+
+	  function Checkout(props) {
+	    _classCallCheck(this, Checkout);
+
+	    return _possibleConstructorReturn(this, (Checkout.__proto__ || Object.getPrototypeOf(Checkout)).call(this, props));
+	  }
+
+	  _createClass(Checkout, [{
+	    key: 'render',
+	    value: function render() {
+	      var _this2 = this;
+
+	      return _react2.default.createElement(
+	        _reactRouterDom.BrowserRouter,
+	        null,
+	        _react2.default.createElement(
+	          'div',
+	          null,
+	          this.props.cart.map(function (item, i) {
+	            return _react2.default.createElement(_CartItem2.default, { key: i, item: item });
+	          }),
+	          _react2.default.createElement(
+	            'div',
+	            null,
+	            'Subtotal: $',
+	            this.props.cart.reduce(function (acc, curr) {
+	              return acc + Number(curr.price) * _this2.props.quantities[curr.prod_id];
+	            }, 0).toFixed(2)
+	          ),
+	          _react2.default.createElement(
+	            _reactRouterDom.Switch,
+	            null,
+	            _react2.default.createElement(
+	              _reactRouterDom.Route,
+	              { exact: true, path: '/cart/confirm' },
+	              _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                  _reactRouterDom.Link,
+	                  { to: '/receipt', onClick: function onClick() {
+	                      return _this2.props.checkout();
+	                    } },
+	                  _react2.default.createElement(
+	                    'button',
+	                    null,
+	                    'Confirm'
+	                  )
+	                ),
+	                _react2.default.createElement(
+	                  _reactRouterDom.Link,
+	                  { to: '/cart' },
+	                  _react2.default.createElement(
+	                    'button',
+	                    null,
+	                    'Abort'
+	                  )
+	                )
+	              )
+	            ),
+	            _react2.default.createElement(
+	              _reactRouterDom.Route,
+	              { path: '/cart' },
+	              _react2.default.createElement(
+	                _reactRouterDom.Link,
+	                { to: '/cart/confirm' },
+	                _react2.default.createElement(
+	                  'button',
+	                  null,
+	                  'Checkout'
+	                )
+	              )
+	            ),
+	            _react2.default.createElement(
+	              _reactRouterDom.Route,
+	              { path: '/receipt' },
+	              _react2.default.createElement(_Receipt2.default, null)
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Checkout;
+	}(_react.Component);
+
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    cart: state.products.cart,
+	    quantities: state.products.quantities
+	  };
+	};
+
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return (0, _redux.bindActionCreators)({ createCart: _products.createCart, addToCart: _products.addToCart, removeFromCart: _products.removeFromCart, checkout: _products.checkout }, dispatch);
+	};
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Checkout);
+
+/***/ }),
+/* 831 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(327);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouterDom = __webpack_require__(567);
+
+	var _reactRedux = __webpack_require__(485);
+
+	var _redux = __webpack_require__(500);
+
+	var _products = __webpack_require__(563);
+
+	var _Card = __webpack_require__(749);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Listing = function Listing(_ref) {
+	  var item = _ref.item,
+	      addToCart = _ref.addToCart;
+
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    _react2.default.createElement(
+	      _Card.Card,
+	      null,
+	      _react2.default.createElement(
+	        'div',
+	        null,
+	        item.title,
+	        _react2.default.createElement('br', null),
+	        _react2.default.createElement(
+	          _reactRouterDom.Link,
+	          { to: '/product?id=' + item.id },
+	          _react2.default.createElement('img', { src: item.img_url_sm })
+	        ),
+	        'Rating: ',
+	        item.rating,
+	        _react2.default.createElement(
+	          'button',
+	          { onClick: function onClick() {
+	              addToCart(item);
+	            } },
+	          'Add to Cart!'
+	        )
+	      )
+	    )
+	  );
+	};
+
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    cart: state.products.cart
+	  };
+	};
+
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return (0, _redux.bindActionCreators)({ addToCart: _products.addToCart }, dispatch);
+	};
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Listing);
+
+/***/ }),
+/* 832 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(327);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Receipt = function (_Component) {
+	  _inherits(Receipt, _Component);
+
+	  function Receipt(props) {
+	    _classCallCheck(this, Receipt);
+
+	    return _possibleConstructorReturn(this, (Receipt.__proto__ || Object.getPrototypeOf(Receipt)).call(this, props));
+	  }
+
+	  _createClass(Receipt, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'h2',
+	          null,
+	          'Thank you!'
+	        ),
+	        _react2.default.createElement(
+	          'h3',
+	          null,
+	          'Your product should be shipping shortly.'
+	        ),
+	        _react2.default.createElement(
+	          'button',
+	          null,
+	          'Get Bitcoits'
+	        ),
+	        _react2.default.createElement(
+	          'button',
+	          null,
+	          'Return to cart'
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Receipt;
+	}(_react.Component);
+
+	exports.default = Receipt;
+
+/***/ }),
+/* 833 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(327);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouterDom = __webpack_require__(567);
+
+	var _reactRedux = __webpack_require__(485);
+
+	var _redux = __webpack_require__(500);
+
+	var _products = __webpack_require__(563);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	// import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+
+	var CartItem = function CartItem(_ref) {
+	  var item = _ref.item,
+	      addToCart = _ref.addToCart,
+	      removeFromCart = _ref.removeFromCart,
+	      quantities = _ref.quantities,
+	      decrementItem = _ref.decrementItem;
+
+	  return _react2.default.createElement(
+	    'div',
+	    null,
+	    _react2.default.createElement(
+	      'div',
+	      null,
+	      _react2.default.createElement(
+	        'h4',
+	        null,
+	        item.title
+	      ),
+	      ' ',
+	      _react2.default.createElement('br', null),
+	      _react2.default.createElement(
+	        _reactRouterDom.Link,
+	        { to: '/product?id=' + item.id },
+	        _react2.default.createElement('img', { src: item.img_url_sm })
+	      ),
+	      _react2.default.createElement(
+	        'button',
+	        { onClick: function onClick() {
+	            addToCart(item);
+	          } },
+	        '+'
+	      ),
+	      _react2.default.createElement(
+	        'span',
+	        null,
+	        ' ',
+	        quantities[item.prod_id] || quantities[item.id],
+	        ' '
+	      ),
+	      _react2.default.createElement(
+	        'button',
+	        { onClick: function onClick() {
+	            decrementItem(item);
+	          } },
+	        '-'
+	      ),
+	      _react2.default.createElement('br', null),
+	      _react2.default.createElement(
+	        'button',
+	        { onClick: function onClick() {
+	            removeFromCart(item);
+	          } },
+	        'Remove from Cart'
+	      ),
+	      _react2.default.createElement(
+	        'p',
+	        null,
+	        '$',
+	        item.price ? Number(item.price).toFixed(2) : 0
+	      )
+	    )
+	  );
+	};
+
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    quantities: state.products.quantities
+	  };
+	};
+
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return (0, _redux.bindActionCreators)({ addToCart: _products.addToCart, removeFromCart: _products.removeFromCart, decrementItem: _products.decrementItem }, dispatch);
+	};
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(CartItem);
+
+/***/ }),
+/* 834 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(327);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _redux = __webpack_require__(500);
+
+	var _reactRedux = __webpack_require__(485);
+
+	var _Transactions = __webpack_require__(835);
+
+	var _Transactions2 = _interopRequireDefault(_Transactions);
+
+	var _Card = __webpack_require__(749);
+
+	var _Paper = __webpack_require__(758);
+
+	var _Paper2 = _interopRequireDefault(_Paper);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    user: state.app.user
+	  };
+	};
+
+	var Profile = function (_Component) {
+	  _inherits(Profile, _Component);
+
+	  function Profile(props) {
+	    _classCallCheck(this, Profile);
+
+	    return _possibleConstructorReturn(this, (Profile.__proto__ || Object.getPrototypeOf(Profile)).call(this, props));
+	  }
+
+	  _createClass(Profile, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          _Paper2.default,
+	          null,
+	          _react2.default.createElement(
+	            _Card.Card,
+	            null,
+	            _react2.default.createElement(
+	              _Card.CardHeader,
+	              null,
+	              _react2.default.createElement(
+	                'h1',
+	                null,
+	                this.props.user.first + ' ' + this.props.user.last
+	              )
+	            )
+	          ),
+	          _react2.default.createElement(
+	            _Card.Card,
+	            null,
+	            _react2.default.createElement(_Transactions2.default, null)
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return Profile;
+	}(_react.Component);
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps)(Profile);
+
+/***/ }),
+/* 835 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(327);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _redux = __webpack_require__(500);
+
+	var _reactRedux = __webpack_require__(485);
+
+	var _app = __webpack_require__(535);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    state: state.app.user.transactions
+	  };
+	};
+
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return (0, _redux.bindActionCreators)({
+	    setTransactions: _app.setTransactions
+	  }, dispatch);
+	};
+
+	var Transactions = function (_Component) {
+	  _inherits(Transactions, _Component);
+
+	  function Transactions(props) {
+	    _classCallCheck(this, Transactions);
+
+	    return _possibleConstructorReturn(this, (Transactions.__proto__ || Object.getPrototypeOf(Transactions)).call(this, props));
+	  }
+
+	  _createClass(Transactions, [{
+	    key: 'render',
+	    value: function render() {
+	      this.props.setTransactions();
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        'This will be the transactions!'
+	      );
+	    }
+	  }]);
+
+	  return Transactions;
+	}(_react.Component);
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Transactions);
+
+/***/ }),
+/* 836 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53555,7 +54290,7 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Login);
 
 /***/ }),
-/* 830 */
+/* 837 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -53747,675 +54482,6 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Signup);
 
 /***/ }),
-/* 831 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(327);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _axios = __webpack_require__(536);
-
-	var _axios2 = _interopRequireDefault(_axios);
-
-	var _FeatListing = __webpack_require__(832);
-
-	var _FeatListing2 = _interopRequireDefault(_FeatListing);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	/*
-	  we need a way indicate which product to retrieve
-	  detailed information on. 
-	  Proposal: save the id in the redux store as 'currentProductId'
-	  which can then be used to retrieve data from the servers
-	  or our database
-	*/
-
-	var Product = function (_Component) {
-	  _inherits(Product, _Component);
-
-	  function Product() {
-	    _classCallCheck(this, Product);
-
-	    return _possibleConstructorReturn(this, (Product.__proto__ || Object.getPrototypeOf(Product)).apply(this, arguments));
-	  }
-
-	  _createClass(Product, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(_FeatListing2.default, null)
-	      );
-	    }
-	  }]);
-
-	  return Product;
-	}(_react.Component);
-
-	exports.default = Product;
-
-/***/ }),
-/* 832 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(327);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRedux = __webpack_require__(485);
-
-	var _Card = __webpack_require__(749);
-
-	var _reactRouterDom = __webpack_require__(567);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	// import { Grid, Row, Col } from 'react-flexbox-grid';
-
-
-	var style = {
-	  image: {
-	    float: 'left',
-	    left: '10px',
-	    top: '10px',
-	    margin: '0 auto',
-	    maxHeight: '300px',
-	    display: 'inline-block'
-	  },
-	  title: {
-	    display: 'inline-block'
-	  },
-	  rating: {},
-	  description: {}
-	};
-
-	var FeatListing = function (_Component) {
-	  _inherits(FeatListing, _Component);
-
-	  function FeatListing() {
-	    _classCallCheck(this, FeatListing);
-
-	    return _possibleConstructorReturn(this, (FeatListing.__proto__ || Object.getPrototypeOf(FeatListing)).apply(this, arguments));
-	  }
-
-	  _createClass(FeatListing, [{
-	    key: 'render',
-	    value: function render() {
-	      var selected = this.props.products[this.props.selectedId];
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        selected ? _react2.default.createElement(
-	          'div',
-	          null,
-	          _react2.default.createElement(
-	            _Card.Card,
-	            null,
-	            _react2.default.createElement('img', { src: selected.img_url_lg, style: style.image })
-	          ),
-	          _react2.default.createElement(
-	            _Card.Card,
-	            null,
-	            _react2.default.createElement(
-	              'h2',
-	              { style: style.title },
-	              selected.title
-	            )
-	          ),
-	          _react2.default.createElement(
-	            _Card.Card,
-	            null,
-	            _react2.default.createElement(
-	              'div',
-	              { style: style.rating },
-	              'Rating: ',
-	              selected.rating
-	            )
-	          ),
-	          _react2.default.createElement(
-	            _Card.Card,
-	            null,
-	            _react2.default.createElement(
-	              'div',
-	              { style: style.description },
-	              selected.description
-	            )
-	          )
-	        ) : _react2.default.createElement(
-	          'div',
-	          null,
-	          'Product not found'
-	        )
-	      );
-	    }
-	  }]);
-
-	  return FeatListing;
-	}(_react.Component);
-
-	var mapStateToProps = function mapStateToProps(state) {
-	  return {
-	    products: state.products.products,
-	    selectedId: state.products.selectedId
-	  };
-	};
-
-	// const mapDispatchToProps = (dispatch) => {
-	//   return bindActionCreators({}, dispatch);
-	// };
-
-	exports.default = (0, _reactRedux.connect)(mapStateToProps)(FeatListing);
-
-/***/ }),
-/* 833 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(327);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRedux = __webpack_require__(485);
-
-	var _redux = __webpack_require__(500);
-
-	var _products = __webpack_require__(563);
-
-	var _Listing = __webpack_require__(834);
-
-	var _Listing2 = _interopRequireDefault(_Listing);
-
-	var _Receipt = __webpack_require__(835);
-
-	var _Receipt2 = _interopRequireDefault(_Receipt);
-
-	var _CartItem = __webpack_require__(836);
-
-	var _CartItem2 = _interopRequireDefault(_CartItem);
-
-	var _reactRouterDom = __webpack_require__(567);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Checkout = function (_Component) {
-	  _inherits(Checkout, _Component);
-
-	  function Checkout(props) {
-	    _classCallCheck(this, Checkout);
-
-	    return _possibleConstructorReturn(this, (Checkout.__proto__ || Object.getPrototypeOf(Checkout)).call(this, props));
-	  }
-
-	  _createClass(Checkout, [{
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
-
-	      return _react2.default.createElement(
-	        _reactRouterDom.BrowserRouter,
-	        null,
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          this.props.cart.map(function (item, i) {
-	            return _react2.default.createElement(_CartItem2.default, { key: i, item: item });
-	          }),
-	          _react2.default.createElement(
-	            'div',
-	            null,
-	            'Subtotal: $',
-	            this.props.cart.reduce(function (acc, curr) {
-	              return acc + Number(curr.price) * _this2.props.quantities[curr.prod_id];
-	            }, 0).toFixed(2)
-	          ),
-	          _react2.default.createElement(
-	            _reactRouterDom.Switch,
-	            null,
-	            _react2.default.createElement(
-	              _reactRouterDom.Route,
-	              { exact: true, path: '/cart/confirm' },
-	              _react2.default.createElement(
-	                'div',
-	                null,
-	                _react2.default.createElement(
-	                  _reactRouterDom.Link,
-	                  { to: '/receipt', onClick: function onClick() {
-	                      return _this2.props.checkout();
-	                    } },
-	                  _react2.default.createElement(
-	                    'button',
-	                    null,
-	                    'Confirm'
-	                  )
-	                ),
-	                _react2.default.createElement(
-	                  _reactRouterDom.Link,
-	                  { to: '/cart' },
-	                  _react2.default.createElement(
-	                    'button',
-	                    null,
-	                    'Abort'
-	                  )
-	                )
-	              )
-	            ),
-	            _react2.default.createElement(
-	              _reactRouterDom.Route,
-	              { path: '/cart' },
-	              _react2.default.createElement(
-	                _reactRouterDom.Link,
-	                { to: '/cart/confirm' },
-	                _react2.default.createElement(
-	                  'button',
-	                  null,
-	                  'Checkout'
-	                )
-	              )
-	            ),
-	            _react2.default.createElement(
-	              _reactRouterDom.Route,
-	              { path: '/receipt' },
-	              _react2.default.createElement(_Receipt2.default, null)
-	            )
-	          )
-	        )
-	      );
-	    }
-	  }]);
-
-	  return Checkout;
-	}(_react.Component);
-
-	var mapStateToProps = function mapStateToProps(state) {
-	  return {
-	    cart: state.products.cart,
-	    quantities: state.products.quantities
-	  };
-	};
-
-	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-	  return (0, _redux.bindActionCreators)({ createCart: _products.createCart, addToCart: _products.addToCart, removeFromCart: _products.removeFromCart, checkout: _products.checkout }, dispatch);
-	};
-
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Checkout);
-
-/***/ }),
-/* 834 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(327);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRouterDom = __webpack_require__(567);
-
-	var _reactRedux = __webpack_require__(485);
-
-	var _redux = __webpack_require__(500);
-
-	var _products = __webpack_require__(563);
-
-	var _Card = __webpack_require__(749);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var Listing = function Listing(_ref) {
-	  var item = _ref.item,
-	      addToCart = _ref.addToCart;
-
-	  return _react2.default.createElement(
-	    'div',
-	    null,
-	    _react2.default.createElement(
-	      _Card.Card,
-	      null,
-	      _react2.default.createElement(
-	        'div',
-	        null,
-	        item.title,
-	        _react2.default.createElement('br', null),
-	        _react2.default.createElement(
-	          _reactRouterDom.Link,
-	          { to: '/product?id=' + item.id },
-	          _react2.default.createElement('img', { src: item.img_url_sm })
-	        ),
-	        'Rating: ',
-	        item.rating,
-	        _react2.default.createElement(
-	          'button',
-	          { onClick: function onClick() {
-	              addToCart(item);
-	            } },
-	          'Add to Cart!'
-	        )
-	      )
-	    )
-	  );
-	};
-
-	var mapStateToProps = function mapStateToProps(state) {
-	  return {
-	    cart: state.products.cart
-	  };
-	};
-
-	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-	  return (0, _redux.bindActionCreators)({ addToCart: _products.addToCart }, dispatch);
-	};
-
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Listing);
-
-/***/ }),
-/* 835 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(327);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Receipt = function (_Component) {
-	  _inherits(Receipt, _Component);
-
-	  function Receipt(props) {
-	    _classCallCheck(this, Receipt);
-
-	    return _possibleConstructorReturn(this, (Receipt.__proto__ || Object.getPrototypeOf(Receipt)).call(this, props));
-	  }
-
-	  _createClass(Receipt, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(
-	          'h2',
-	          null,
-	          'Thank you!'
-	        ),
-	        _react2.default.createElement(
-	          'h3',
-	          null,
-	          'Your product should be shipping shortly.'
-	        ),
-	        _react2.default.createElement(
-	          'button',
-	          null,
-	          'Get Bitcoits'
-	        ),
-	        _react2.default.createElement(
-	          'button',
-	          null,
-	          'Return to cart'
-	        )
-	      );
-	    }
-	  }]);
-
-	  return Receipt;
-	}(_react.Component);
-
-	exports.default = Receipt;
-
-/***/ }),
-/* 836 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _react = __webpack_require__(327);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _reactRouterDom = __webpack_require__(567);
-
-	var _reactRedux = __webpack_require__(485);
-
-	var _redux = __webpack_require__(500);
-
-	var _products = __webpack_require__(563);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	// import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
-
-	var CartItem = function CartItem(_ref) {
-	  var item = _ref.item,
-	      addToCart = _ref.addToCart,
-	      removeFromCart = _ref.removeFromCart,
-	      quantities = _ref.quantities,
-	      decrementItem = _ref.decrementItem;
-
-	  return _react2.default.createElement(
-	    'div',
-	    null,
-	    _react2.default.createElement(
-	      'div',
-	      null,
-	      _react2.default.createElement(
-	        'h4',
-	        null,
-	        item.title
-	      ),
-	      ' ',
-	      _react2.default.createElement('br', null),
-	      _react2.default.createElement(
-	        _reactRouterDom.Link,
-	        { to: '/product?id=' + item.id },
-	        _react2.default.createElement('img', { src: item.img_url_sm })
-	      ),
-	      _react2.default.createElement(
-	        'button',
-	        { onClick: function onClick() {
-	            addToCart(item);
-	          } },
-	        '+'
-	      ),
-	      _react2.default.createElement(
-	        'span',
-	        null,
-	        ' ',
-	        quantities[item.prod_id] || quantities[item.id],
-	        ' '
-	      ),
-	      _react2.default.createElement(
-	        'button',
-	        { onClick: function onClick() {
-	            decrementItem(item);
-	          } },
-	        '-'
-	      ),
-	      _react2.default.createElement('br', null),
-	      _react2.default.createElement(
-	        'button',
-	        { onClick: function onClick() {
-	            removeFromCart(item);
-	          } },
-	        'Remove from Cart'
-	      ),
-	      _react2.default.createElement(
-	        'p',
-	        null,
-	        '$',
-	        item.price ? Number(item.price).toFixed(2) : 0
-	      )
-	    )
-	  );
-	};
-
-	var mapStateToProps = function mapStateToProps(state) {
-	  return {
-	    quantities: state.products.quantities
-	  };
-	};
-
-	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-	  return (0, _redux.bindActionCreators)({ addToCart: _products.addToCart, removeFromCart: _products.removeFromCart, decrementItem: _products.decrementItem }, dispatch);
-	};
-
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(CartItem);
-
-/***/ }),
-/* 837 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(327);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _redux = __webpack_require__(500);
-
-	var _reactRedux = __webpack_require__(485);
-
-	var _Transactions = __webpack_require__(838);
-
-	var _Transactions2 = _interopRequireDefault(_Transactions);
-
-	var _Card = __webpack_require__(749);
-
-	var _Paper = __webpack_require__(758);
-
-	var _Paper2 = _interopRequireDefault(_Paper);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var mapStateToProps = function mapStateToProps(state) {
-	  return {
-	    user: state.app.user
-	  };
-	};
-
-	var Profile = function (_Component) {
-	  _inherits(Profile, _Component);
-
-	  function Profile(props) {
-	    _classCallCheck(this, Profile);
-
-	    return _possibleConstructorReturn(this, (Profile.__proto__ || Object.getPrototypeOf(Profile)).call(this, props));
-	  }
-
-	  _createClass(Profile, [{
-	    key: 'render',
-	    value: function render() {
-	      return _react2.default.createElement(
-	        'div',
-	        null,
-	        _react2.default.createElement(
-	          _Paper2.default,
-	          null,
-	          _react2.default.createElement(
-	            _Card.Card,
-	            null,
-	            _react2.default.createElement(
-	              _Card.CardHeader,
-	              null,
-	              _react2.default.createElement(
-	                'h1',
-	                null,
-	                this.props.user.first + ' ' + this.props.user.last
-	              )
-	            )
-	          ),
-	          _react2.default.createElement(
-	            _Card.Card,
-	            null,
-	            _react2.default.createElement(_Transactions2.default, null)
-	          )
-	        )
-	      );
-	    }
-	  }]);
-
-	  return Profile;
-	}(_react.Component);
-
-	exports.default = (0, _reactRedux.connect)(mapStateToProps)(Profile);
-
-/***/ }),
 /* 838 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -54431,11 +54497,13 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _redux = __webpack_require__(500);
+	var _Search = __webpack_require__(748);
 
-	var _reactRedux = __webpack_require__(485);
+	var _Search2 = _interopRequireDefault(_Search);
 
-	var _app = __webpack_require__(535);
+	var _CartWidget = __webpack_require__(818);
+
+	var _CartWidget2 = _interopRequireDefault(_CartWidget);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -54444,44 +54512,45 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	// import Listings from '../components/Listings.jsx';
 
-	var mapStateToProps = function mapStateToProps(state) {
-	  return {
-	    state: state.app.user.transactions
-	  };
-	};
 
-	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-	  return (0, _redux.bindActionCreators)({
-	    setTransactions: _app.setTransactions
-	  }, dispatch);
-	};
+	/*
+	  here is where we will update the redux state, dispatching an event 
+	  with the id of the item that was clicked
+	        <CartWidget />
+	        <Search/> 
+	*/
 
-	var Transactions = function (_Component) {
-	  _inherits(Transactions, _Component);
+	var Home = function (_React$Component) {
+	  _inherits(Home, _React$Component);
 
-	  function Transactions(props) {
-	    _classCallCheck(this, Transactions);
+	  function Home() {
+	    _classCallCheck(this, Home);
 
-	    return _possibleConstructorReturn(this, (Transactions.__proto__ || Object.getPrototypeOf(Transactions)).call(this, props));
+	    return _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this));
 	  }
 
-	  _createClass(Transactions, [{
+	  _createClass(Home, [{
 	    key: 'render',
 	    value: function render() {
-	      this.props.setTransactions();
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        'This will be the transactions!'
+	        'home view'
 	      );
+	    }
+	  }], [{
+	    key: 'fetchData',
+	    value: function fetchData(store) {
+	      return store;
 	    }
 	  }]);
 
-	  return Transactions;
-	}(_react.Component);
+	  return Home;
+	}(_react2.default.Component);
 
-	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Transactions);
+	exports.default = Home;
 
 /***/ }),
 /* 839 */

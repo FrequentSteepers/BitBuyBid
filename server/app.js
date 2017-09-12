@@ -1,8 +1,23 @@
-'use strict';
-const express = require('express');
-const path = require('path');
-const middleware = require('./middleware');
-const routes = require('./routes');
+import express from 'express';
+import React from 'react';
+import { renderToString } from 'react-dom/server';
+import { Provider } from 'react-redux';
+import configureStore from '../src/store/index.js';
+import renderFullHTMLPage from '../renderFullHTMLPage';
+import App from '../src/views/app.jsx';
+import path from 'path';
+
+import StaticRouter from 'react-router-dom/StaticRouter';
+
+import { matchRoutes, renderRoutes } from 'react-router-config';
+
+import routes from '../src/routes.js';
+import reducers from '../src/store/modules';
+
+import middleware from './middleware';
+import router from './routes/router.jsx';
+
+global.navigator = { userAgent: 'all' };
 
 const app = express();
 
@@ -19,16 +34,23 @@ app.use(middleware.passport.session());
 app.use(middleware.flash());
 
 
-app.use('/auth', routes.auth);
-app.use('/api', routes.api);
-app.use('/api/users', routes.users);
-app.use('/api/products', routes.products);
-app.use('/api/transactions', routes.transactions);
-app.use('/api/search', routes.search);
+// app.use('/auth', routes.auth);
+// app.use('/api', routes.api);
+// app.use('/api/users', routes.users);
+// app.use('/api/products', routes.products);
+// app.use('/api/transactions', routes.transactions);
+// app.use('/api/search', routes.search);
 
-app.get('*/app.js', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../public/dist/bundle.js'));
-});
+app.disable('x-powered-by');
+app.use('/images', express.static(path.join(__dirname, '../src/assets/images')));
+app.use('/scripts', express.static('built'));
+app.use('/styles', express.static('lib'));
+app.use('/built', express.static(path.join(__dirname, 'built')));
+app.use('/built', express.static('built'));
+app.use(express.static(path.join(__dirname, '../')));
+app.get('/favicon.ico', (req, res) => res.send(''));
+
+app.use('/', router);
 
 //if there is a carrot error, then that means that the file being 
 //served is expected to be of another format, but is in HTML, 

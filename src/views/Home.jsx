@@ -6,6 +6,8 @@ import CartWidget from '../components/CartWidget.jsx';
 /*
   here is where we will update the redux state, dispatching an event 
   with the id of the item that was clicked
+        <CartWidget />
+        <Search/> 
 */
 
 class Home extends React.Component {
@@ -20,8 +22,7 @@ class Home extends React.Component {
   render() {
     return (
       <div>
-        <CartWidget />
-        <Search/> 
+        {'home view'}
       </div>
     );
   }

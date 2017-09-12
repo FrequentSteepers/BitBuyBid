@@ -9,8 +9,6 @@ const store = configureStore(window.__PRELOADED_STATE__, window);
 
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <App />
   </Provider>
   , document.getElementById('root'));

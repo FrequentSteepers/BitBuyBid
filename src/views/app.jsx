@@ -52,12 +52,9 @@ class App extends React.Component {
           left: 0
         }
       })}>
-          <div>
-          <Nav />
           <BrowserRouter>
             {renderRoutes(routes)}
           </BrowserRouter>
-          </div>
       </MuiThemeProvider>
     );
   }

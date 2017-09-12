@@ -93,8 +93,19 @@ Product.fromAmazon = (results) => {
           .fetchAll()
           .then(products => {
             if (products && products.length > 0) {
-              product.id = products.models[0].id;
-              return product;
+              return {           
+                'id': products.models[0].id,
+                'prod_id': product.ASIN[0] + '|AMZN',
+                'asin': product.ASIN[0],
+                'img_url_sm': product.SmallImage ? product.SmallImage[0].URL[0] : defaultImage,
+                'img_url_md': product.MediumImage ? product.MediumImage[0].URL[0] : defaultImage,
+                'img_url_lg': product.LargeImage ? product.LargeImage[0].URL[0] : defaultImage,
+                'buy_url': product.DetailPageURL[0].substring(0, product.DetailPageURL[0].indexOf('?')),
+                'title': product.ItemAttributes[0].Title[0],
+                'price': product.ItemAttributes[0].ListPrice ? Number(product.ItemAttributes[0].ListPrice[0].FormattedPrice[0].slice(1)) : null,
+                'description': product.ItemAttributes[0].Feature ? product.ItemAttributes[0].Feature.join('; ') : '',
+                'type': 'amzn'
+              };
             } else {
               // add new amazon product to db with title and ASIN:
               // product.ItemAttributes[0].Title[0], product.ASIN[0]

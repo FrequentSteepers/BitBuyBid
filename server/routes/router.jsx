@@ -26,14 +26,11 @@ import { matchRoutes, renderRoutes } from 'react-router-config';
 const router = express.Router();
 
 router.get('/', (req, res) => {
+
+  console.log('user', req.user);
+
   const app = {
-    user: 
-    {
-      id: 1,
-      first: 'server',
-      last: 'server',
-      username: 'server'
-    },
+    user: req.isAuthenticated() ? req.user : null, 
   };
 
   const store = configureStore({ app });

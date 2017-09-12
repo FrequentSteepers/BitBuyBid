@@ -61,7 +61,7 @@
 	'use strict';
 
 	var app = __webpack_require__(3);
-	var models = __webpack_require__(69);
+	var models = __webpack_require__(71);
 	var PORT = Number(process.env.PORT) || 3000;
 
 	app.listen(PORT, function () {
@@ -69,7 +69,7 @@
 	});
 
 	// start cronjobs
-	__webpack_require__(106)(models);
+	__webpack_require__(108)(models);
 
 /***/ }),
 /* 3 */
@@ -101,11 +101,11 @@
 
 	var _app2 = _interopRequireDefault(_app);
 
-	var _path = __webpack_require__(53);
+	var _path = __webpack_require__(55);
 
 	var _path2 = _interopRequireDefault(_path);
 
-	var _StaticRouter = __webpack_require__(54);
+	var _StaticRouter = __webpack_require__(56);
 
 	var _StaticRouter2 = _interopRequireDefault(_StaticRouter);
 
@@ -119,13 +119,13 @@
 
 	var _modules2 = _interopRequireDefault(_modules);
 
-	var _index3 = __webpack_require__(55);
+	var _index3 = __webpack_require__(57);
 
-	var _middleware = __webpack_require__(58);
+	var _middleware = __webpack_require__(60);
 
 	var _middleware2 = _interopRequireDefault(_middleware);
 
-	var _router = __webpack_require__(105);
+	var _router = __webpack_require__(107);
 
 	var _router2 = _interopRequireDefault(_router);
 
@@ -393,7 +393,7 @@
 
 	var handleLogout = exports.handleLogout = function handleLogout() {
 	  return function (dispatch) {
-	    _axios2.default.get('/logout').then(function (res) {
+	    _axios2.default.get('/auth/logout').then(function (res) {
 	      console.log(res);
 	      dispatch({
 	        type: appTypes.SET_USER,
@@ -737,7 +737,7 @@
 
 	var _Receipt2 = _interopRequireDefault(_Receipt);
 
-	var _Nav = __webpack_require__(48);
+	var _Nav = __webpack_require__(50);
 
 	var _Nav2 = _interopRequireDefault(_Nav);
 
@@ -859,7 +859,7 @@
 
 	var _Signup2 = _interopRequireDefault(_Signup);
 
-	var _Logout = __webpack_require__(47);
+	var _Logout = __webpack_require__(49);
 
 	var _Logout2 = _interopRequireDefault(_Logout);
 
@@ -955,11 +955,11 @@
 
 	var _Home2 = _interopRequireDefault(_Home);
 
-	var _Logout = __webpack_require__(47);
+	var _Logout = __webpack_require__(49);
 
 	var _Logout2 = _interopRequireDefault(_Logout);
 
-	var _Nav = __webpack_require__(48);
+	var _Nav = __webpack_require__(50);
 
 	var _Nav2 = _interopRequireDefault(_Nav);
 
@@ -982,7 +982,7 @@
 	      _react2.default.createElement(
 	        _reactRouterDom.Route,
 	        { path: '/logout' },
-	        _react2.default.createElement(_Profile2.default, null)
+	        _react2.default.createElement(_Logout2.default, null)
 	      ),
 	      _react2.default.createElement(
 	        _reactRouterDom.Route,
@@ -2633,6 +2633,10 @@
 
 	var _Search2 = _interopRequireDefault(_Search);
 
+	var _Listings = __webpack_require__(47);
+
+	var _Listings2 = _interopRequireDefault(_Listings);
+
 	var _CartWidget = __webpack_require__(30);
 
 	var _CartWidget2 = _interopRequireDefault(_CartWidget);
@@ -2644,8 +2648,6 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	// import Listings from '../components/Listings.jsx';
-
 
 	/*
 	  here is where we will update the redux state, dispatching an event 
@@ -2668,7 +2670,8 @@
 	        'div',
 	        null,
 	        _react2.default.createElement(_CartWidget2.default, null),
-	        _react2.default.createElement(_Search2.default, null)
+	        _react2.default.createElement(_Search2.default, null),
+	        _react2.default.createElement(_Listings2.default, null)
 	      );
 	    }
 	  }], [{
@@ -2699,11 +2702,97 @@
 
 	var _reactRedux = __webpack_require__(7);
 
+	var _axios = __webpack_require__(12);
+
+	var _axios2 = _interopRequireDefault(_axios);
+
+	var _products = __webpack_require__(14);
+
+	var _redux = __webpack_require__(9);
+
+	var _GridList = __webpack_require__(32);
+
+	var _Listing = __webpack_require__(39);
+
+	var _Listing2 = _interopRequireDefault(_Listing);
+
+	var _reactFlexboxGrid = __webpack_require__(48);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var styles = {
+	  root: {
+	    paddingTop: '90px',
+	    display: 'flex',
+	    flexWrap: 'wrap',
+	    justifyContent: 'space-around'
+	  }
+	};
+	// import $ from 'jquery';
+
+
+	var Listings = function Listings(props) {
+	  return _react2.default.createElement(
+	    'div',
+	    { style: styles.root },
+	    _react2.default.createElement(
+	      _reactFlexboxGrid.Grid,
+	      { fluid: true },
+	      _react2.default.createElement(
+	        _reactFlexboxGrid.Row,
+	        null,
+	        props.products.length ? props.products.map(function (product, i) {
+	          return product.img_url_sm ? _react2.default.createElement(
+	            _reactFlexboxGrid.Col,
+	            { key: i, xs: 6, sm: 6, md: 4, lg: 3, onClick: function onClick() {
+	                return props.selectProduct(i);
+	              } },
+	            _react2.default.createElement(_Listing2.default, { id: product.id, item: product })
+	          ) : null;
+	        }) : null
+	      )
+	    )
+	  );
+	};
+
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    products: state.products.products,
+	    selectedId: state.products.selectedId
+	  };
+	};
+
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	  return (0, _redux.bindActionCreators)({ selectProduct: _products.selectProduct }, dispatch);
+	};
+
+	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Listings);
+
+/***/ }),
+/* 48 */
+/***/ (function(module, exports) {
+
+	module.exports = require("react-flexbox-grid");
+
+/***/ }),
+/* 49 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(5);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRedux = __webpack_require__(7);
+
 	var _redux = __webpack_require__(9);
 
 	var _app = __webpack_require__(11);
-
-	var _app2 = _interopRequireDefault(_app);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2716,34 +2805,36 @@
 	    _react2.default.createElement(
 	      'h3',
 	      null,
-	      'click to logout ' + user.first
+	      'click to logout ' + (user || {}).first
 	    ),
 	    _react2.default.createElement(
 	      'button',
-	      { onClick: handleLogout.bind(undefined) },
+	      { onClick: function onClick() {
+	          return handleLogout();
+	        } },
 	      ' Logout '
 	    )
 	  );
 	};
 
 	var mapStateToProps = function mapStateToProps(_ref2) {
-	  var user = _ref2.user;
+	  var app = _ref2.app;
 
 	  return {
-	    user: user.user
+	    user: app.user
 	  };
 	};
 
 	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 	  return (0, _redux.bindActionCreators)({
-	    handleLogout: _app2.default
+	    handleLogout: _app.handleLogout
 	  }, dispatch);
 	};
 
 	exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Logout);
 
 /***/ }),
-/* 48 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2758,19 +2849,19 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _Drawer = __webpack_require__(49);
+	var _Drawer = __webpack_require__(51);
 
 	var _Drawer2 = _interopRequireDefault(_Drawer);
 
-	var _MenuItem = __webpack_require__(50);
+	var _MenuItem = __webpack_require__(52);
 
 	var _MenuItem2 = _interopRequireDefault(_MenuItem);
 
-	var _AppBar = __webpack_require__(51);
+	var _AppBar = __webpack_require__(53);
 
 	var _AppBar2 = _interopRequireDefault(_AppBar);
 
-	var _FlatButton = __webpack_require__(52);
+	var _FlatButton = __webpack_require__(54);
 
 	var _FlatButton2 = _interopRequireDefault(_FlatButton);
 
@@ -2959,56 +3050,56 @@
 	exports.default = (0, _reactRedux.connect)(mapStateToProps)(Navbar);
 
 /***/ }),
-/* 49 */
+/* 51 */
 /***/ (function(module, exports) {
 
 	module.exports = require("material-ui/Drawer");
 
 /***/ }),
-/* 50 */
+/* 52 */
 /***/ (function(module, exports) {
 
 	module.exports = require("material-ui/MenuItem");
 
 /***/ }),
-/* 51 */
+/* 53 */
 /***/ (function(module, exports) {
 
 	module.exports = require("material-ui/AppBar");
 
 /***/ }),
-/* 52 */
+/* 54 */
 /***/ (function(module, exports) {
 
 	module.exports = require("material-ui/FlatButton");
 
 /***/ }),
-/* 53 */
+/* 55 */
 /***/ (function(module, exports) {
 
 	module.exports = require("path");
 
 /***/ }),
-/* 54 */
+/* 56 */
 /***/ (function(module, exports) {
 
 	module.exports = require("react-router-dom/StaticRouter");
 
 /***/ }),
-/* 55 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	module.exports.api = __webpack_require__(56);
-	module.exports.auth = __webpack_require__(57);
-	module.exports.users = __webpack_require__(92);
-	module.exports.products = __webpack_require__(102);
-	module.exports.transactions = __webpack_require__(103);
-	module.exports.search = __webpack_require__(104);
+	module.exports.api = __webpack_require__(58);
+	module.exports.auth = __webpack_require__(59);
+	module.exports.users = __webpack_require__(94);
+	module.exports.products = __webpack_require__(104);
+	module.exports.transactions = __webpack_require__(105);
+	module.exports.search = __webpack_require__(106);
 
 /***/ }),
-/* 56 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3026,14 +3117,14 @@
 	module.exports = router;
 
 /***/ }),
-/* 57 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var express = __webpack_require__(4);
-	var middleware = __webpack_require__(58);
-	var urlencodedParser = __webpack_require__(89).urlencoded({ extended: false });
+	var middleware = __webpack_require__(60);
+	var urlencodedParser = __webpack_require__(91).urlencoded({ extended: false });
 
 	var router = express.Router();
 	// middleware.auth.verify, 
@@ -3096,27 +3187,27 @@
 	module.exports = router;
 
 /***/ }),
-/* 58 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	module.exports.auth = __webpack_require__(59);
-	module.exports.passport = __webpack_require__(63);
-	module.exports.morgan = __webpack_require__(88);
-	module.exports.bodyParser = __webpack_require__(89);
-	module.exports.flash = __webpack_require__(90);
-	module.exports.cookieParser = __webpack_require__(91);
+	module.exports.auth = __webpack_require__(61);
+	module.exports.passport = __webpack_require__(65);
+	module.exports.morgan = __webpack_require__(90);
+	module.exports.bodyParser = __webpack_require__(91);
+	module.exports.flash = __webpack_require__(92);
+	module.exports.cookieParser = __webpack_require__(93);
 
 /***/ }),
-/* 59 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var session = __webpack_require__(60);
-	var RedisStore = __webpack_require__(61)(session);
-	var redisClient = __webpack_require__(62).createClient();
+	var session = __webpack_require__(62);
+	var RedisStore = __webpack_require__(63)(session);
+	var redisClient = __webpack_require__(64).createClient();
 
 	module.exports.verify = function (req, res, next) {
 	  if (req.isAuthenticated()) {
@@ -3137,38 +3228,38 @@
 	});
 
 /***/ }),
-/* 60 */
+/* 62 */
 /***/ (function(module, exports) {
 
 	module.exports = require("express-session");
 
 /***/ }),
-/* 61 */
+/* 63 */
 /***/ (function(module, exports) {
 
 	module.exports = require("connect-redis");
 
 /***/ }),
-/* 62 */
+/* 64 */
 /***/ (function(module, exports) {
 
 	module.exports = require("redis");
 
 /***/ }),
-/* 63 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
-	var passport = __webpack_require__(64);
-	var LocalStrategy = __webpack_require__(65).Strategy;
-	var GoogleStrategy = __webpack_require__(66).OAuth2Strategy;
-	var FacebookStrategy = __webpack_require__(67).Strategy;
-	var TwitterStrategy = __webpack_require__(68).Strategy;
+	var passport = __webpack_require__(66);
+	var LocalStrategy = __webpack_require__(67).Strategy;
+	var GoogleStrategy = __webpack_require__(68).OAuth2Strategy;
+	var FacebookStrategy = __webpack_require__(69).Strategy;
+	var TwitterStrategy = __webpack_require__(70).Strategy;
 	// const config = require('config')['passport'];
-	var models = __webpack_require__(69);
+	var models = __webpack_require__(71);
 
 	passport.serializeUser(function (profile, done) {
 	  done(null, profile.id);
@@ -3276,62 +3367,62 @@
 	module.exports = passport;
 
 /***/ }),
-/* 64 */
+/* 66 */
 /***/ (function(module, exports) {
 
 	module.exports = require("passport");
 
 /***/ }),
-/* 65 */
+/* 67 */
 /***/ (function(module, exports) {
 
 	module.exports = require("passport-local");
 
 /***/ }),
-/* 66 */
+/* 68 */
 /***/ (function(module, exports) {
 
 	module.exports = require("passport-google-oauth");
 
 /***/ }),
-/* 67 */
+/* 69 */
 /***/ (function(module, exports) {
 
 	module.exports = require("passport-facebook");
 
 /***/ }),
-/* 68 */
+/* 70 */
 /***/ (function(module, exports) {
 
 	module.exports = require("passport-twitter");
 
 /***/ }),
-/* 69 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	module.exports = {
-	  Auth: __webpack_require__(70),
-	  User: __webpack_require__(78),
-	  Product: __webpack_require__(79),
-	  Category: __webpack_require__(82),
-	  Transaction: __webpack_require__(83),
-	  Review: __webpack_require__(84),
-	  Address: __webpack_require__(85),
-	  Tag: __webpack_require__(86),
-	  Purchase: __webpack_require__(87)
+	  Auth: __webpack_require__(72),
+	  User: __webpack_require__(80),
+	  Product: __webpack_require__(81),
+	  Category: __webpack_require__(84),
+	  Transaction: __webpack_require__(85),
+	  Review: __webpack_require__(86),
+	  Address: __webpack_require__(87),
+	  Tag: __webpack_require__(88),
+	  Purchase: __webpack_require__(89)
 	};
 
 /***/ }),
-/* 70 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var db = __webpack_require__(71);
-	var Promise = __webpack_require__(76);
-	var bcrypt = Promise.promisifyAll(__webpack_require__(77));
+	var db = __webpack_require__(73);
+	var Promise = __webpack_require__(78);
+	var bcrypt = Promise.promisifyAll(__webpack_require__(79));
 
 	var Auth = db.Model.extend({
 	  tableName: 'auths',
@@ -3367,65 +3458,65 @@
 	module.exports = db.model('Auth', Auth);
 
 /***/ }),
-/* 71 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var knex = __webpack_require__(72)(__webpack_require__(73));
-	var db = __webpack_require__(75)(knex);
+	var knex = __webpack_require__(74)(__webpack_require__(75));
+	var db = __webpack_require__(77)(knex);
 
 	db.plugin('registry');
 
 	module.exports = db;
 
 /***/ }),
-/* 72 */
+/* 74 */
 /***/ (function(module, exports) {
 
 	module.exports = require("knex");
 
 /***/ }),
-/* 73 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var config = __webpack_require__(74);
+	var config = __webpack_require__(76);
 
 	module.exports = config['knex'];
-
-/***/ }),
-/* 74 */
-/***/ (function(module, exports) {
-
-	module.exports = require("config");
-
-/***/ }),
-/* 75 */
-/***/ (function(module, exports) {
-
-	module.exports = require("bookshelf");
 
 /***/ }),
 /* 76 */
 /***/ (function(module, exports) {
 
-	module.exports = require("bluebird");
+	module.exports = require("config");
 
 /***/ }),
 /* 77 */
 /***/ (function(module, exports) {
 
-	module.exports = require("bcrypt-nodejs");
+	module.exports = require("bookshelf");
 
 /***/ }),
 /* 78 */
+/***/ (function(module, exports) {
+
+	module.exports = require("bluebird");
+
+/***/ }),
+/* 79 */
+/***/ (function(module, exports) {
+
+	module.exports = require("bcrypt-nodejs");
+
+/***/ }),
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var db = __webpack_require__(71);
+	var db = __webpack_require__(73);
 
 	var User = db.Model.extend({
 	  tableName: 'users',
@@ -3443,14 +3534,14 @@
 	module.exports = db.model('User', User);
 
 /***/ }),
-/* 79 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var db = __webpack_require__(71);
-	var convert = __webpack_require__(80);
-	var parseString = __webpack_require__(81).parseString;
+	var db = __webpack_require__(73);
+	var convert = __webpack_require__(82);
+	var parseString = __webpack_require__(83).parseString;
 
 	var Product = db.Model.extend({
 	  tableName: 'products',
@@ -3587,24 +3678,24 @@
 	module.exports = db.model('Product', Product);
 
 /***/ }),
-/* 80 */
+/* 82 */
 /***/ (function(module, exports) {
 
 	module.exports = require("xml-js");
 
 /***/ }),
-/* 81 */
+/* 83 */
 /***/ (function(module, exports) {
 
 	module.exports = require("xml2js");
 
 /***/ }),
-/* 82 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var db = __webpack_require__(71);
+	var db = __webpack_require__(73);
 
 	var Category = db.Model.extend({
 	  tableName: 'categories',
@@ -3616,12 +3707,12 @@
 	module.exports = db.model('Category', Category);
 
 /***/ }),
-/* 83 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var db = __webpack_require__(71);
+	var db = __webpack_require__(73);
 
 	var Transaction = db.Model.extend({
 	  tableName: 'transactions',
@@ -3636,12 +3727,12 @@
 	module.exports = db.model('Transaction', Transaction);
 
 /***/ }),
-/* 84 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var db = __webpack_require__(71);
+	var db = __webpack_require__(73);
 
 	var Review = db.Model.extend({
 	  tableName: 'reviews',
@@ -3659,12 +3750,12 @@
 	module.exports = db.model('Review', Review);
 
 /***/ }),
-/* 85 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var db = __webpack_require__(71);
+	var db = __webpack_require__(73);
 
 	var Address = db.Model.extend({
 	  tableName: 'addresses'
@@ -3673,12 +3764,12 @@
 	module.exports = db.model('Address', Address);
 
 /***/ }),
-/* 86 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var db = __webpack_require__(71);
+	var db = __webpack_require__(73);
 
 	var Tag = db.Model.extend({
 	  tableName: 'tags'
@@ -3687,12 +3778,12 @@
 	module.exports = db.model('Tag', Tag);
 
 /***/ }),
-/* 87 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var db = __webpack_require__(71);
+	var db = __webpack_require__(73);
 
 	var Purchase = db.Model.extend({
 	  tableName: 'purchases',
@@ -3707,31 +3798,31 @@
 	module.exports = db.model('Purchase', Purchase);
 
 /***/ }),
-/* 88 */
+/* 90 */
 /***/ (function(module, exports) {
 
 	module.exports = require("morgan");
 
 /***/ }),
-/* 89 */
+/* 91 */
 /***/ (function(module, exports) {
 
 	module.exports = require("body-parser");
 
 /***/ }),
-/* 90 */
+/* 92 */
 /***/ (function(module, exports) {
 
 	module.exports = require("connect-flash");
 
 /***/ }),
-/* 91 */
+/* 93 */
 /***/ (function(module, exports) {
 
 	module.exports = require("cookie-parser");
 
 /***/ }),
-/* 92 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3739,7 +3830,7 @@
 	var express = __webpack_require__(4);
 	var router = express.Router();
 
-	var _require$Users = __webpack_require__(93).Users,
+	var _require$Users = __webpack_require__(95).Users,
 	    getAll = _require$Users.getAll,
 	    getOne = _require$Users.getOne,
 	    update = _require$Users.update;
@@ -3751,25 +3842,25 @@
 	module.exports = router;
 
 /***/ }),
-/* 93 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	module.exports = {
-	  Users: __webpack_require__(94),
-	  Products: __webpack_require__(95),
-	  Transactions: __webpack_require__(96),
-	  Search: __webpack_require__(100)
+	  Users: __webpack_require__(96),
+	  Products: __webpack_require__(97),
+	  Transactions: __webpack_require__(98),
+	  Search: __webpack_require__(102)
 	};
 
 /***/ }),
-/* 94 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var models = __webpack_require__(69);
+	var models = __webpack_require__(71);
 
 	module.exports.getAll = function (req, res) {
 	  models.Users.fetchAll().then(function (profiles) {
@@ -3839,12 +3930,12 @@
 	// };
 
 /***/ }),
-/* 95 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _require = __webpack_require__(69),
+	var _require = __webpack_require__(71),
 	    Product = _require.Product;
 
 	module.exports.create = function (req, res) {
@@ -3912,22 +4003,22 @@
 	};
 
 /***/ }),
-/* 96 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
-	var _require = __webpack_require__(69),
+	var _require = __webpack_require__(71),
 	    Transaction = _require.Transaction,
 	    Purchase = _require.Purchase;
 
 	var axios = __webpack_require__(12);
 
-	var _require2 = __webpack_require__(97),
+	var _require2 = __webpack_require__(99),
 	    overstock = _require2.overstock;
 
 	axios.defaults.headers.common['Authorization'] = overstock.Authorization;
-	var convert = __webpack_require__(80);
+	var convert = __webpack_require__(82);
 
 	module.exports.create = function (req, res) {
 	  Transaction.forge({
@@ -4012,15 +4103,15 @@
 	};
 
 /***/ }),
-/* 97 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	if (!process.env.TRAVIS) {
 	  module.exports = {
-	    overstock: __webpack_require__(98),
-	    amazon: __webpack_require__(99)
+	    overstock: __webpack_require__(100),
+	    amazon: __webpack_require__(101)
 	  };
 	} else {
 	  module.exports = {
@@ -4037,7 +4128,7 @@
 	}
 
 /***/ }),
-/* 98 */
+/* 100 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -4048,7 +4139,7 @@
 	};
 
 /***/ }),
-/* 99 */
+/* 101 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -4060,24 +4151,24 @@
 	};
 
 /***/ }),
-/* 100 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
 
 	var axios = __webpack_require__(12);
 
-	var _require = __webpack_require__(97),
+	var _require = __webpack_require__(99),
 	    overstock = _require.overstock,
 	    amazon = _require.amazon;
 
-	var _require2 = __webpack_require__(69),
+	var _require2 = __webpack_require__(71),
 	    Product = _require2.Product,
 	    Transaction = _require2.Transaction;
 
-	var convert = __webpack_require__(80);
-	var parseString = __webpack_require__(81).parseString;
-	var CryptoJS = __webpack_require__(101);
+	var convert = __webpack_require__(82);
+	var parseString = __webpack_require__(83).parseString;
+	var CryptoJS = __webpack_require__(103);
 	var endpoint = 'webservices.amazon.com';
 	var uri = '/onca/xml';
 	var pairs = [];
@@ -4177,13 +4268,13 @@
 	};
 
 /***/ }),
-/* 101 */
+/* 103 */
 /***/ (function(module, exports) {
 
 	module.exports = require("crypto-js");
 
 /***/ }),
-/* 102 */
+/* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4191,7 +4282,7 @@
 	var express = __webpack_require__(4);
 	var router = express.Router();
 
-	var _require$Products = __webpack_require__(93).Products,
+	var _require$Products = __webpack_require__(95).Products,
 	    getAll = _require$Products.getAll,
 	    getOne = _require$Products.getOne,
 	    update = _require$Products.update,
@@ -4205,7 +4296,7 @@
 	module.exports = router;
 
 /***/ }),
-/* 103 */
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4213,7 +4304,7 @@
 	var express = __webpack_require__(4);
 	var router = express.Router();
 
-	var _require$Transactions = __webpack_require__(93).Transactions,
+	var _require$Transactions = __webpack_require__(95).Transactions,
 	    create = _require$Transactions.create,
 	    getAll = _require$Transactions.getAll,
 	    getOne = _require$Transactions.getOne,
@@ -4239,7 +4330,7 @@
 	module.exports = router;
 
 /***/ }),
-/* 104 */
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4247,14 +4338,14 @@
 	var express = __webpack_require__(4);
 	var router = express.Router();
 
-	var search = __webpack_require__(93).Search.search;
+	var search = __webpack_require__(95).Search.search;
 
 	router.route('/').get(search).post(search);
 
 	module.exports = router;
 
 /***/ }),
-/* 105 */
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -4275,7 +4366,7 @@
 
 	var _reactRedux = __webpack_require__(7);
 
-	var _path = __webpack_require__(53);
+	var _path = __webpack_require__(55);
 
 	var _path2 = _interopRequireDefault(_path);
 
@@ -4291,7 +4382,7 @@
 
 	var _app2 = _interopRequireDefault(_app);
 
-	var _StaticRouter = __webpack_require__(54);
+	var _StaticRouter = __webpack_require__(56);
 
 	var _StaticRouter2 = _interopRequireDefault(_StaticRouter);
 
@@ -4311,7 +4402,7 @@
 
 	var _routes2 = _interopRequireDefault(_routes);
 
-	var _middleware = __webpack_require__(58);
+	var _middleware = __webpack_require__(60);
 
 	var _middleware2 = _interopRequireDefault(_middleware);
 
@@ -4327,13 +4418,11 @@
 	var router = _express2.default.Router();
 
 	router.get('/', function (req, res) {
+
+	  console.log('user', req.user);
+
 	  var app = {
-	    user: {
-	      id: 1,
-	      first: 'server',
-	      last: 'server',
-	      username: 'server'
-	    }
+	    user: req.isAuthenticated() ? req.user : null
 	  };
 
 	  var store = (0, _index2.default)({ app: app });
@@ -4383,22 +4472,129 @@
 	exports.default = router;
 
 /***/ }),
-/* 106 */
-/***/ (function(module, exports) {
+/* 108 */
+/***/ (function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	module.exports = function (models) {
-	  // require('./overstock')(models);
-	  // require('./amazon')(models);
+	  __webpack_require__(109)(models);
+	  __webpack_require__(110)(models);
 
-	  // var CronJob = require('cron').CronJob;
+	  var CronJob = __webpack_require__(111).CronJob;
 
-	  // new CronJob('0 * * * *', function() {
-	  //   require('./overstock')(models);
-	  //   require('./amazon')(models);
-	  // }, null, true, 'America/Los_Angeles');
+	  new CronJob('0 * * * *', function () {
+	    __webpack_require__(109)(models);
+	    __webpack_require__(110)(models);
+	  }, null, true, 'America/Los_Angeles');
 	};
+
+/***/ }),
+/* 109 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var axios = __webpack_require__(12);
+
+	var _require = __webpack_require__(99),
+	    overstock = _require.overstock;
+
+	axios.defaults.headers.common['Authorization'] = overstock.Authorization;
+	var convert = __webpack_require__(82);
+
+	/**
+	 * Query overstock api with each category and insert the resulting
+	 * data into the database.
+	 */
+	module.exports = function (_ref) {
+	  var Product = _ref.Product;
+
+	  axios.get('https://product-search.api.cj.com/v2/product-search?', {
+	    params: {
+	      'website-id': overstock['website-id'],
+	      'keywords': 'laptop apple windows'
+	    }
+	  }).then(function (results) {
+	    Product.fromOverstock(results);
+	  }).catch(function (err) {
+	    console.log(err);
+	  });
+	};
+
+/***/ }),
+/* 110 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var db = __webpack_require__(73);
+	var parseString = __webpack_require__(83).parseString;
+	var CryptoJS = __webpack_require__(103);
+	var axios = __webpack_require__(12);
+
+	var _require = __webpack_require__(99),
+	    amazon = _require.amazon;
+
+	var endpoint = 'webservices.amazon.com';
+	var uri = '/onca/xml';
+	var searchTerm = 'electronics'; // default category tag
+	var pairs = [];
+	var product_list = [];
+	var params = {
+	  'Service': 'AWSECommerceService',
+	  'Operation': 'ItemSearch',
+	  'AWSAccessKeyId': amazon.access_key_id,
+	  'AssociateTag': amazon.associate_tag,
+	  'SearchIndex': 'All',
+	  'Keywords': searchTerm,
+	  'ResponseGroup': 'Images,ItemAttributes'
+	};
+	var defaultImage = '';
+
+	var keys = void 0,
+	    canonical_query_string = void 0,
+	    string_to_sign = void 0,
+	    hash = void 0,
+	    signature = void 0,
+	    request_url = void 0,
+	    productListings = void 0;
+
+	if (!params.hasOwnProperty('Timestamp')) {
+	  params['Timestamp'] = new Date().toISOString();
+	}
+
+	keys = Object.keys(params).sort();
+
+	keys.forEach(function (key) {
+	  return pairs.push(encodeURIComponent(key) + '=' + encodeURIComponent(params[key]));
+	});
+
+	canonical_query_string = pairs.join('&');
+
+	string_to_sign = 'GET\n' + endpoint + '\n' + uri + '\n' + canonical_query_string;
+
+	hash = CryptoJS.HmacSHA256(string_to_sign, amazon.secret_key);
+
+	signature = hash.toString(CryptoJS.enc.Base64);
+
+	request_url = 'http://' + endpoint + uri + '?' + canonical_query_string + '&Signature=' + encodeURIComponent(signature);
+
+	module.exports = function (_ref) {
+	  var Product = _ref.Product;
+
+	  axios.get(request_url).then(function (results) {
+	    Product.fromAmazon(results).catch(console.error);
+	  }).catch(function (err) {
+	    console.log(err);
+	  });
+	};
+
+/***/ }),
+/* 111 */
+/***/ (function(module, exports) {
+
+	module.exports = require("cron");
 
 /***/ })
 /******/ ]);

@@ -26,7 +26,7 @@ export default ({route}) => (
         <Login />
       </Route>
       <Route path='/logout'> 
-        <Profile />
+        <Logout />
       </Route>
       <Route path='/signup'>
         <Signup />

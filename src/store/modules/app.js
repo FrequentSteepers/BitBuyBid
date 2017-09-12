@@ -85,7 +85,7 @@ export const handleSignup = (user) => {
 
 export const handleLogout = () => {
   return (dispatch) => {
-    axios.get('/logout')
+    axios.get('/auth/logout')
       .then(res => {
         console.log(res);
         dispatch({

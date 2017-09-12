@@ -3,18 +3,18 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import handleLogout from '../store/modules/app.js';
+import { handleLogout } from '../store/modules/app.js';
 
 const Logout = ({user, handleLogout}) => (
   <div>
-    <h3>{`click to logout ${user.first}`}</h3>
-    <button onClick={handleLogout.bind(this)}> Logout </button>
+    <h3>{`click to logout ${(user || {}).first}`}</h3>
+    <button onClick={() => handleLogout()}> Logout </button>
   </div>
 );
 
-const mapStateToProps = ({user}) => {
+const mapStateToProps = ({app}) => {
   return {
-    user: user.user
+    user: app.user
   };
 };
 

@@ -22,7 +22,7 @@ class Home extends React.Component {
       <div>
         <CartWidget />
         <Search/> 
-        <Listings />
+        {/* <Listings /> */}
       </div>
     );
   }

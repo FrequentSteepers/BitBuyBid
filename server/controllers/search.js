@@ -25,99 +25,80 @@ let keys, canonical_query_string, string_to_sign, hash, signature, request_url, 
 
 
 /**
- * Search overstock api with a given search term
- * @todo refactor to search database layer
+ * Search all apis with a given search term specified in the request body.
  */
 module.exports.search = (req, res) => {
 
   if (!req.body.searchTerm || req.body.searchTerm.trim().length < 2) {
-    console.log('no body!');
-    return;
+    console.log('search failed: requires body!');
+    res.status(400).end(); // bad request
   }
 
   Product
-    .query((qb) => { qb.whereRaw(`TRIM(LOWER(title)) LIKE '%${req.body.searchTerm.trim().toLowerCase()}%'`).andWhere('type', '=', 'amzn').offset(0).limit(20); })
+    .query((qb) => { 
+      qb.whereRaw(`TRIM(LOWER(title)) LIKE '%${req.body.searchTerm.trim().toLowerCase()}%'`)
+        .limit(20); 
+    })
     .fetchAll()
     .then(products => {
       if (products.length === 0) {
+        console.log('searching foreign');
         throw products;
       }
+      console.log('searching local');
       res.status(200).send({results: products});
     })
     .error(err => {
       res.status(500).send(err);
     })
     .catch(except => {
-      params['Timestamp'] = new Date().toISOString();
-      params['Keywords'] = req.body.searchTerm;
-
-      keys = Object.keys(params).sort();
-      pairs = [];
-      keys.forEach(key =>
-        pairs.push(encodeURIComponent(key) + '=' + encodeURIComponent(params[key]))
-      );
-
-      canonical_query_string = pairs.join('&');
-
-      string_to_sign = `GET\n${endpoint}\n${uri}\n${canonical_query_string}`;
-
-      hash = CryptoJS.HmacSHA256(string_to_sign, amazon.secret_key);
-
-      signature = hash.toString(CryptoJS.enc.Base64);
-
-      request_url = `http://${endpoint}${uri}?${canonical_query_string}&Signature=` + encodeURIComponent(signature);
-
-      let linksArray = [
-        // {
-        //   url: 'https://product-search.api.cj.com/v2/product-search?',
-        //   params: {
-        //     'website-id': overstock['website-id'],
-        //     'keywords': req.body.searchTerm
-        //   }
-        // },
-        {
-          url: request_url
-        }
-      ];
-
-      let promiseArray = linksArray.map( url =>
-        axios.get(url.url)
-          .then(results => {
-            if (url.url === 'https://product-search.api.cj.com/v2/product-search?') {
-              Product.fromOverstock(results);
-              res.json(JSON.parse(convert.xml2json(results.data)));
-            } else {
-              Product.fromAmzn(results);
-              product_list = [];
-
-              parseString(results.data, function (err, result) {
-                productListings = result.ItemSearchResponse.Items[0].Item;
-
-                productListings.filter((p) => {
-                  return p.ItemAttributes[0].ListPrice && p.SmallImage && p.MediumImage && p.LargeImage;
-                }).forEach((product) => {
-                  product_list.push({
-                    'prod_id': product.ASIN[0] + '|AMZN',
-                    'asin': product.ASIN[0],
-                    'img_url_sm': product.SmallImage ? product.SmallImage[0].URL[0] : defaultImage,
-                    'img_url_md': product.MediumImage ? product.MediumImage[0].URL[0] : defaultImage,
-                    'img_url_lg': product.LargeImage ? product.LargeImage[0].URL[0] : defaultImage,
-                    'buy_url': product.DetailPageURL[0].substring(0, product.DetailPageURL[0].indexOf('?')),
-                    'title': product.ItemAttributes[0].Title[0],
-                    'price': product.ItemAttributes[0].ListPrice ? Number(product.ItemAttributes[0].ListPrice[0].FormattedPrice[0].slice(1)) : null,
-                    'description': product.ItemAttributes[0].Feature ? product.ItemAttributes[0].Feature.join('; ') : '',
-                    'type': 'amzn'
-                  });
-                });
-
-                res.send({results: product_list});
-              });
-            }
-          })
-          .catch(err => {
-            console.log(err);
-            res.status(404);
-          }) );
-
+      return searchAmazon(req.body.searchTerm);
+    })
+    .then(responses => {
+      if (!responses) {
+        throw new Error('no response from amazon!');
+      }
+      return Product.fromAmazon(responses);
+    })
+    .then(results => {
+      console.log('search results: ', results);
+      res.json({results}).status(200);
+    })
+    .catch((...err) => {
+      console.error(...err);
+      res.status(500).end();
+    })
+    .error((...err) => {
+      console.error(...err);
+      res.status(500).end();
     });
+};
+
+/**
+ * Search Amazon given a search term.
+ *  
+ * @param {string} searchTerm 
+ * @param {Promise} - Promise that resolves with a response from amazon
+ */
+const searchAmazon = searchTerm => {
+  params.Timestamp = new Date().toISOString();
+  params.Keywords = searchTerm;
+
+  pairs = [];
+  const keys = Object.keys(params);
+  keys.sort().forEach(key =>
+    pairs.push(encodeURIComponent(key) + '=' + encodeURIComponent(params[key]))
+  );
+
+  canonical_query_string = pairs.join('&');
+
+  string_to_sign = `GET\n${endpoint}\n${uri}\n${canonical_query_string}`;
+
+  hash = CryptoJS.HmacSHA256(string_to_sign, amazon.secret_key);
+
+  signature = hash.toString(CryptoJS.enc.Base64);
+
+  request_url = `http://${endpoint}${uri}?${canonical_query_string}&Signature=` + encodeURIComponent(signature);
+
+  return axios.get(request_url);
 };

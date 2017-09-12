@@ -10,12 +10,14 @@ import {
 import Listing from '../components/Listing.jsx';
 import Receipt from '../views/Receipt.jsx';
 import CartItem from '../components/CartItem.jsx';
+import Subtotal from '../components/Subtotal.jsx';
 import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 
 class Checkout extends Component {
   constructor(props) {
     super(props);
   }
+
   render() {
     return (
       <BrowserRouter> 
@@ -23,11 +25,7 @@ class Checkout extends Component {
           {this.props.cart.map((item, i) => {
             return <CartItem key={i} item={item} />;
           })}
-          <div>Subtotal: ${
-            this.props.cart.reduce((acc, curr) => {
-              return acc + (Number(curr.price)) * this.props.quantities[curr.prod_id];
-            }, 0).toFixed(2)
-          }
+          <div>Subtotal: <Subtotal/>
           </div>
           <Switch>
             <Route exact path='/cart/confirm'>
@@ -40,7 +38,7 @@ class Checkout extends Component {
               <Link to='/cart/confirm'><button>Checkout</button></Link>
             </Route>
             <Route path='/receipt'>
-              <Receipt />
+              <Receipt/>
             </Route>
           </Switch>
         </div> 
@@ -49,12 +47,11 @@ class Checkout extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
+const mapStateToProps = (state) => 
+  ({
     cart: state.products.cart,
     quantities: state.products.quantities
-  };
-};
+  });
 
 const mapDispatchToProps = (dispatch) => {
   return bindActionCreators({createCart, addToCart, removeFromCart, checkout}, dispatch);

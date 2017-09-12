@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Subtotal from './Subtotal.jsx';
 import { Link } from 'react-router-dom';
-import {selectProduct} from '../store/modules/products.js';
+import {selectProduct, addToCart, removeFromCart, decrementItem} from '../store/modules/products.js';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
@@ -18,7 +18,13 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({selectProduct}, dispatch);
+  return bindActionCreators(
+    {
+      selectProduct,
+      decrementItem,
+      addToCart,
+      removeFromCart
+    }, dispatch);
 };
 
 class CartWidget extends Component {
@@ -44,7 +50,7 @@ class CartWidget extends Component {
                     return (
                       <div key={i}>
                         {i > 0 ? <hr/> : null}
-                        <Row onClick={() => this.props.selectProduct(i)} style={style.row} start="xs">
+                        <Row onClick={() => this.props.selectProduct(i)} start="xs">
                           <Col style={style.imgHold} xs={4}>
                             <Link style={style.link} to={`/product?id=${product.prod_id}`}>
                               <img style={style.img} src={product.img_url_sm} alt="" />
@@ -56,16 +62,23 @@ class CartWidget extends Component {
                             </Link>
                             <CardText style={style.text}>{product.description.slice(0, 40) + '...'}</CardText>
                           </Col>
-                          <Row>
-                            <Col style={style.priceCol}>
-                              <CardText style={style.price}>
-                                ${product.price ? Number(product.price).toFixed(2) : 0}
-                              </CardText>
-                              <CardText style={style.delete}>
-                                delete&nbsp;&nbsp;&nbsp;quantity:{this.props.quantities[product.prod_id] || this.props.quantities[product.id]}
-                              </CardText>
-                            </Col>
-                          </Row>
+                        </Row>
+                        <Row start="xs">
+                          <Col xs={8} style={style.priceCol}>
+                            <CardText style={style.price}>
+                              ${product.price ? Number(product.price).toFixed(2) : 0}
+                            </CardText>
+                          </Col>
+                          <Col xs={4} style={style.priceCol}>
+                            <CardText style={style.delete}>
+                              <div>
+                                <button style={style.inline} onClick={() => this.props.addToCart(product)}>+</button>
+                                <div style={style.inline}>{this.props.quantities[product.prod_id] || this.props.quantities[product.id]}</div>
+                                <button style={style.inline} onClick={() => this.props.decrementItem(product)}>-</button>
+                              </div>
+                              <button onClick={() => this.props.removeFromCart(product)}>remove</button>
+                            </CardText>
+                          </Col>
                         </Row>
                       </div>
                     );

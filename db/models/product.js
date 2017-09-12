@@ -28,18 +28,20 @@ Product.fromOverstock = (results) => {
       instructionHasAttributes: true
     }
   ))['cj-api'].products.product;
+
   parsed.filter((p) => {
     return Number(p.price['_text']) && p['image-url']._text;
   }).forEach(p => {
-    Product.query((qb) => { qb.whereRaw(`prod_id = '${(p['ad-id']._text || '') + (p['sku']._text || '') + (p['upc']._text || '')}|OVSOCK'`).andWhere('type', '=', 'ovsock').limit(1); })
+    Product.query((qb) => { 
+      qb.whereRaw(`prod_id = '${(p['ad-id']._text || '') + (p['sku']._text || '') + (p['upc']._text || '')}|OVSOCK'`)
+        .andWhere('type', '=', 'ovsock').limit(1); 
+    })
       .fetchAll()
       .then(products => {
         if (products && products.length > 0) {
           // ovsock item found in db, skipping
         } else {
           // insert new item
-          // '...adding new overstock product to db with identifier', p['ad-id']._text + p['sku']._text + p['upc']._text
-
           Product.forge(
             {
               'prod_id': (p['ad-id']._text || '') + (p['sku']._text || '') + (p['upc']._text || '') + '|OVSOCK',
@@ -66,45 +68,63 @@ Product.fromOverstock = (results) => {
   });
 };
 
-Product.fromAmzn = (results) => {
+/**
+ * Given a response from amazon, upsert the new data into the database
+ * and return the newly created products.
+ * @todo refactor to xml-js
+ * @param {Object} - results of a get form amazon.
+ * @param {Promise} - resolves with the array of objects after being
+ * registered with the products table.
+ */
+Product.fromAmazon = (results) => {
+  var promiseArray;
   parseString(results.data, function (err, result) {
     let productListings = result.ItemSearchResponse.Items[0].Item;
 
-    productListings.filter((p) => {
-      return p.ItemAttributes[0].ListPrice && p.SmallImage && p.MediumImage && p.LargeImage;
-    }).forEach((product) => {
-      Product.query((qb) => { qb.whereRaw(`prod_id = '${product.ASIN[0]}|AMZN'`).andWhere('type', '=', 'amzn').limit(1); })
-        .fetchAll()
-        .then(products => {
-          if (products && products.length > 0) {
-            // 'amzn item found in db, skipping...'
-          } else {
-            // insert new item
-            // ...adding new amazon product to db with title and ASIN:', product.ItemAttributes[0].Title[0], product.ASIN[0]
-
-            Product.forge(
-              {
-                'prod_id': product.ASIN[0] + '|AMZN',
-                'asin': product.ASIN[0],
-                'img_url_sm': product.SmallImage ? product.SmallImage[0].URL[0] : defaultImage,
-                'img_url_md': product.MediumImage ? product.MediumImage[0].URL[0] : defaultImage,
-                'img_url_lg': product.LargeImage ? product.LargeImage[0].URL[0] : defaultImage,
-                'buy_url': product.DetailPageURL[0].substring(0, product.DetailPageURL[0].indexOf('?')),
-                'title': product.ItemAttributes[0].Title[0],
-                'price': product.ItemAttributes[0].ListPrice ? Number(product.ItemAttributes[0].ListPrice[0].FormattedPrice[0].slice(1)) : null,
-                'description': product.ItemAttributes[0].Feature ? product.ItemAttributes[0].Feature.join('; ') : '',
-                'type': 'amzn'
-              }
-            )
-              .save()
-              .then(() => { console.log('success', product.ItemAttributes[0].Title[0]); return productListings; });
-          }
-        }).catch(e => {
-          console.log('error occured querying amzn products');
-          console.error(e);
-        });
-    });
+    promiseArray = productListings
+      .filter(p => 
+        p.ItemAttributes[0].ListPrice && (p.SmallImage || p.MediumImage || p.LargeImage)
+      ).map(product => 
+        Product.query(qb =>  
+          qb.whereRaw(`prod_id = '${product.ASIN[0]}|AMZN'`)
+            .andWhere('type', '=', 'amzn')
+            .limit(1)
+        )
+          .fetchAll()
+          .then(products => {
+            if (products && products.length > 0) {
+              product.id = products.models[0].id;
+              return product;
+            } else {
+              // add new amazon product to db with title and ASIN:
+              // product.ItemAttributes[0].Title[0], product.ASIN[0]
+              return Product.forge(
+                {
+                  'prod_id': product.ASIN[0] + '|AMZN',
+                  'asin': product.ASIN[0],
+                  'img_url_sm': product.SmallImage ? product.SmallImage[0].URL[0] : defaultImage,
+                  'img_url_md': product.MediumImage ? product.MediumImage[0].URL[0] : defaultImage,
+                  'img_url_lg': product.LargeImage ? product.LargeImage[0].URL[0] : defaultImage,
+                  'buy_url': product.DetailPageURL[0].substring(0, product.DetailPageURL[0].indexOf('?')),
+                  'title': product.ItemAttributes[0].Title[0],
+                  'price': product.ItemAttributes[0].ListPrice ? Number(product.ItemAttributes[0].ListPrice[0].FormattedPrice[0].slice(1)) : null,
+                  'description': product.ItemAttributes[0].Feature ? product.ItemAttributes[0].Feature.join('; ') : '',
+                  'type': 'amzn'
+                }
+              )
+                .save()
+                .then(({id}) => {
+                  product.id = id;
+                  return product;
+                });
+            }
+          }).catch(e => {
+            console.log('error occured querying amazon products');
+            console.error(e);
+          })
+      );
   });
+  return Promise.all(promiseArray);
 };
 
 module.exports = db.model('Product', Product);

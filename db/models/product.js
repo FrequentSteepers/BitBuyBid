@@ -114,8 +114,19 @@ Product.fromAmazon = (results) => {
               )
                 .save()
                 .then(({id}) => {
-                  product.id = id;
-                  return product;
+                  return {
+                    id: id,
+                    'prod_id': product.ASIN[0] + '|AMZN',
+                    'asin': product.ASIN[0],
+                    'img_url_sm': product.SmallImage ? product.SmallImage[0].URL[0] : defaultImage,
+                    'img_url_md': product.MediumImage ? product.MediumImage[0].URL[0] : defaultImage,
+                    'img_url_lg': product.LargeImage ? product.LargeImage[0].URL[0] : defaultImage,
+                    'buy_url': product.DetailPageURL[0].substring(0, product.DetailPageURL[0].indexOf('?')),
+                    'title': product.ItemAttributes[0].Title[0],
+                    'price': product.ItemAttributes[0].ListPrice ? Number(product.ItemAttributes[0].ListPrice[0].FormattedPrice[0].slice(1)) : null,
+                    'description': product.ItemAttributes[0].Feature ? product.ItemAttributes[0].Feature.join('; ') : '',
+                    'type': 'amzn'
+                  };
                 });
             }
           }).catch(e => {

@@ -88,6 +88,6 @@ export const style = {
     display: 'inline-block'
   },
   inline: {
-    display:'inline-block'
+    display: 'inline-block'
   }
 };

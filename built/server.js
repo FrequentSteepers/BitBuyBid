@@ -163,15 +163,16 @@
 	  return res.send('');
 	});
 
-	app.use('/', _router2.default);
+	app.use('/*', _router2.default);
 
 	//if there is a carrot error, then that means that the file being 
 	//served is expected to be of another format, but is in HTML, 
 	//meaning that one of the routes meant to catch the request before 
 	//the catch all, which serves the HTML
-	app.get('/*', function (req, res) {
-	  res.sendFile(_path2.default.resolve(__dirname, '../client/src/app.html'));
-	});
+	// app.get('/*', (req, res) => {
+	//   res.sendFile(path.resolve(__dirname, '../client/src/app.html'));
+	// });
+
 
 	module.exports = app;
 	/* WEBPACK VAR INJECTION */}.call(exports, "/"))

@@ -50,15 +50,15 @@ app.use('/built', express.static('built'));
 app.use(express.static(path.join(__dirname, '../')));
 app.get('/favicon.ico', (req, res) => res.send(''));
 
-app.use('/', router);
+app.use('/*', router);
 
 //if there is a carrot error, then that means that the file being 
 //served is expected to be of another format, but is in HTML, 
 //meaning that one of the routes meant to catch the request before 
 //the catch all, which serves the HTML
-app.get('/*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../client/src/app.html'));
-});
+// app.get('/*', (req, res) => {
+//   res.sendFile(path.resolve(__dirname, '../client/src/app.html'));
+// });
 
 
 module.exports = app;

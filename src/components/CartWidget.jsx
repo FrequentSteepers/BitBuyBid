@@ -38,40 +38,26 @@ class CartWidget extends Component {
                 <div style={style.cart}>Cart</div>
                 <button style={style.collapse} type='button' onClick={() => this.setState({display: false})}>collapse</button>
               </div>
-              <Grid style={style.grid} fluid>
-                <Col xs={12}>
-                  {this.props.cart ? this.props.cart.map((product, i) => {
-                    return (
-                      <div key={i}>
-                        {i > 0 ? <hr/> : null}
-                        <Row onClick={() => this.props.selectProduct(i)} style={style.row} start="xs">
-                          <Col style={style.imgHold} xs={4}>
-                            <Link style={style.link} to={`/product?id=${product.prod_id}`}>
-                              <img style={style.img} src={product.img_url_sm} alt="" />
-                            </Link>
-                          </Col>
-                          <Col xs={8}>
-                            <Link style={style.link} to={`/product?id=${product.prod_id}`}>
-                              <CardTitle style={style.title} title={product.title}/>
-                            </Link>
-                            <CardText style={style.text}>{product.description.slice(0, 40) + '...'}</CardText>
-                          </Col>
-                          <Row>
-                            <Col style={style.priceCol}>
-                              <CardText style={style.price}>
-                                ${product.price ? Number(product.price).toFixed(2) : 0}
-                              </CardText>
-                              <CardText style={style.delete}>
-                                delete&nbsp;&nbsp;&nbsp;quantity:{this.props.quantities[product.prod_id] || this.props.quantities[product.id]}
-                              </CardText>
-                            </Col>
-                          </Row>
-                        </Row>
-                      </div>
-                    );
-                  }) : false}
-                </Col>
-              </Grid>
+              {this.props.cart ? this.props.cart.map((product, i) => {
+                return (
+                  <div key={i}>
+                    {i > 0 ? <hr/> : null}
+                    <Link style={style.link} to={`/product?id=${product.prod_id}`}>
+                      <img style={style.img} src={product.img_url_sm} alt="" />
+                    </Link>
+                    <Link style={style.link} to={`/product?id=${product.prod_id}`}>
+                      <CardTitle style={style.title} title={product.title}/>
+                    </Link>
+                    <CardText style={style.text}>{product.description.slice(0, 40) + '...'}</CardText>
+                    <CardText style={style.price}>
+                            ${product.price ? Number(product.price).toFixed(2) : 0}
+                    </CardText>
+                    <CardText style={style.delete}>
+                            delete&nbsp;&nbsp;&nbsp;quantity:{this.props.quantities[product.prod_id] || this.props.quantities[product.id]}
+                    </CardText>
+                  </div>
+                );
+              }) : false}
               <div style={style.subtotal}>
                 <div style={style.subTitle}>
                   <b><i>Subtotal:</i></b>

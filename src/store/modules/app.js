@@ -87,7 +87,6 @@ export const handleLogout = () => {
   return (dispatch) => {
     axios.get('/auth/logout')
       .then(res => {
-        console.log(res);
         dispatch({
           type: appTypes.SET_USER,
           payload: null

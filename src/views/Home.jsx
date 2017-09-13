@@ -1,7 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux';
+
 import Search from '../components/Search.jsx';
 import Listings from '../components/Listings.jsx';
 import CartWidget from '../components/CartWidget.jsx';
+import SearchItem from '../components/SearchItem.jsx';
 
 /*
   here is where we will update the redux state, dispatching an event 
@@ -9,10 +12,6 @@ import CartWidget from '../components/CartWidget.jsx';
 */
 
 class Home extends React.Component {
-  constructor() {
-    super();
-  }
-
   static fetchData(store) {
     return store;
   }
@@ -22,10 +21,18 @@ class Home extends React.Component {
       <div>
         <CartWidget />
         <Search/> 
-        {/* <Listings /> */}
+        {this.props.products.map(p => {
+          return ( 
+            <SearchItem item={p} key={p.id} />
+          );
+        })}
       </div>
     );
   }
 }
 
-export default Home;
+const mapStateToProps = ({products}) => ({
+  products: products.products,
+});
+
+export default connect(mapStateToProps)(Home);

@@ -7,6 +7,9 @@ import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 
 const store = configureStore(window.__PRELOADED_STATE__, window);
 
+/**
+ * Render react to the dom from the client side
+ */
 ReactDOM.render(
   <Provider store={store}>
     <App />

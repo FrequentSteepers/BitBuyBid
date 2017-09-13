@@ -22,7 +22,7 @@ class Profile extends Component {
         <Paper>
           <Card>
             <CardHeader>
-              <h1>{this.props.user.first + ' ' + this.props.user.last}</h1>
+              <h1>{this.props.user && this.props.user.first + ' ' + this.props.user.last}</h1>
             </CardHeader>
           </Card>
           <Card>

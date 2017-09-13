@@ -9,7 +9,7 @@
     "serve": "webpack --watch | nodemon built/server.js --exec babel-node",
     "webdev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js --recursive ./test",
-    "docs": "jsdoc client/src/ server/ -r -c conf.json -d docs/",
+    "docs": "jsdoc src/ server/ -r -c conf.json -d docs/",
     "test:watch": "npm run test -- --watch"
   },
   "author": "",

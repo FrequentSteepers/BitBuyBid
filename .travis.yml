@@ -20,4 +20,4 @@ before_script:
   - webpack
 
 script:
-  - "yarn test"
+  - "npm test"

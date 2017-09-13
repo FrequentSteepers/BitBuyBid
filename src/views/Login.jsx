@@ -3,6 +3,7 @@ import {handleLogin} from '../store/modules/app.js';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {Link} from 'react-router-dom';
+import {Redirect} from 'react-router';
 
 class Login extends React.Component {
   constructor(props) {
@@ -55,9 +56,9 @@ class Login extends React.Component {
 
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({app}) => {
   return {
-    // term: state.search.term
+    user: app.user
   };
 };
 const mapDispatchToProps = (dispatch) => {

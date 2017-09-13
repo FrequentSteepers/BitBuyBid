@@ -25,9 +25,10 @@ import { matchRoutes, renderRoutes } from 'react-router-config';
 
 const router = express.Router();
 
+/**
+ * Render the component and return the given 
+ */
 router.get('/', (req, res) => {
-
-  console.log('user', req.user);
 
   const app = {
     user: req.isAuthenticated() ? req.user : null, 

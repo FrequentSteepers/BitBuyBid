@@ -20,7 +20,7 @@ const setup = () => {
 
 describe('App', () => {
   const { wrapper } = setup();
-
+  console.log(wrapper);
   it('renders something', () => {
     expect(wrapper).to.exist;
   });

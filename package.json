@@ -2,6 +2,7 @@
   "name": "course.thesis",
   "version": "1.0.0",
   "scripts": {
+    "jest": "jest",
     "postinstall": "curl -s https://raw.githubusercontent.com/reactorcore/pomander/master/bin/install | bash",
     "start": "nodemon server",
     "test": "NODE_ENV=test grunt test",
@@ -42,6 +43,7 @@
     "passport-twitter": "^1.0.4",
     "pg": "^6.1.5",
     "react": "^15.4.2",
+    "react-addons-test-utils": "^15.6.0",
     "react-dom": "^15.4.2",
     "react-flexbox-grid": "^1.1.5",
     "react-redux": "^5.0.6",

@@ -11,7 +11,7 @@ const CartItem = ({item, addToCart, removeFromCart, quantities, decrementItem}) 
       <Card>
         <div>
           <h4>{item.title}</h4> <br/>
-          <Link to={`/product?id=${item.id}`}><img src={item.img_url_sm}/></Link>
+          {/* <Link to={`/product?id=${item.id}`}><img src={item.img_url_sm}/></Link> */}
           <button onClick={ () => { addToCart(item); } }>+</button>
           <span> {quantities[item.prod_id] || quantities[item.id]} </span>
           <button onClick={ () => { decrementItem(item); } }>-</button><br/>

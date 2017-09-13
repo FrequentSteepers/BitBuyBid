@@ -46,7 +46,7 @@ module.exports = ({Product}) => {
   axios.get(request_url)
     .then(results => {
       Product.fromAmazon(results)
-        .then(console.log);
+        .catch(console.error);
     })
     .catch(err => {
       console.log(err);

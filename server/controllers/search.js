@@ -61,7 +61,6 @@ module.exports.search = (req, res) => {
       return Product.fromAmazon(responses);
     })
     .then(results => {
-      console.log('search results: ', results);
       res.json({results}).status(200);
     })
     .catch((...err) => {

@@ -33,7 +33,7 @@ export const setTransactions = payload => {
       .then(transactions => {
         dispatch({
           type: appTypes.SET_TRANSACTIONS,
-          transactions
+          payload: transactions
         });
       })
       .catch(e => console.log('error getting transactions: ', e));

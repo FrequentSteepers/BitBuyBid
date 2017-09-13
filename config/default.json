@@ -3,7 +3,7 @@
     "client": "postgresql",
     "connection": {
       "database": "thesis_devel",
-      "user": "",
+      "user": "potgres",
       "host": "localhost",
       "port": 5432
     },

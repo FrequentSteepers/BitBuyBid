@@ -6,21 +6,21 @@ class TransactionSummary extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      detailed: false
+      isDetailed: false
     };
     this.toggleDetails = this.toggleDetails.bind(this);
   }
 
   toggleDetails() {
     this.setState({
-      detailed: !this.state.detailed
+      isDetailed: !this.state.isDetailed
     });
   }
 
   render() {
     return (
       <div >
-        {this.state.detailed ? 
+        {this.state.isDetailed ? 
           <DetailedTransactionSummary toggle={this.toggleDetails} transaction={this.props.transaction}/> :
           <ConciseTransactionSummary toggle={this.toggleDetails} transaction={this.props.transaction}/>
         }

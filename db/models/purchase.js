@@ -7,6 +7,9 @@ const Purchase = db.Model.extend({
   },
   product: function() {
     return this.belongsTo('Products', 'product_id', 'id');
+  },
+  review: function() {
+    return this.belongsTo('Reviews', 'review_id', 'id');
   }
 });
 

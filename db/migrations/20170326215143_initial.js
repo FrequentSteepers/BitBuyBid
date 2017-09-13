@@ -72,7 +72,7 @@ exports.up = function (knex, Promise) {
       table.integer('transaction_id').references('transactions.id').onDelete('CASCADE');
       table.integer('product_id').references('products.id').onDelete('CASCADE');
       table.integer('status').notNullable().default(0);
-      table.text('review').nullable();
+      table.integer('review_id').references('reviews.id').onDelete('CASCADE');
     })
   ]);
 };

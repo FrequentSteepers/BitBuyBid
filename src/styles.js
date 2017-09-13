@@ -5,7 +5,8 @@ export const style = {
     right: '5%',
     float: 'right',
     zIndex: 2,
-    paddingTop: '10px'
+    paddingTop: '10px',
+    height: '300px'
   },
   paper: {
     width: '250px'
@@ -19,7 +20,7 @@ export const style = {
   title: {
     padding: '0px',
     whiteSpace: 'nowrap',
-    overflow: 'hidden',
+    overflow: 'hidden'
   },
   text: {
     padding: '0px',
@@ -32,9 +33,14 @@ export const style = {
   },
   img: {
     position: 'relative',
-    width: '100%'
+    width: '100%',
+    maxHeight: '80px'
   },
   imgHold: {
+    padding: '0px',
+    margin: '0 auto'
+  },
+  priceCol: {
     padding: '0px',
     margin: '0 auto'
   },
@@ -42,16 +48,15 @@ export const style = {
     color: 'seagreen',
     float: 'left'
   },
-  priceCol: {
-    display: 'inline-block'
-  },
   delete: {
-    display: 'inline-block',
+    width: '100%',
     float: 'right',
     color: 'maroon',
+    paddingRight: '0px'
   },
   gridList: {
-    overflowY: 'auto'
+    maxHeight: '100%',
+    overflowY: 'scroll'
   },
   subTitle: {
     color: 'black'
@@ -76,6 +81,9 @@ export const style = {
     float: 'right'
   },
   cart: {
+    display: 'inline-block'
+  },
+  inline: {
     display: 'inline-block'
   }
 };

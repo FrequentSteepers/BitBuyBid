@@ -11,6 +11,7 @@ const {
 
 router.route('/')
   .all((req, res, next) => {
+    console.log('auth: ', req.isAuthenticated());
     if (req.isAuthenticated()) {
       next();
     } else {

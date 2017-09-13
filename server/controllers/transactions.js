@@ -22,7 +22,6 @@ module.exports.create = (req, res) => {
               quantity: req.body.quantities[p.prod_id] || 1
             })
               .save();
-            
           }
         )
       );

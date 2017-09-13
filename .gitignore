@@ -39,3 +39,5 @@ node_modules/
 bower_components/
 package-lock.json
 .vscode/
+built/
+dist/

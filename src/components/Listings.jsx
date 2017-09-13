@@ -5,8 +5,8 @@ import {selectProduct} from '../store/modules/products.js';
 import {bindActionCreators} from 'redux';
 import {GridList, GridTile} from 'material-ui/GridList';
 import Listing from './Listing.jsx';
-import $ from 'jquery';
-import { Grid, Row, Col } from 'react-flexbox-grid';
+// import $ from 'jquery';
+// import { Grid, Row, Col } from 'react-flexbox-grid';
 
 
 const styles = {

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import { Card } from 'material-ui/Card';
 import { Link } from 'react-router-dom';
-import { Grid, Row, Col } from 'react-flexbox-grid';
+// import { Grid, Row, Col } from 'react-flexbox-grid';
 
 
 const style = {

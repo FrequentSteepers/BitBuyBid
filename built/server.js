@@ -4304,7 +4304,6 @@
 	    }
 	    return Product.fromAmazon(responses);
 	  }).then(function (results) {
-	    console.log('search results: ', results);
 	    res.json({ results: results }).status(200);
 	  }).catch(function () {
 	    var _console;

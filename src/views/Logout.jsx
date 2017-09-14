@@ -5,10 +5,27 @@ import { bindActionCreators } from 'redux';
 
 import { handleLogout } from '../store/modules/app.js';
 
-const Logout = ({user, handleLogout}) => (
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Redirect,
+  withRouter
+} from 'react-router-dom';
+import FlatButton from 'material-ui/FlatButton';
+
+const Logout = ({user, handleLogout, ...rest}) => (
   <div>
-    <h3>{`click to logout ${(user || {}).first}`}</h3>
-    <button onClick={() => handleLogout()}> Logout </button>
+    <Route {...rest} render={props => (
+      user ? (
+        <FlatButton onClick={() => handleLogout()} label="Logout" />
+      ) : (
+        <Redirect to={{
+          pathname: '/login',
+          state: { from: props.location }
+        }}/>
+      )
+    )} />
   </div>
 );
 

@@ -1,12 +1,12 @@
-# Bit Buy 
+# BitBuy 
 
 Bit Buy aggregates product information and recommends products.
 
 ## Team
 
+- Clarence Bowen 
 - Matt Garber 
 - Jacob Penney 
-- Clarence Bowen 
 - Adisa Stewart 
 
 ## Roadmap

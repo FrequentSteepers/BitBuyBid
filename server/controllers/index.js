@@ -2,6 +2,7 @@ module.exports = {
   Users: require('./users'),
   Products: require('./products'),
   Transactions: require('./transactions'),
-  Search: require('./search')
+  Search: require('./search'),
+  Amazon: require('./amazon')
 };
 

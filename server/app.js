@@ -21,7 +21,8 @@ import {
   users,
   products,
   transactions,
-  search
+  search,
+  amazon
 } from './routes/index.js';
 
 import middleware from './middleware';
@@ -35,8 +36,8 @@ app.use(middleware.morgan('dev'));
 app.use(middleware.cookieParser());
 app.use(middleware.bodyParser.urlencoded({extended: true}));
 app.use(middleware.bodyParser.json());
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+// app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'ejs');
 
 app.use(middleware.auth.session);
 app.use(middleware.passport.initialize());
@@ -50,6 +51,7 @@ app.use('/api/users', users);
 app.use('/api/products', products);
 app.use('/api/transactions', transactions);
 app.use('/api/search', search);
+app.use('/api/amzn', amazon);
 
 app.disable('x-powered-by');
 app.use('/images', express.static(path.join(__dirname, '../src/assets/images')));

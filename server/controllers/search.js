@@ -35,37 +35,37 @@ module.exports.search = (req, res) => {
   }
 
   Product
-    .query((qb) => { 
+    .query((qb) => {
       qb.whereRaw(`TRIM(LOWER(title)) LIKE '%${req.body.searchTerm.trim().toLowerCase()}%'`)
-        .limit(20); 
+        .limit(20);
     })
     .fetchAll()
     .then(products => {
       if (products.length === 0) {
         console.log('searching foreign');
-        throw products;
+        return;
       }
-      console.log('searching local');
-      res.status(200).send({results: products});
+
+      throw [products.models, undefined];
     })
-    .error(err => {
-      res.status(500).send(err);
-    })
-    .catch(except => {
-      return searchAmazon(req.body.searchTerm);
+    .then(() => {
+      return Promise.all([searchOverstock(req.body.searchTerm), searchAmazon(req.body.searchTerm)])
     })
     .then(responses => {
-      if (!responses) {
-        throw new Error('no response from amazon!');
+      if (!responses || (!responses[0] && !responses[1])) {
+        throw new Error('no response from amazon or overstock!');
       }
-      return Product.fromAmazon(responses);
+
+      return Promise.all([Product.fromOverstock(responses[0]), Product.fromAmazon(responses[1])]);
     })
     .then(results => {
-      res.json({results}).status(200);
+      throw results;
     })
-    .catch((...err) => {
-      console.error(...err);
-      res.status(500).end();
+    .catch(results => {
+      if (!Array.isArray(results)) {
+        throw results;
+      }
+      res.json({results: results[0].concat(results[1] || [])}).status(200);
     })
     .error((...err) => {
       console.error(...err);
@@ -75,8 +75,8 @@ module.exports.search = (req, res) => {
 
 /**
  * Search Amazon given a search term.
- *  
- * @param {string} searchTerm 
+ *
+ * @param {string} searchTerm
  * @param {Promise} - Promise that resolves with a response from amazon
  */
 const searchAmazon = searchTerm => {
@@ -99,5 +99,16 @@ const searchAmazon = searchTerm => {
 
   request_url = `http://${endpoint}${uri}?${canonical_query_string}&Signature=` + encodeURIComponent(signature);
 
-  return axios.get(request_url);
+  return axios.get(request_url)
+  .catch(err => null);
+};
+
+const searchOverstock = searchTerm => {
+  return axios.get('https://product-search.api.cj.com/v2/product-search?', {
+      params: {
+        'website-id': overstock['website-id'],
+        'keywords': searchTerm
+      }
+    })
+    .catch((err) => null);
 };

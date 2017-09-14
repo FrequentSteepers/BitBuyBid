@@ -2,8 +2,19 @@ import React from 'react';
 import {handleLogin} from '../store/modules/app.js';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {Link} from 'react-router-dom';
-import {Redirect} from 'react-router';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Redirect,
+  withRouter
+} from 'react-router-dom';
+
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
+import FlatButton from 'material-ui/FlatButton';
+import Snackbar from 'material-ui/Snackbar';
+
 
 class Login extends React.Component {
   constructor(props) {
@@ -29,27 +40,39 @@ class Login extends React.Component {
   }
 
   render() {
+    if (this.props.user) {
+      return (<Route render={props => (
+        <Redirect to={{
+          pathname: '/',
+          state: { from: props.location }
+        }}/>
+      )} />);
+    }
     return (
-      <div className="col-sm-6 col-sm-offset-3">
-        <h1><span className="fa fa-sign-in"></span>Login</h1>     
-
-        <div className="form-group">
-          <label>Email</label>
-          <input onChange={this.handleEmailChange} type="text" className="form-control" name="email" />
-        </div>
-
-        <div className="form-group">
-          <label>Password</label>
-          <input onChange={this.handlePassChange} type="password" className="form-control" name="password" />
-        </div>
-
-        <button onClick={() => { 
-          this.props.handleLogin({email: this.state.email, password: this.state.password});
-        }} 
-        className="btn btn-warning btn-lg">Login</button>
-
-        <p>Need to sign up for an account?</p>
-        <Link to='/signup'>Sign up Page</ Link>
+      <div className='login center'>
+        <h1>Login</h1>
+        <TextField 
+          hintText='email' 
+          floatingLabelText='Email' 
+          type='email' 
+          value={this.state.email} 
+          onChange={this.handleEmailChange} 
+        /> 
+        <br/>
+        <TextField 
+          onKeyPress={this.handlePassChange} 
+          floatingLabelText='Password' 
+          type='password' 
+          value={this.state.password} 
+          onChange={this.handlePassChange} 
+        />
+        <br/>
+        <RaisedButton 
+          className='btn' 
+          onClick={() => this.props.handleLogin({email: this.state.email, password: this.state.password})}
+        >Login
+        </RaisedButton>
+        <FlatButton className='btn' href='/signup'>Sign Up</FlatButton><br/>
       </div>
     );
   }

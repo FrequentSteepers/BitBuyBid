@@ -119,13 +119,13 @@ Product.fromOverstock = (results) => {
 Product.fromAmazon = (results) => {
   var promiseArray;
 
-  if(!results) {
+  if (!results) {
     return Promise.resolve(null);
   }
 
   parseString(results.data, function (err, result) {
-    if(err) {
-      console.log('error is', err)
+    if (err) {
+      console.log('error is', err);
     }
     let productListings = result.ItemSearchResponse.Items[0].Item;
 

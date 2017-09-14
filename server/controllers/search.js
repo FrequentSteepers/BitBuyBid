@@ -49,7 +49,7 @@ module.exports.search = (req, res) => {
       throw [products.models, undefined];
     })
     .then(() => {
-      return Promise.all([searchOverstock(req.body.searchTerm), searchAmazon(req.body.searchTerm)])
+      return Promise.all([searchOverstock(req.body.searchTerm), searchAmazon(req.body.searchTerm)]);
     })
     .then(responses => {
       if (!responses || (!responses[0] && !responses[1])) {
@@ -100,15 +100,15 @@ const searchAmazon = searchTerm => {
   request_url = `http://${endpoint}${uri}?${canonical_query_string}&Signature=` + encodeURIComponent(signature);
 
   return axios.get(request_url)
-  .catch(err => null);
+    .catch(err => null);
 };
 
 const searchOverstock = searchTerm => {
   return axios.get('https://product-search.api.cj.com/v2/product-search?', {
-      params: {
-        'website-id': overstock['website-id'],
-        'keywords': searchTerm
-      }
-    })
+    params: {
+      'website-id': overstock['website-id'],
+      'keywords': searchTerm
+    }
+  })
     .catch((err) => null);
 };

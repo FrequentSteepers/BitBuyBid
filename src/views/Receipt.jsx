@@ -31,7 +31,6 @@ class Receipt extends Component {
         <h2>Thank you!</h2>
         <h3>Your product should be shipping shortly.</h3>
         <button onClick={() => this.handleBitcoinBuy(this.amount)}>Get ${this.amount} worth of Bitcoins</button>
-        <FlatButton label="Return to cart" />
       </div>
     );
   }

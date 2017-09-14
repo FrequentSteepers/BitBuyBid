@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { renderToString } from 'react-dom/server';
 import { Provider } from 'react-redux';
 import path from 'path';
+import axios from 'axios';
 
 import configureStore from '../../src/store/index.js';
 import renderFullHTMLPage from '../../renderFullHTMLPage';
@@ -24,8 +25,12 @@ import { matchRoutes, renderRoutes } from 'react-router-config';
 
 
 const router = express.Router();
-
-/**
+var BTC_EXCHANGE = {btcExchange: undefined};  
+axios.get('https://api.coinbase.com/v2/prices/spot?currency=USD')
+  .then((data) => {
+    BTC_EXCHANGE.btcExchange = data.data.data.amount;    
+  });
+/**4
  * Render the component and return the given 
  */
 router.get('/', (req, res) => {
@@ -34,7 +39,11 @@ router.get('/', (req, res) => {
     user: req.isAuthenticated() ? req.user : null, 
   };
 
-  const store = configureStore({ app });
+  const exchange = {
+    btcExchange: BTC_EXCHANGE.btcExchange
+  };
+
+  const store = configureStore({ app, exchange });
 
   const branch = matchRoutes(routes, req.url);
 

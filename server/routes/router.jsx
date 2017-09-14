@@ -30,7 +30,7 @@ axios.get('https://api.coinbase.com/v2/prices/spot?currency=USD')
   .then((data) => {
     BTC_EXCHANGE.btcExchange = data.data.data.amount;    
   });
-/**
+/**4
  * Render the component and return the given 
  */
 router.get('/', (req, res) => {
@@ -39,7 +39,6 @@ router.get('/', (req, res) => {
     user: req.isAuthenticated() ? req.user : null, 
   };
 
-  console.log('exchange rate', BTC_EXCHANGE);
   const exchange = {
     btcExchange: BTC_EXCHANGE.btcExchange
   };

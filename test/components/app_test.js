@@ -21,7 +21,17 @@ const setup = () => {
 describe('App', () => {
   const { wrapper } = setup();
   console.log(wrapper);
+  let app;
+
+  beforeEach(() => {
+    app = shallow(<App />);
+  });
+
   it('renders something', () => {
     expect(wrapper).to.exist;
+  });
+
+  it('renders nested Nav component', () => {
+    expect(app.find('#nav').length).to.equal(1);
   });
 });

@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import DetailedTransactionSummary from './DetailedTransactionSummary.jsx';
 import ConciseTransactionSummary from './ConciseTransactionSummary.jsx';
 
-class TransactionSummary extends Component {
+class Transaction extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,14 +19,11 @@ class TransactionSummary extends Component {
 
   render() {
     return (
-      <div >
-        {this.state.isDetailed ? 
-          <DetailedTransactionSummary toggle={this.toggleDetails} transaction={this.props.transaction}/> :
-          <ConciseTransactionSummary toggle={this.toggleDetails} transaction={this.props.transaction}/>
-        }
-      </div>
+      this.state.isDetailed ? 
+        <DetailedTransactionSummary toggle={this.toggleDetails} transaction={this.props.transaction}/> :
+        <ConciseTransactionSummary toggle={this.toggleDetails} transaction={this.props.transaction}/>
     );
   }
 }
 
-export default TransactionSummary;
+export default Transaction;

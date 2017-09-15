@@ -106,6 +106,7 @@ export const checkout = (payload, dispatch) => {
 };
 
 export const selectProduct = payload => {
+  
   return {
     type: SELECT_PRODUCT,
     payload

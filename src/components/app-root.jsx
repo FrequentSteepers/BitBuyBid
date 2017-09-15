@@ -18,6 +18,13 @@ import Logout from '../views/Logout.jsx';
 
 import Nav from './Nav.js';
 
+/*
+  the default route should always be last, as the interpreter
+  will render the first route that returns positive in the switch 
+  block as matching the path endpoint. therefor, the '/' will render
+  no matter what the chartacters after the URI are, serving as a 
+  kind of catch-all. 
+*/
 export default ({route}) => (
   <div>
     <Nav />

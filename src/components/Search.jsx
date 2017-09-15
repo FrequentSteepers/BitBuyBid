@@ -54,7 +54,7 @@ class Search extends Component {
       <div style={style.search}>
         <Card>
           <form style={style.form} onKeyPress={(e) => this.handleSearch(e)}>
-            <TextField floatingLabelText="search for a product!"/>
+            <TextField id="search-bar" floatingLabelText="search for a product!"/>
           </form>
         </Card>
       </div>

@@ -1,10 +1,11 @@
 const { Transaction } = require('../../db/models');
-
+const axios = require('axios');
 
 const { 
   associate_tag,
   access_key_id,
-  secret_key
+  secret_key,
+  signRequest
 } = require('../../config/api_configs/amazon');
 
 /**
@@ -12,29 +13,33 @@ const {
  */
 module.exports.create = (req, res) => {
   // req.body.transaction_id
-  Transaction.where({id: req.body.transaction_id}) 
+  Transaction.where({id: 1}) 
     .fetch({
       withRelated: ['cart', 'buyer']
     })
     .then(transaction => {
-      var url = 'http:// webservices.amazon.com/onca/xml?' +
+      var url = 'http://webservices.amazon.com/onca/xml?' +
       'Service=AWSECommerceService&' +
       `AWSAccessKeyId=${access_key_id}&` +
       'Operation=CartCreate&'; 
       var c = 1; 
-      for (var i = 0; i < transaction.cart; i++) {
-        if (transaction.cart[i].product.asin && transaction.cart[i].quantity) {
-          url += `Item.${c}.ASIN=${transaction.cart[i].product.asin}&`;
-          url += `Item.${c}.Quantity=${transaction.cart[i].quantity}&`;
+      const items = transaction.relations.cart.models
+        .map(o => o._previousAttributes);
+      for (const item of items) {
+        if (item.asin && item._pivot_quantity) {
+          url += `Item.${c}.ASIN=${item.asin}&`;
+          url += `Item.${c}.Quantity=${item._pivot_quantity}&`;
           c++;
         }
       }
-      url += `&Timestamp=[${new Date()}]`; // YYYY-MM-DDThh:mm:ssZ
-      url += '&Signature=[Request Signature]';
-      axios.get(url)
-        .then(console.log);
+      if (c === 1) {
+        throw new Error('no data!');
+      }
+      console.log(signRequest(url));
+      res.status(200).end();
     })
     .catch(err => {
+      console.error(err);
       res.status(500).end();
     });
 };

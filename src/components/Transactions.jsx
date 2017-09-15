@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {setTransactions} from '../store/modules/app.js';
-import TransactionSummary from './TransactionSummary.jsx';
+import Transaction from './Transaction.jsx';
+import { Card } from 'material-ui/Card';
 
 const mapStateToProps = state => {
   return {
@@ -21,19 +22,18 @@ class Transactions extends Component {
     super(props);
     this.props.setTransactions();
   }
+  
   render() {
     return (
-      <div>
+      <div> 
         {this.props.transactions ? 
-          this.props.transactions.data.map((transaction, i) => {
-            return (
-              <TransactionSummary transaction={transaction} key={i}/>
-            );
-          }) : 
-          null
-        }
-      </div>
-    );
+          (this.props.transactions.data.map((transaction, i) => 
+            (<Card key={i} style={{padding: '15px', margin: '4px'}}>
+              <Transaction key={i} transaction={transaction}/>
+            </Card>))
+          ) : 
+          null}
+      </div>);
   }
 }
 

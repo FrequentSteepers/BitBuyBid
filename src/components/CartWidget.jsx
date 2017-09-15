@@ -7,7 +7,6 @@ import {bindActionCreators} from 'redux';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import {GridList} from 'material-ui/GridList';
 import Paper from 'material-ui/Paper';
-// import { Grid, Row, Col } from 'react-flexbox-grid';
 import {style} from '../styles.js';
 
 const mapStateToProps = state => {
@@ -34,6 +33,7 @@ class CartWidget extends Component {
       display: true
     };
   }
+
   render() {
     return (this.state.display ? 
       <div style={style.root}>
@@ -46,12 +46,13 @@ class CartWidget extends Component {
               </div>
               {this.props.cart ? this.props.cart.map((product, i) => {
                 return (
-                  <div key={i}>
+                  <div onClick={() => this.props.selectProduct(product.id)} key={i}>
                     {i > 0 ? <hr/> : null}
-                    <Link style={style.link} to={`/product?id=${product.prod_id}`}>
+                    <Link style={style.link} to={`/product?id=${product.id}`}>
                       <img style={style.img} src={product.img_url_sm} alt="" />
                     </Link>
-                    <Link style={style.link} to={`/product?id=${product.prod_id}`}>
+                    <Link style={style.link} to={`/product?id=${product.id}`}>
+
                       <CardTitle style={style.title} title={product.title}/>
                     </Link>
                     <CardText style={style.text}>{product.description.slice(0, 40) + '...'}</CardText>

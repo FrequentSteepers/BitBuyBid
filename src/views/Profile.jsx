@@ -18,18 +18,14 @@ class Profile extends Component {
 
   render() {
     return (
-      <div>
-        <Paper>
-          <Card>
-            <CardHeader>
-              <h1>{this.props.user && this.props.user.first + ' ' + this.props.user.last}</h1>
-            </CardHeader>
-          </Card>
-          <Card>
-            <Transactions />
-          </Card>
-        </Paper>
-      </div>
+      <Paper style={{position: 'relative', width: '90%', padding: '50px', left: '5%'}}>
+        <Card>
+          <CardHeader>
+            <h1>{this.props.user && this.props.user.first + ' ' + this.props.user.last}</h1>
+          </CardHeader>
+        </Card>
+        <Transactions />
+      </Paper>
     );
   }
 }

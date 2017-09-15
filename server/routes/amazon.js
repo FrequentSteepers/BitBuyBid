@@ -1,14 +1,9 @@
 'use strict';
 const express = require('express');
 const router = express.Router();
-const {create, getAll, getOne, update} = require('../controllers').Amazon;
-
-router.route('/')
-  .get(getAll)
-  .post(create);
+const {getOne} = require('../controllers').Amazon;
 
 router.route('/:id')
-  .get(getOne)
-  .put(update);
+  .post(getOne);
 
 module.exports = router;

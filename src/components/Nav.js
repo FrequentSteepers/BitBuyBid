@@ -6,6 +6,9 @@ import FlatButton from 'material-ui/FlatButton';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
 
+import { bindActionCreators } from 'redux';
+import { handleLogout } from '../store/modules/app.js';
+
 const style = {
   nav: {
     position: 'fixed',
@@ -71,7 +74,7 @@ class Navbar extends React.Component {
             this.props.user ? 
               <div>
                 <Link to ='/profile'><FlatButton label={this.props.user.username} labelStyle={{color: 'white'}} /></Link> 
-                <Link to ='/logout' ><FlatButton label="Logout" labelStyle={{color: 'white'}} /></Link>
+                <Link to ='/logout' ><FlatButton label="Logout" labelStyle={{color: 'white'}} onClick={this.props.handleLogout} /></Link>
               </div> :
               <div>
                 <Link to ='/signup' ><FlatButton label="Signup" labelStyle={{color: 'white'}} /></Link>
@@ -94,4 +97,10 @@ const mapStateToProps = ({app}) => ({
   user: app.user
 });
 
-export default connect(mapStateToProps)(Navbar);
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({
+    handleLogout
+  }, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

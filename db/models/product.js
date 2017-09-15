@@ -21,6 +21,7 @@ const defaultImage = '';
  * @todo associate inserted products to category/ tag.
  */
 Product.fromOverstock = (results) => {
+  var promiseArray;
   const parsed = JSON.parse(convert.xml2json(results.data,
     {
       compact: true,
@@ -29,20 +30,40 @@ Product.fromOverstock = (results) => {
     }
   ))['cj-api'].products.product;
 
-  parsed.filter((p) => {
+  if (!Array.isArray(parsed)) {
+    return Promise.resolve(null);
+  }
+
+  promiseArray = parsed.filter((p) => {
     return Number(p.price['_text']) && p['image-url']._text;
-  }).forEach(p => {
-    Product.query((qb) => { 
+  }).map(p => {
+    return Product.query((qb) => {
       qb.whereRaw(`prod_id = '${(p['ad-id']._text || '') + (p['sku']._text || '') + (p['upc']._text || '')}|OVSOCK'`)
-        .andWhere('type', '=', 'ovsock').limit(1); 
+        .andWhere('type', '=', 'ovsock').limit(1);
     })
       .fetchAll()
       .then(products => {
         if (products && products.length > 0) {
           // ovsock item found in db, skipping
+          return {
+            'id': products.models[0].id,
+            'prod_id': (p['ad-id']._text || '') + (p['sku']._text || '') + (p['upc']._text || '') + '|OVSOCK',
+            'ad-id': Number.parseInt(p['ad-id']._text || 0) || null,
+            'sku': Number.parseInt(p['sku']._text) || null,
+            'upc': Number.parseInt(p['upc']._text) || null,
+            'catalog_id': p['catalog-id']._text.replace(/\D/g, ''),
+            'price': Number(p.price['_text']),
+            'buy_url': p['buy-url']._text,
+            'type': 'ovsock',
+            'title': p.name._text,
+            'description': p.description._text,
+            'img_url_sm': p['image-url']._text || defaultImage,
+            'img_url_md': p['image-url']._text || defaultImage,
+            'img_url_lg': p['image-url']._text || defaultImage
+          };
         } else {
           // insert new item
-          Product.forge(
+          return Product.forge(
             {
               'prod_id': (p['ad-id']._text || '') + (p['sku']._text || '') + (p['upc']._text || '') + '|OVSOCK',
               'ad-id': Number.parseInt(p['ad-id']._text || 0) || null,
@@ -59,13 +80,32 @@ Product.fromOverstock = (results) => {
               'img_url_lg': p['image-url']._text || defaultImage
             }
           )
-            .save();
+            .save()
+            .then(({id}) => {
+              return {
+                id: id,
+                'prod_id': (p['ad-id']._text || '') + (p['sku']._text || '') + (p['upc']._text || '') + '|OVSOCK',
+                'ad-id': Number.parseInt(p['ad-id']._text || 0) || null,
+                'sku': Number.parseInt(p['sku']._text) || null,
+                'upc': Number.parseInt(p['upc']._text) || null,
+                'catalog_id': p['catalog-id']._text.replace(/\D/g, ''),
+                'price': Number(p.price['_text']),
+                'buy_url': p['buy-url']._text,
+                'type': 'ovsock',
+                'title': p.name._text,
+                'description': p.description._text,
+                'img_url_sm': p['image-url']._text || defaultImage,
+                'img_url_md': p['image-url']._text || defaultImage,
+                'img_url_lg': p['image-url']._text || defaultImage
+              };
+            });
         }
       }).catch(e => {
         console.log('error occured querying ovsock products');
         console.error(e);
       });
   });
+  return Promise.all(promiseArray);
 };
 
 /**
@@ -78,14 +118,22 @@ Product.fromOverstock = (results) => {
  */
 Product.fromAmazon = (results) => {
   var promiseArray;
+
+  if (!results) {
+    return Promise.resolve(null);
+  }
+
   parseString(results.data, function (err, result) {
+    if (err) {
+      console.log('error is', err);
+    }
     let productListings = result.ItemSearchResponse.Items[0].Item;
 
     promiseArray = productListings
-      .filter(p => 
+      .filter(p =>
         p.ItemAttributes[0].ListPrice && (p.SmallImage || p.MediumImage || p.LargeImage)
-      ).map(product => 
-        Product.query(qb =>  
+      ).map(product =>
+        Product.query(qb =>
           qb.whereRaw(`prod_id = '${product.ASIN[0]}|AMZN'`)
             .andWhere('type', '=', 'amzn')
             .limit(1)
@@ -93,7 +141,7 @@ Product.fromAmazon = (results) => {
           .fetchAll()
           .then(products => {
             if (products && products.length > 0) {
-              return {           
+              return {
                 'id': products.models[0].id,
                 'prod_id': product.ASIN[0] + '|AMZN',
                 'asin': product.ASIN[0],

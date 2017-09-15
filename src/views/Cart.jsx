@@ -12,6 +12,7 @@ import Receipt from '../views/Receipt.jsx';
 import CartItem from '../components/CartItem.jsx';
 import Subtotal from '../components/Subtotal.jsx';
 import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
+import FlatButton from 'material-ui/FlatButton';
 
 class Checkout extends Component {
   constructor(props) {
@@ -25,17 +26,17 @@ class Checkout extends Component {
           {this.props.cart.map((item, i) => {
             return <CartItem key={i} item={item} />;
           })}
-          <div>Subtotal: <Subtotal/>
+          <div>Subtotal: <Subtotal />
           </div>
           <Switch>
             <Route exact path='/cart/confirm'>
               <div>
-                <Link to='/receipt' onClick={() => this.props.checkout()}><button>Confirm</button></Link>
-                <Link to='/cart'><button>Abort</button></Link>
+                <Link to='/receipt' onClick={() => this.props.checkout()}><FlatButton label="checkout"/></Link>
+                <Link to='/cart'><FlatButton label="Abort"/></Link>
               </div>
             </Route>
             <Route path='/cart'>
-              <Link to='/cart/confirm'><button>Checkout</button></Link>
+              <Link to='/cart/confirm'><FlatButton label="Checkout"/></Link>
             </Route>
             <Route path='/receipt'>
               <Receipt/>

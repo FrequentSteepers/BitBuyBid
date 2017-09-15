@@ -6,7 +6,7 @@ const Transaction = db.Model.extend({
     return this.belongsTo('User', 'buyer_id');
   },
   cart: function() {
-    return this.belongsToMany('Product').through('Purchase');
+    return this.belongsToMany('Product').through('Purchase').withPivot(['quantity', 'status']);
   }
 });
 

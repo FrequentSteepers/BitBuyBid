@@ -139,3 +139,11 @@ export const decrementItem = (payload) => {
     payload
   };
 };
+
+export const handleAmazonCart = (payload) => {
+  return (dispatch, getState) => {
+    axios.post('/api/amzn', {cart: getState().products.cart, quantities: getState().products.quantities})
+      .then(res => console.log('successful checkout: ', res))
+      .catch(err => console.log('error in the checkout: ', err));
+  };
+};

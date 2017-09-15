@@ -1,13 +1,10 @@
 import React, {Component} from 'react';
-import { connect } from 'react-redux';
 import FlatButton from 'material-ui/FlatButton';
 
-const mapStateToProps = state => {
-  return {
-    cart: state.products.cart,
-    quantities: state.products.quantities
-  };
-};
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import { handleAmazonCart } from '../store/modules/products';
 
 class Receipt extends Component {
   constructor(props) {
@@ -25,17 +22,31 @@ class Receipt extends Component {
   handleBitcoinBuy(amount) {
     alert(`you have purchased %${(100 * amount / 4288.99).toFixed(8)} of a single bitcoin`);
   }
+
   render() {
     return (
       <div>
         <h2>Thank you!</h2>
         <h3>Your product should be shipping shortly.</h3>
         <button onClick={() => this.handleBitcoinBuy(this.amount)}>Get ${this.amount} worth of Bitcoins</button>
+        <button onClick={() => this.props.handleAmazonCart()}>
+          Create Amazon cart
+        </button>
       </div>
     );
   }
 }
 
+const mapStateToProps = state => ({
+  cart: state.products.cart,
+  quantities: state.products.quantities
+});
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({
+    handleAmazonCart
+  }, dispatch);
+};
 
 
-export default connect(mapStateToProps)(Receipt);
+export default connect(mapStateToProps, mapDispatchToProps)(Receipt);

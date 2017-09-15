@@ -30,7 +30,8 @@ axios.get('https://api.coinbase.com/v2/prices/spot?currency=USD')
   .then((data) => {
     BTC_EXCHANGE.btcExchange = data.data.data.amount;    
   });
-/**4
+
+/**
  * Render the component and return the given 
  */
 router.get('/', (req, res) => {
@@ -62,7 +63,8 @@ router.get('/', (req, res) => {
             position: 'relative',
             padding: 0,
             left: 0
-          }
+          },
+          userAgent: req.headers['user-agent']
         })}>
           <StaticRouter location={req.url} context={context}>
             {renderRoutes(routes)}
@@ -76,8 +78,7 @@ router.get('/', (req, res) => {
     if (context.status === 302) {
       return res.redirect(302, context.url);
     }
-
-    res.send(renderFullHTMLPage(content, store.getState()));
+    res.send(renderFullHTMLPage(content, store.getState(), req.headers['user-agent']));
   });
 });
 

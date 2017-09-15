@@ -4,7 +4,7 @@ import FlatButton from 'material-ui/FlatButton';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { handleAmazonCart } from '../store/modules/products';
+import { handleAmazonCart } from '../store/modules/transactions';
 
 class Receipt extends Component {
   constructor(props) {

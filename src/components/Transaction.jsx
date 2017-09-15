@@ -19,9 +19,7 @@ class Transaction extends Component {
 
   render() {
     return (
-      this.state.isDetailed ? 
-        <DetailedTransactionSummary toggle={this.toggleDetails} transaction={this.props.transaction}/> :
-        <ConciseTransactionSummary toggle={this.toggleDetails} transaction={this.props.transaction}/>
+      <ConciseTransactionSummary isDetailed={this.state.isDetailed} toggle={this.toggleDetails} transaction={this.props.transaction}/>
     );
   }
 }

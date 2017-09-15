@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import {setTransactions} from '../store/modules/app.js';
-import DetailedTransactionSummary from './DetailedTransactionSummary.jsx';
-import ConciseTransactionSummary from './ConciseTransactionSummary.jsx';
 import Transaction from './Transaction.jsx';
-import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
+import { Card } from 'material-ui/Card';
 
 const mapStateToProps = state => {
   return {

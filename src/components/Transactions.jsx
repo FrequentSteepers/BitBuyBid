@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
-import {setTransactions} from '../store/modules/app.js';
+import {setTransactions} from '../store/modules/transactions.js';
 import Transaction from './Transaction.jsx';
 import { Card } from 'material-ui/Card';
 
 const mapStateToProps = state => {
   return {
-    transactions: state.app.transactions
+    transactions: state.transactions.transactions
   };
 };
 
@@ -20,6 +20,9 @@ const mapDispatchToProps = dispatch => {
 class Transactions extends Component {
   constructor(props) {
     super(props);
+  }
+
+  componentWillMount() {
     this.props.setTransactions();
   }
   
@@ -27,7 +30,7 @@ class Transactions extends Component {
     return (
       <div> 
         {this.props.transactions ? 
-          (this.props.transactions.data.map((transaction, i) => 
+          (this.props.transactions.map((transaction, i) => 
             (<Card key={i} style={{padding: '15px', margin: '4px'}}>
               <Transaction key={i} transaction={transaction}/>
             </Card>))

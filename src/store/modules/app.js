@@ -3,7 +3,6 @@ import { push } from 'react-router-redux';
 
 export const appTypes = {
   SET_USER: 'app/SET_USER',
-  SET_TRANSACTIONS: 'app/SET_TRANSACTIONS'
 };
 
 const initialState = {
@@ -18,27 +17,10 @@ export default (state = initialState, {type, payload}) => {
       ...state, 
       user: payload
     };
-  case appTypes.SET_TRANSACTIONS:
-    return {
-      ...state, 
-      transactions: payload
-    };
   default: return state;
   }
 };
 
-export const setTransactions = payload => {
-  return dispatch => {
-    axios.get('/api/transactions')
-      .then(transactions => {
-        dispatch({
-          type: appTypes.SET_TRANSACTIONS,
-          payload: transactions
-        });
-      })
-      .catch(e => console.log('error getting transactions: ', e));
-  };
-};
 
 export const setUser = payload => {
   return {

@@ -6,6 +6,7 @@ import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'm
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import { setProducts, selectProduct } from '../store/modules/products.js';
+import AutoComplete from 'material-ui/AutoComplete';
 
 const style = {
   search: {
@@ -36,6 +37,9 @@ const mapDispatchToProps = (dispatch) => {
 class Search extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      dataSource: []
+    };
     this.handleSearch = this.handleSearch.bind(this);
   }
 
@@ -53,9 +57,13 @@ class Search extends Component {
     return (
       <div style={style.search}>
         <Card>
-          <form style={style.form} onKeyPress={(e) => this.handleSearch(e)}>
-            <TextField id="search-bar" floatingLabelText="search for a product!"/>
-          </form>
+          <AutoComplete 
+            id="searchfield"
+            hintText="bitbuy a new..."
+            dataSource={this.state.dataSource}
+            onKeyPress={this.handleSearch}
+            fullWidth={true}
+          />
         </Card>
       </div>
     );

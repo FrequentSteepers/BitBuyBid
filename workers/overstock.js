@@ -2,7 +2,6 @@ const axios = require('axios');
 
 const { overstock } = require('../config/api_configs/');
 axios.defaults.headers.common['Authorization'] = overstock.Authorization;
-const convert = require('xml-js');
 
 /**
  * Query overstock api with each category and insert the resulting

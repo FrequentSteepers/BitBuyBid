@@ -58,7 +58,6 @@ app.use('/images', express.static(path.join(__dirname, '../src/assets/images')))
 app.use('/scripts', express.static('built'));
 app.use('/styles', express.static(path.join(__dirname, 'style')));
 app.use('/built', express.static(path.join(__dirname, 'built')));
-// app.use('/built', express.static('built'));
 app.use(express.static(path.join(__dirname, '../')));
 app.get('/favicon.ico', (req, res) => res.send(''));
 

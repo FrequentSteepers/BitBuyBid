@@ -30,7 +30,7 @@ class Transactions extends Component {
       <div> 
         {this.props.transactions ? 
           (this.props.transactions.data.map((transaction, i) => 
-            (<Card style={{padding: '15px', margin: '4px'}}>
+            (<Card key={i} style={{padding: '15px', margin: '4px'}}>
               <Transaction key={i} transaction={transaction}/>
             </Card>))
           ) : 

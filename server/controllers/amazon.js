@@ -7,8 +7,11 @@ const convert = require('xml-js');
 
 /**
  * Create an amazon cart from a transaction in the database.
- * A post to /:id (transaction_id) creates an amazon
- * cart and which is gettable from /:id
+ * A post to /:id (transaction_id) creates an amazon cart.
+ * 
+ * Two network calls are required for each amazon cart. 
+ * One creates the cart and the next fetches the purchase 
+ * url.
  */
 module.exports.createAmazonCart = (req, res) => {
   let t;

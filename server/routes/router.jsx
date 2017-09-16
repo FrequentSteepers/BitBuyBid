@@ -21,11 +21,6 @@ import { matchRoutes, renderRoutes } from 'react-router-config';
 
 import {Exchange} from '../../db/models';
 
-// import appRouter from '../../src/router';
-
-// const reqRoutes = createRoutes(appRouter());
-
-
 const router = express.Router();
 
 var BTC_EXCHANGE = {btcExchange: undefined};
@@ -38,10 +33,7 @@ Exchange.query(function(qb) {
   });
 
 /**
-
-/**4
-
- * Render the component and return the given 
+* Render the component and return the given 
  */
 router.get('/', (req, res) => {
 

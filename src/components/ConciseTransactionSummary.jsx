@@ -18,7 +18,7 @@ class ConciseTransactionSummary extends Component {
       <div style={{width: '100%', height: '100px', display: 'inline-block'}}>
         <div style={{display: 'inline-block', width: '15%'}}>
           <div onClick={() => this.props.toggle()} style={{color: 'teal', alignText: 'left', fontSize: 'large', fontWeight: 'bold'}}>
-            {this.props.transaction.cart || 'Amazon'}
+            {(this.props.transaction.cart[0] && this.props.transaction.cart[0].user_id) || 'Amazon'}
           </div><br/>
           <div style={{position: 'relative', display: 'inline-block', color: 'maroon', alignText: 'left'}}>
             ${this.total}

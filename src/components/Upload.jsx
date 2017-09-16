@@ -31,11 +31,6 @@ class Upload extends React.Component {
     this.preview = document.querySelector('.preview');
   }
 
-  // <div class="fileUpload btn btn-primary">
-  //   <span>Upload</span>
-  //   <input id="uploadBtn" type="file" class="upload" />
-  // </div>
-
   render() {
     return (
       <div style={{width: '100%'}}>

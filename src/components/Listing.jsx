@@ -14,7 +14,7 @@ const Listing = ({item, addToCart}) => {
           <Link to={`/product?id=${item.id}`}><img style={{paddingBottom: '0px', maxWidth: '95%', height: '125px', margin: '0 auto', border: '1px solid black'}} src={item.img_url_sm}/></Link>
           <CardText style={{width: '100%'}}>
             <div style={{fontSize: '18px', height: '22px', whiteSpace: 'nowrap', margin: '0 auto', textAlign: 'left', overflow: 'hidden'}}>{item.title.slice(0, 25)}</div>
-            <div style={{fontSize: '10px', height: '30px', overflow: 'show', width: '100%', margin: '0 auto', textAlign: 'left', fontStyle:'italic'}}>{item.description.slice(0, 100)}</div>
+            <div style={{fontSize: '10px', height: '30px', overflow: 'show', width: '100%', margin: '0 auto', textAlign: 'left', fontStyle: 'italic'}}>{item.description.slice(0, 100)}</div>
           </CardText>
           <CardActions style={{padding: '0px'}}>
             <div style={{float: 'left', paddingLeft: '10px', fontSize: '10px', fontStyle: 'italic'}}>{`${item.type === 'amzn' ? 'Amazon' : (item.type === 'ovsock' ? 'Overstock' : 'Unidentified')}`}</div>

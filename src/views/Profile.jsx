@@ -20,29 +20,51 @@ class Profile extends Component {
       showUpload: false
     };
     this.toggleUpload = this.toggleUpload.bind(this);
+    this.toggleUploadOff = this.toggleUploadOff.bind(this);
+    this.calculateDate = this.calculateDate.bind(this);
   }
 
   toggleUpload() {
     this.setState({showUpload: !this.state.showUpload});
   }
 
+  toggleUploadOff(e) {
+    if (e.target === document.getElementById('upload') && this.state.showUpload) {
+      this.setState({showUpload: false});
+    }
+  }
+
+  calculateDate() {
+    let joinedAt = new Date(Date.now() - Date.parse(this.props.user.created_at));
+    if (joinedAt.getHours() < 48) {
+      return `${joinedAt.getHours()} hours ago`; 
+    } else if (joinedAtAt.getWeeks() < 8) {
+      return `${joinedAt.getWeeks()} weeks ago`; 
+    } else {
+      return `${joinedAt.getMonths()} months ago`; 
+    }
+  }
+
   render() {
     return (
-      <div>
-        <Paper style={{position: 'relative', width: '90%', padding: '50px', left: '5%'}}>
+      <div onClick={(e) => this.toggleUploadOff(e)}>
+        <Paper style={{position: 'relative', width: '90%', padding: '50px', left: '5%', backgroundColor: 'teal'}}>
           <Card style={{margin: '0 auto', padding: '10px'}}>
             <ProfilePicture toggle={this.toggleUpload} photo={this.props.user.picture}/>
-            <h1 style={{display: 'inline-block', paddingLeft: '10px'}}>{this.props.user && this.props.user.first + ' ' + this.props.user.last}</h1>
+            <div style={{display: 'inline-block', paddingLeft: '10px'}}>
+              <div style={{fontSize: '50px', fontWeight: 'bold'}}>{this.props.user && this.props.user.first + ' ' + this.props.user.last}</div>
+              <div style={{fontStyle: 'italic'}}>Joined {this.calculateDate()}</div>
+            </div>
           </Card>
           <Transactions />
         </Paper>
         {
           this.state.showUpload ? 
-            <Card style={{position: 'fixed', width: '100%', height: '100%', top: '0', left: '0', right: '0', bottom: '0', margin: 'auto', backgroundColor: 'rgba(0,0,0, 0.5)'}}>
-              <div style={{position: 'absolute', left: '25%', right: '25%', top: '25%', bottom: '25%', margin: 'auto', background: 'white'}}>
+            <div id='upload' style={{position: 'fixed', top: '0', left: '0', right: '0', bottom: '0', margin: 'auto', backgroundColor: 'rgba(0,0,0, 0.5)', zIndex: '100'}}>
+              <Card style={{position: 'absolute', left: '25%', right: '25%', top: '25%', maxBottom: '50%', margin: 'auto', background: 'teal', padding: '10px'}}>
                 <Upload/>
-              </div>
-            </Card> :
+              </Card>
+            </div> :
             null
         }
       </div>

@@ -102,24 +102,18 @@ module.exports.updateImage = function() {
   }
 };
 
-module.exports.submitImage = function(e) {
+module.exports.submitImage = function(e, userId) {
   e.preventDefault();
   var form = new FormData();
   form.append('image', this.state.photo[0]);
   axios.post('https://api.imgur.com/3/image', form)
     .then((res) => {
-      let metaPhoto = {
-        title: this.state.photo[0].name,
-        text: document.getElementsByTagName('textarea')[0].value,
-        image_url: res.data.data.link,
-        flag_comments: [],
-        latitude: this.state.lng,
-        longitude: this.state.lat,
-        trail_id: this.state.trailId,
-      };
-      return axios.post('/api/posts', {photo: metaPhoto})
-        .then(res => console.log('success: ', res))
-        .catch(err => console.log('error in the /api/posts endpoint: ', err));
+      console.log('stored!: ', res.data.data.link);
+      var link = res.data.data.link;
+      axios.put(`/api/users/${userId}`, {picture: link});
+      return link;
+      //   .then(res => console.log('success: ', res))
+      //   .catch(err => console.log('error in the /api/posts endpoint: ', err));
     })
     .catch((err, res) => {
       if (err) {

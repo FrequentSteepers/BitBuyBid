@@ -20,7 +20,11 @@ const style = {
 const Listing = ({item, addToCart}) => {
   return (
     <div style={style.listingContainer}>
-      <Card style={{...style.listingCard, backgroundColor: `${item.type === 'amzn' ? 'Turquoise' : (item.type === 'ovsock' ? 'PaleVioletRed' : 'DarkTurquoise')}`}}>
+      <Card style={{
+        ...style.listingCard, 
+        //background color needs to be determined upon each instantiation of this component:
+        backgroundColor: `${item.type === 'amzn' ? 'Turquoise' : (item.type === 'ovsock' ? 'PaleVioletRed' : 'DarkTurquoise')}`
+      }}>
         <CardMedia style={style.media}>
           <Link to={`/product?id=${item.id}`}><img style={style.img} src={item.img_url_sm}/></Link>
           <CardText style={{width: '100%'}}>

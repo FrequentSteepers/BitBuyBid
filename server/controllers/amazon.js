@@ -6,14 +6,18 @@ const {buildAmazonRequest} = require('../../utils').amazon;
 const convert = require('xml-js');
 
 /**
- * Create an amazon cart from a transaction in the database
+ * Create an amazon cart from a transaction in the database.
+ * A post to /:id (transaction_id) creates an amazon
+ * cart and which is gettable from /:id
  */
-module.exports.getOne = (req, res) => {
+module.exports.createAmazonCart = (req, res) => {
+  let t;
   Transaction.where({id: req.params.id}) 
     .fetch({
       withRelated: ['cart', 'buyer']
     })
     .then(transaction => {
+      t = transaction;
       var c = 1; 
       const items = transaction.relations.cart.models
         .map(o => o._previousAttributes);
@@ -46,7 +50,9 @@ module.exports.getOne = (req, res) => {
         amzn_HMAC: parsed.CartCreateResponse.Cart.HMAC._text,
         amzn_URLEncodedHMAC: parsed.CartCreateResponse.Cart.URLEncodedHMAC._text,
       };
-      transaction.save(response).then(() => console.log('success!'));
+      return t.save(response).then(() => 
+        res.status(201).end()
+      );
     })
     .catch(err => {
       console.error(err);

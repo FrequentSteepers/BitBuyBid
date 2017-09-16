@@ -86,7 +86,7 @@ class Navbar extends React.Component {
           <Link style={style.link} to='/'><MenuItem>Search</MenuItem></ Link>
           <Link style={style.link} to='/profile'><MenuItem>Profile</MenuItem></ Link>
           <Link style={style.link} to='/cart'><MenuItem >Cart</MenuItem></ Link>
-          <Link style={style.link} to='/logout'><MenuItem>Logout</MenuItem></ Link>
+          <Link style={style.link} to='/' onClick={this.props.handleLogout}><MenuItem>Logout</MenuItem></ Link>
           <Link style={style.link} to='/login'><MenuItem>Login</MenuItem></ Link>
         </Drawer>
       </div>

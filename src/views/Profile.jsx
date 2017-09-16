@@ -38,7 +38,7 @@ class Profile extends Component {
     let joinedAt = new Date(Date.now() - Date.parse(this.props.user.created_at));
     if (joinedAt.getHours() < 48) {
       return `${joinedAt.getHours()} hours ago`; 
-    } else if (joinedAtAt.getWeeks() < 8) {
+    } else if (joinedAt.getWeeks() < 8) {
       return `${joinedAt.getWeeks()} weeks ago`; 
     } else {
       return `${joinedAt.getMonths()} months ago`; 

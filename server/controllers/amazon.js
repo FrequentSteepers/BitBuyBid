@@ -59,3 +59,40 @@ module.exports.createAmazonCart = (req, res) => {
       res.status(500).end();
     });
 };
+
+module.exports.getAmazonCart = (req, res) => {
+  Transaction.where({id: req.params.id})
+    .fetch()
+    .then(transaction => {
+      let params = {
+        Service: 'AWSECommerceService',
+        Operation: 'CartGet',
+        CartId: `${transaction.toJSON().amzn_cart_id}`,
+        HMAC: `${transaction.toJSON().amzn_HMAC}` 
+      };
+      return axios.get(buildAmazonRequest(params));
+    })
+    .then(results => {
+      const parsed = JSON.parse(convert.xml2json(results.data,
+        {
+          compact: true,
+          spaces: 2,
+          instructionHasAttributes: true
+        }
+      ));
+      try {
+        const response = {
+          PurchaseURL: parsed.CartGetResponse.cart.PurchaseURL._text,
+        };
+        res.json(response).status(200);
+      } catch (e) {
+        res.status(405).end();
+      }
+    })
+    .catch(err => {
+      if (err.status !== 503) {
+        console.error(err);
+      }
+      res.status(500).end();
+    });
+};

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -24,14 +25,25 @@ class Receipt extends Component {
   }
 
   render() {
+    if (this.props.transactions.length > 0 && this.props.transactions.slice(-1)[0]['amzn_purchase_url']) {
+      return (
+        <div>
+          <h2>Thank you!</h2>
+          <h3>Your product should be shipping shortly.</h3>
+          <button onClick={() => this.handleBitcoinBuy(this.amount)}>Get ${this.amount} worth of Bitcoins</button>
+          {<a href={this.props.transactions.slice(-1)[0]['amzn_purchase_url']}>YOUR CART</a>}
+        </div>
+      );
+    }
     return (
       <div>
         <h2>Thank you!</h2>
         <h3>Your product should be shipping shortly.</h3>
         <button onClick={() => this.handleBitcoinBuy(this.amount)}>Get ${this.amount} worth of Bitcoins</button>
-        <button onClick={() => this.props.handleAmazonCart()}>
-          Create Amazon cart
-        </button>
+        <RaisedButton 
+          onClick={() => this.props.handleAmazonCart()}
+          label="Create Amazon cart"
+        />
       </div>
     );
   }
@@ -39,6 +51,7 @@ class Receipt extends Component {
 
 const mapStateToProps = state => ({
   cart: state.products.cart,
+  transactions: state.transactions.transactions,
   quantities: state.products.quantities
 });
 

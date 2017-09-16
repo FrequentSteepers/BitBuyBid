@@ -7,8 +7,7 @@ var convert = require('xml-js');
 
 module.exports.create = (req, res) => {
   if (!req.body.cart || req.body.cart.length === 0) {
-    // must have a cart
-    res.status(405);
+    res.status(405).send('You must have a cart');
   }
   let builtTransaction = {};
   Transaction.forge(

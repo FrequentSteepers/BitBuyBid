@@ -48,7 +48,7 @@ class Profile extends Component {
   render() {
     return (
       <div onClick={(e) => this.toggleUploadOff(e)}>
-        <Paper style={{position: 'relative', width: '90%', padding: '50px', left: '5%', backgroundColor: 'steelblue'}}>
+        <Paper style={{position: 'relative', width: '90%', padding: '50px', left: '5%', backgroundColor: 'white'}}>
           <Card style={{margin: '0 auto', padding: '10px'}}>
             <ProfilePicture toggle={this.toggleUpload} photo={this.props.user.picture}/>
             <div style={{display: 'inline-block', paddingLeft: '10px'}}>

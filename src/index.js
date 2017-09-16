@@ -19,7 +19,7 @@ import { matchRoutes, renderRoutes } from 'react-router-config';
  * Render react to the dom from the client side
  */
 ReactDOM.render(
-  <Provider store={store}>
+  <Provider store={store} style={{backgroundColor: 'lightgrey'}}>
     <MuiThemeProvider muiTheme={getMuiTheme({
       theme: lightBaseTheme,
       AppBar: {

@@ -1,5 +1,5 @@
 .root {
 	display: flex;
-	color: #000;
+	background-color: 'lightGrey';
 	font-size: 25px;
 }

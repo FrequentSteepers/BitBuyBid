@@ -3,18 +3,24 @@ import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {addToCart} from '../store/modules/products.js';
+import FlatButton from 'material-ui/FlatButton';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 
 const Listing = ({item, addToCart}) => {
   return (
-    <div>
-      <Card>
-        <div>
-          {item.title}<br/>
-          <Link to={`/product?id=${item.id}`}><img src={item.img_url_sm}/></Link>
-          Rating: {item.rating}
-          <button onClick={ () => { addToCart(item); } }>Add to Cart!</button>
-        </div>
+    <div style={{padding: '10px', display: 'inline-block', width: '200px', height: '250px'}}>
+      <Card style={{position: 'relative', width: '100%', height: '100%', border: '2px solid #95a5a6', backgroundColor: `${item.type === 'amzn' ? 'Turquoise' : (item.type === 'ovsock' ? 'PaleVioletRed' : 'DarkTurquoise')}`}}>
+        <CardMedia style={{position: 'relative', width: '95%', height: '100%', paddingTop: '10px', overflow: 'hidden'}}>
+          <Link to={`/product?id=${item.id}`}><img style={{paddingBottom: '0px', maxWidth: '95%', height: '125px', margin: '0 auto', border: '1px solid black'}} src={item.img_url_sm}/></Link>
+          <CardText style={{width: '100%'}}>
+            <div style={{fontSize: '18px', height: '22px', whiteSpace: 'nowrap', margin: '0 auto', textAlign: 'left', overflow: 'hidden'}}>{item.title.slice(0, 25)}</div>
+            <div style={{fontSize: '10px', height: '30px', overflow: 'show', width: '100%', margin: '0 auto', textAlign: 'left', fontStyle:'italic'}}>{item.description.slice(0, 100)}</div>
+          </CardText>
+          <CardActions style={{padding: '0px'}}>
+            <div style={{float: 'left', paddingLeft: '10px', fontSize: '10px', fontStyle: 'italic'}}>{`${item.type === 'amzn' ? 'Amazon' : (item.type === 'ovsock' ? 'Overstock' : 'Unidentified')}`}</div>
+            <FlatButton style={{float: 'right', bottom: '10px'}} onClick={ () => { addToCart(item); } }>Add to Cart!</FlatButton>
+          </CardActions>
+        </CardMedia>
       </Card>
     </div>
   );

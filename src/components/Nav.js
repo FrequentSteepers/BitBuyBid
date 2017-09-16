@@ -8,6 +8,7 @@ import {connect} from 'react-redux';
 
 import { bindActionCreators } from 'redux';
 import { handleLogout } from '../store/modules/app.js';
+import BitExchangeChart from './BitExchangeChart.jsx';
 
 const style = {
   nav: {
@@ -88,7 +89,9 @@ class Navbar extends React.Component {
           <Link style={style.link} to='/cart'><MenuItem >Cart</MenuItem></ Link>
           <Link style={style.link} to='/' onClick={this.props.handleLogout}><MenuItem>Logout</MenuItem></ Link>
           <Link style={style.link} to='/login'><MenuItem>Login</MenuItem></ Link>
+          <BitExchangeChart />
         </Drawer>
+        
       </div>
     );
   }

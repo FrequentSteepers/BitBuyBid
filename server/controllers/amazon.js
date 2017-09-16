@@ -50,9 +50,30 @@ module.exports.createAmazonCart = (req, res) => {
         amzn_HMAC: parsed.CartCreateResponse.Cart.HMAC._text,
         amzn_URLEncodedHMAC: parsed.CartCreateResponse.Cart.URLEncodedHMAC._text,
       };
-      return t.save(response).then(() => 
-        res.status(201).end()
-      );
+      let params = {
+        Service: 'AWSECommerceService',
+        Operation: 'CartGet',
+        CartId: `${response.amzn_cart_id}`,
+        HMAC: `${response.amzn_HMAC}` 
+      };
+      return axios.get(buildAmazonRequest(params))
+        .then(results => {
+          const parsed = JSON.parse(convert.xml2json(results.data,
+            {
+              compact: true,
+              spaces: 2,
+              instructionHasAttributes: true
+            }
+          ));
+          try {
+            response['amzn_purchase_url'] = parsed.CartGetResponse.Cart.PurchaseURL._text;
+            res.json(response).status(200);
+          } catch (e) {
+            console.error(e);
+            res.status(405).end();
+          }
+          t.save(response);
+        });
     })
     .catch(err => {
       console.error(err);
@@ -81,11 +102,13 @@ module.exports.getAmazonCart = (req, res) => {
         }
       ));
       try {
+        console.log(parsed.CartGetResponse);
         const response = {
-          PurchaseURL: parsed.CartGetResponse.cart.PurchaseURL._text,
+          PurchaseURL: parsed.CartGetResponse.Cart.PurchaseURL._text,
         };
         res.json(response).status(200);
       } catch (e) {
+        console.error(e);
         res.status(405).end();
       }
     })

@@ -19,20 +19,21 @@ import routes from '../../src/routes.js';
 import middleware from '../middleware';
 import { matchRoutes, renderRoutes } from 'react-router-config';
 
-// import appRouter from '../../src/router';
-
-// const reqRoutes = createRoutes(appRouter());
-
+import {Exchange} from '../../db/models';
 
 const router = express.Router();
-var BTC_EXCHANGE = {btcExchange: undefined};  
-axios.get('https://api.coinbase.com/v2/prices/spot?currency=USD')
-  .then((data) => {
-    BTC_EXCHANGE.btcExchange = data.data.data.amount;    
+
+var BTC_EXCHANGE = {btcExchange: undefined};
+Exchange.query(function(qb) {
+  qb.orderBy('date', 'desc').limit(10);
+})
+  .fetchAll({})
+  .then((data)=>{
+    BTC_EXCHANGE.btcExchange = data.toJSON();
   });
 
 /**
- * Render the component and return the given 
+* Render the component and return the given 
  */
 router.get('/', (req, res) => {
 

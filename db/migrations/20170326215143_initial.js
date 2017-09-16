@@ -76,6 +76,11 @@ exports.up = function (knex, Promise) {
       table.integer('transaction_id').references('transactions.id').onDelete('CASCADE');
       table.integer('product_id').references('products.id').onDelete('CASCADE');
       table.integer('review_id').references('reviews.id').onDelete('CASCADE');
+    }),
+    knex.schema.createTableIfNotExists('exchanges', function(table) {
+      table.increments('id').primary();
+      table.decimal('dollar_amt').notNullable();
+      table.timestamp('date').defaultTo(knex.fn.now());
     })
   ]);
 };
@@ -91,5 +96,6 @@ exports.down = function (knex, Promise) {
     knex.schema.dropTable('products'),
     knex.schema.dropTable('users'),
     knex.schema.dropTable('categories'),
+    knex.schema.dropTable('exchanges')
   ]);
 };

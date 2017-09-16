@@ -15,9 +15,9 @@ class DetailedTransactionSummary extends Component {
 
   render() {
     return (
-      <div style={{width: '100%', minHeight: '100px', display: 'inline-block'}}>
+      <div onClick={() => this.props.toggle()} style={{width: '100%', minHeight: '100px', display: 'inline-block', cursor: 'pointer'}}>
         <div style={{display: 'inline-block', width: '15%'}}>
-          <div onClick={() => this.props.toggle()} style={{color: 'teal', alignText: 'left', fontSize: 'large', fontWeight: 'bold'}}>
+          <div style={{color: 'teal', alignText: 'left', fontSize: 'large', fontWeight: 'bold'}}>
             {this.props.transaction.cart[0].user_id ? this.props.transaction.cart[0].user_id : 'Amazon'}
           </div><br/>
           <div style={{position: 'relative', display: 'inline-block', color: 'maroon', alignText: 'left'}}>

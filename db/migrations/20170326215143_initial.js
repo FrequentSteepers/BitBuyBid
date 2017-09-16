@@ -59,6 +59,7 @@ exports.up = function (knex, Promise) {
       table.text('amzn_cart_id').nullable();
       table.text('amzn_HMAC').nullable();
       table.text('amzn_URLEncodedHMAC').nullable();
+      table.text('amzn_purchase_url').nullable();
       table.integer('buyer_id').references('users.id').onDelete('CASCADE');
     }),
     knex.schema.createTableIfNotExists('reviews', function(table) {

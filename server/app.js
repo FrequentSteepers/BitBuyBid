@@ -21,8 +21,7 @@ import {
   users,
   products,
   transactions,
-  search,
-  amazon
+  search
 } from './routes/index.js';
 
 import middleware from './middleware';
@@ -49,7 +48,6 @@ app.use('/api/users', users);
 app.use('/api/products', products);
 app.use('/api/transactions', transactions);
 app.use('/api/search', search);
-app.use('/api/amzn', amazon);
 
 app.disable('x-powered-by');
 app.use('/images', express.static(path.join(__dirname, '../src/assets/images')));

@@ -10,7 +10,8 @@
     "webdev": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js",
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js --recursive ./test",
     "docs": "jsdoc src/ server/ -r -c conf.json -d docs/",
-    "test:watch": "npm run test -- --watch"
+    "test:watch": "npm run test -- --watch",
+    "rebuild": "grunt pgcreatedb:default && knex migrate:latest --env NODE_ENV && knex seed:run --env NODE_ENV"
   },
   "author": "",
   "license": "ISC",
@@ -74,6 +75,7 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
     "graceful-fs": "^4.1.11",
+    "grunt-pg": "https://github.com/watsoncj/grunt-pg.git",
     "json-loader": "^0.5.4",
     "knex": "^0.13.0",
     "lodash": "^3.10.1",

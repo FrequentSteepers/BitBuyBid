@@ -17,8 +17,8 @@ class ConciseTransactionSummary extends Component {
     return (
       <div onClick={() => this.props.toggle()} style={{width: '100%', height: '100px', display: 'inline-block', cursor: 'pointer'}}>
         <div style={{display: 'inline-block', width: '15%'}}>
-          <div style={{color: 'teal', alignText: 'left', fontSize: 'large', fontWeight: 'bold'}}>
-            {this.props.transaction.cart[0].user_id ? this.props.transaction.cart[0].user_id : 'Amazon'}
+          <div onClick={() => this.props.toggle()} style={{color: 'teal', alignText: 'left', fontSize: 'large', fontWeight: 'bold'}}>
+            {(this.props.transaction.cart[0] && this.props.transaction.cart[0].user_id) || 'Amazon'}
           </div><br/>
           <div style={{position: 'relative', display: 'inline-block', color: 'maroon', alignText: 'left'}}>
             ${this.total.toFixed(2)}

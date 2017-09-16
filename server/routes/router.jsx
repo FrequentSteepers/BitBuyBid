@@ -30,10 +30,12 @@ const router = express.Router();
 
 var BTC_EXCHANGE = {btcExchange: undefined};
 Exchange.query(function(qb) {
-  qb.orderBy('date', 'desc').limit(1);
+  qb.orderBy('date', 'desc').limit(10);
 })
   .fetchAll({})
-  .then(console.log);
+  .then((data)=>{
+    BTC_EXCHANGE.btcExchange = data.toJSON();
+  });
 
 /**
 

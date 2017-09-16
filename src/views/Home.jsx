@@ -16,9 +16,7 @@ class Home extends React.Component {
         <CartWidget/>
         <Search/> 
         <Paper style={{position: 'relative', top: '60px', textAlign: 'center', backgroundColor: 'white'}}>
-          {this.props.products.map(p => 
-            <Listing style={{display: 'inline-block', padding: '15px'}} item={p} key={p.id} />
-          )}
+          {this.props.products.map(p => p.img_url_sm ? <Listing style={{display: 'inline-block', padding: '15px'}} item={p} key={p.id} /> : null)}
         </Paper>
       </div>
     );

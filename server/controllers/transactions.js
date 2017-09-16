@@ -6,6 +6,10 @@ var convert = require('xml-js');
 
 
 module.exports.create = (req, res) => {
+  if (!req.body.cart || req.body.cart.length === 0) {
+    res.status(405).send('You must have a cart');
+  }
+  let builtTransaction = {};
   Transaction.forge(
     { 
       buyer_id: req.user.id		
@@ -13,6 +17,8 @@ module.exports.create = (req, res) => {
   )
     .save()
     .then(result => {
+      builtTransaction = result;
+      builtTransaction.cart = [];
       return Promise.all(
         req.body.cart.map(
           p => {
@@ -27,7 +33,7 @@ module.exports.create = (req, res) => {
       );
     })
     .then(result => {
-      res.status(201);
+      res.json(builtTransaction).status(201);
     })
     .catch(err => {
       console.error(err);

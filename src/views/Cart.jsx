@@ -5,8 +5,8 @@ import {
   createCart, 
   addToCart, 
   removeFromCart,
-  checkout
 } from '../store/modules/products.js';
+import {checkout} from '../store/modules/transactions.js';
 import Listing from '../components/Listing.jsx';
 import Receipt from '../views/Receipt.jsx';
 import CartItem from '../components/CartItem.jsx';

@@ -56,6 +56,10 @@ exports.up = function (knex, Promise) {
     }),
     knex.schema.createTableIfNotExists('transactions', function(table) {
       table.increments('id').unsigned().primary();
+      table.text('amzn_cart_id').nullable();
+      table.text('amzn_HMAC').nullable();
+      table.text('amzn_URLEncodedHMAC').nullable();
+      table.text('amzn_purchase_url').nullable();
       table.integer('buyer_id').references('users.id').onDelete('CASCADE');
     }),
     knex.schema.createTableIfNotExists('reviews', function(table) {
@@ -69,9 +73,9 @@ exports.up = function (knex, Promise) {
     knex.schema.createTableIfNotExists('purchases', function(table) {
       table.increments('id').primary();
       table.integer('quantity').notNullable().default(1);
+      table.integer('status').notNullable().default(0);
       table.integer('transaction_id').references('transactions.id').onDelete('CASCADE');
       table.integer('product_id').references('products.id').onDelete('CASCADE');
-      table.integer('status').notNullable().default(0);
       table.integer('review_id').references('reviews.id').onDelete('CASCADE');
     }),
     knex.schema.createTableIfNotExists('exchanges', function(table) {

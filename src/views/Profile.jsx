@@ -48,7 +48,7 @@ class Profile extends Component {
   render() {
     return (
       <div onClick={(e) => this.toggleUploadOff(e)}>
-        <Paper style={{position: 'relative', width: '90%', padding: '50px', left: '5%', backgroundColor: 'teal'}}>
+        <Paper style={{position: 'relative', width: '90%', padding: '50px', left: '5%', backgroundColor: 'steelblue'}}>
           <Card style={{margin: '0 auto', padding: '10px'}}>
             <ProfilePicture toggle={this.toggleUpload} photo={this.props.user.picture}/>
             <div style={{display: 'inline-block', paddingLeft: '10px'}}>
@@ -61,7 +61,7 @@ class Profile extends Component {
         {
           this.state.showUpload ? 
             <div id='upload' style={{position: 'fixed', top: '0', left: '0', right: '0', bottom: '0', margin: 'auto', backgroundColor: 'rgba(0,0,0, 0.5)', zIndex: '100'}}>
-              <Card style={{position: 'absolute', left: '25%', right: '25%', top: '25%', maxBottom: '50%', margin: 'auto', background: 'teal', padding: '10px'}}>
+              <Card style={{position: 'absolute', left: '25%', right: '25%', top: '25%', maxBottom: '50%', margin: 'auto', background: 'lightgrey', padding: '10px', border: '2px solid black', borderRadius: '10px'}}>
                 <Upload/>
               </Card>
             </div> :

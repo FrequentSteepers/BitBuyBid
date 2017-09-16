@@ -8,7 +8,7 @@ class ProfilePicture extends Component {
 
   render() {
     return (
-      <Card style={{display: 'inline-block', width: '300px'}}>
+      <Card style={{display: 'inline-block', width: '300px', backgroundColor: 'lightsteelblue'}}>
         {
           this.props.photo ? 
             <div style={{width: '100%', maxHeight: '100%', position: 'relative', padding: '5%'}}> 

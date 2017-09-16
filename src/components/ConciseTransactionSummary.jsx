@@ -21,7 +21,7 @@ class ConciseTransactionSummary extends Component {
             {(this.props.transaction.cart[0] && this.props.transaction.cart[0].user_id) || 'Amazon'}
           </div><br/>
           <div style={{position: 'relative', display: 'inline-block', color: 'maroon', alignText: 'left'}}>
-            ${this.total}
+            ${this.total.toFixed(2)}
           </div>
         </div>
         <div style={{display: 'inline-block', verticalAlign: 'top', paddingLeft: '10px', width: '80%', height: '100%'}}> 

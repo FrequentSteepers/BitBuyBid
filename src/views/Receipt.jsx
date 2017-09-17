@@ -25,13 +25,13 @@ class Receipt extends Component {
   }
 
   render() {
-    if (this.props.transactions.length > 0 && this.props.transactions.slice(-1)[0]['amzn_purchase_url']) {
+    if (this.props.pendingTransaction) {
       return (
         <div>
           <h2>Thank you!</h2>
           <h3>Your product should be shipping shortly.</h3>
           <button onClick={() => this.handleBitcoinBuy(this.amount)}>Get ${this.amount} worth of Bitcoins</button>
-          {<a href={this.props.transactions.slice(-1)[0]['amzn_purchase_url']}>YOUR CART</a>}
+          {<a href={this.props.pendingTransaction['amzn_purchase_url']}>YOUR CART</a>}
         </div>
       );
     }
@@ -51,7 +51,7 @@ class Receipt extends Component {
 
 const mapStateToProps = state => ({
   cart: state.products.cart,
-  transactions: state.transactions.transactions,
+  pendingTransaction: state.transactions.pendingTransaction,
   quantities: state.products.quantities
 });
 

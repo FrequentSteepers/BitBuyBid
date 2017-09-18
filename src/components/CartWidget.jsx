@@ -7,7 +7,7 @@ import {bindActionCreators} from 'redux';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import {GridList} from 'material-ui/GridList';
 import Paper from 'material-ui/Paper';
-import {style} from '../styles.js';
+import { style } from '../styles.js';
 
 const mapStateToProps = state => {
   return {
@@ -32,41 +32,41 @@ class CartWidget extends Component {
     this.state = {
       display: true
     };
+    this.style = style.cartWidget;
   }
 
   render() {
     return (this.state.display ? 
-      <div style={style.root}>
+      <div style={this.style.root}>
         {this.props.cart.length ? 
-          <GridList style={style.gridList}>
-            <Paper style={style.paper}>
-              <div style={style.header}>
-                <div style={style.cart}>Cart</div>
-                <button style={style.collapse} type='button' onClick={() => this.setState({display: false})}>collapse</button>
+          <GridList cols={2} style={this.style.gridList}>
+            <Paper cols={2} style={this.style.paper}>
+              <div cols={2} style={this.style.header}>
+                <div style={this.style.cart}>Cart</div>
+                <button style={this.style.collapse} type='button' onClick={() => this.setState({display: false})}>collapse</button>
               </div>
               {this.props.cart ? this.props.cart.map((product, i) => {
                 return (
-                  <div onClick={() => this.props.selectProduct(product.id)} key={i}>
+                  <div cols={1} onClick={() => this.props.selectProduct(product.id)} key={i}>
                     {i > 0 ? <hr/> : null}
-                    <Link style={style.link} to={`/product?id=${product.id}`}>
-                      <img style={style.img} src={product.img_url_sm} alt="" />
+                    <Link style={this.style.link} to={`/product?id=${product.id}`}>
+                      <img style={this.style.img} src={product.img_url_sm} alt="" />
                     </Link>
-                    <Link style={style.link} to={`/product?id=${product.id}`}>
-
-                      <CardTitle style={style.title} title={product.title}/>
+                    <Link style={this.style.link} to={`/product?id=${product.id}`}>
+                      <CardTitle style={this.style.title} title={product.title}/>
                     </Link>
-                    <CardText style={style.text}>{product.description.slice(0, 40) + '...'}</CardText>
-                    <CardText style={style.price}>
+                    <CardText style={this.style.text}>{product.description.slice(0, 40) + '...'}</CardText>
+                    <CardText style={this.style.price}>
                             ${product.price ? Number(product.price).toFixed(2) : 0}
                     </CardText>
-                    <CardText style={style.delete}>
+                    <CardText style={this.style.delete}>
                             delete&nbsp;&nbsp;&nbsp;quantity:{this.props.quantities[product.prod_id] || this.props.quantities[product.id]}
                     </CardText>
                   </div>
                 );
               }) : false}
-              <div style={style.subtotal}>
-                <div style={style.subTitle}>
+              <div cols={1} style={this.style.subtotal}>
+                <div style={this.style.subTitle}>
                   <b><i>Subtotal:</i></b>
                   <Subtotal/>
                 </div>
@@ -76,7 +76,7 @@ class CartWidget extends Component {
               </div>
             </Paper>
           </GridList> : false}
-      </div> : <button style={style.expand} type='button' onClick={() => this.setState({display: true})}>expand</button>
+      </div> : <button style={this.style.expand} type='button' onClick={() => this.setState({display: true})}>expand</button>
     );
   }
 }

@@ -35,13 +35,6 @@ class App extends React.Component {
     return store;
   }
 
-  /*
-    the default route should always be last, as the interpreter
-    will render the first route that returns positive in the switch 
-    block as matching the path endpoint. therefor, the '/' will render
-    no matter what the chartacters after the URI are, serving as a 
-    kind of catch-all. 
-  */
   render() {
     return (
       <MuiThemeProvider muiTheme={getMuiTheme({
@@ -52,9 +45,9 @@ class App extends React.Component {
           left: 0
         }
       })}>
-          <BrowserRouter>
-            {renderRoutes(routes)}
-          </BrowserRouter>
+        <BrowserRouter>
+          {renderRoutes(routes)}
+        </BrowserRouter>
       </MuiThemeProvider>
     );
   }

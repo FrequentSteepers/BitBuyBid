@@ -1,6 +1,5 @@
 import React from 'react';
 import Search from '../components/Search.jsx';
-// import Listings from '../components/Listings.jsx';
 import CartWidget from '../components/CartWidget.jsx';
 import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';

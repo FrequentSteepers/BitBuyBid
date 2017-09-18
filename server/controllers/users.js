@@ -1,7 +1,7 @@
-const models = require('../../db/models');
+const {User, Transaction, Purchase} = require('../../db/models');
 
 module.exports.getAll = (req, res) => {
-  models.Users.fetchAll()
+  Users.fetchAll()
     .then(profiles => {
       res.status(200).send(profiles);
     })
@@ -12,7 +12,7 @@ module.exports.getAll = (req, res) => {
 };
 
 module.exports.create = (req, res) => {
-  models.User.forge(req.body)
+  User.forge(req.body)
     .save()
     .then(result => {
       res.status(201).send(result.omit('password'));
@@ -26,7 +26,7 @@ module.exports.create = (req, res) => {
 };
 
 module.exports.getOne = (req, res) => {
-  models.User.where({ id: req.params.id })
+  User.where({ id: req.params.id })
     .fetch()
     .then(profile => {
       if (!profile) {
@@ -43,7 +43,7 @@ module.exports.getOne = (req, res) => {
 };
 
 module.exports.update = (req, res) => {
-  models.User.where({ id: req.params.id }).fetch()
+  User.where({ id: req.params.id }).fetch()
     .then(profile => {
       if (!profile) {
         throw profile;
@@ -65,7 +65,7 @@ module.exports.createActiveCart = (req, res) => {
   if (!req.body.cart || req.body.cart.length === 0) {
     res.status(405).send('You must have a cart');
   }
-  if (req.params.id !== req.user.id) {
+  if (Number(req.params.id) !== Number(req.user.id)) {
     res.status(401).send('You must be logged in');
   }
   let builtTransaction = {};
@@ -92,30 +92,31 @@ module.exports.createActiveCart = (req, res) => {
       );
     })
     .then(result => {
-      return models.User.where({id: req.params.id})
-        .fetch()
-        .then(profile => {
-          if (!profile) {
-            throw profile;
-          }
-          return profile.save(
-            {
-              'active_cart': builtTransaction.id
-            }, 
-            { 
-              method: 'update' 
-            }
-          );
-        });
+      return User.where({id: req.params.id})
+        .fetch();
+    })
+    .then(profile => {
+      if (!profile) {
+        throw profile;
+      }
+      return profile.save(
+        {
+          'active_cart': builtTransaction.id
+        }, 
+        { 
+          method: 'update' 
+        }
+      );
     })
     .then(() => {
-      res.json(builtTransaction).sendStatus(201);
+      res.status(201).json(builtTransaction);
     })
     .catch(err => {
       console.error(err);
       res.status(500).send(err);
     })
     .error(err => {
+      console.error(err);
       res.status(500).send(err);
     });
 };

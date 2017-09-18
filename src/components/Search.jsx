@@ -15,10 +15,6 @@ const style = {
     left: '25%', 
     margin: '0 auto'
 
-  },
-  form: {
-    textAlign: 'center',
-    paddingBottom: '10px'
   }
 };
 

@@ -13,6 +13,15 @@ const mapStateToProps = state => {
   };
 };
 
+const style = {
+  paper: {position: 'relative', width: '90%', padding: '50px', left: '5%', backgroundColor: 'white'},
+  transactionsCard: {margin: '0 auto', padding: '10px'},
+  information: {display: 'inline-block', paddingLeft: '10px'},
+  username: {fontSize: '50px', fontWeight: 'bold'},
+  upload: {position: 'fixed', top: '0', left: '0', right: '0', bottom: '0', margin: 'auto', backgroundColor: 'rgba(0,0,0, 0.5)', zIndex: '100'},
+  uploadCard: {position: 'absolute', left: '25%', right: '25%', top: '25%', maxBottom: '50%', margin: 'auto', background: 'lightgrey', padding: '10px', border: '2px solid black', borderRadius: '10px'}
+};
+
 class Profile extends Component {
   constructor(props) {
     super(props);
@@ -48,11 +57,11 @@ class Profile extends Component {
   render() {
     return (
       <div onClick={(e) => this.toggleUploadOff(e)}>
-        <Paper style={{position: 'relative', width: '90%', padding: '50px', left: '5%', backgroundColor: 'steelblue'}}>
-          <Card style={{margin: '0 auto', padding: '10px'}}>
+        <Paper style={style.paper}>
+          <Card style={style.transactionsCard}>
             <ProfilePicture toggle={this.toggleUpload} photo={this.props.user.picture}/>
-            <div style={{display: 'inline-block', paddingLeft: '10px'}}>
-              <div style={{fontSize: '50px', fontWeight: 'bold'}}>{this.props.user && this.props.user.first + ' ' + this.props.user.last}</div>
+            <div style={style.information}>
+              <div style={style.username}>{this.props.user && this.props.user.first + ' ' + this.props.user.last}</div>
               <div style={{fontStyle: 'italic'}}>Joined {this.calculateDate()}</div>
             </div>
           </Card>
@@ -60,8 +69,8 @@ class Profile extends Component {
         </Paper>
         {
           this.state.showUpload ? 
-            <div id='upload' style={{position: 'fixed', top: '0', left: '0', right: '0', bottom: '0', margin: 'auto', backgroundColor: 'rgba(0,0,0, 0.5)', zIndex: '100'}}>
-              <Card style={{position: 'absolute', left: '25%', right: '25%', top: '25%', maxBottom: '50%', margin: 'auto', background: 'lightgrey', padding: '10px', border: '2px solid black', borderRadius: '10px'}}>
+            <div id='upload' style={style.upload}>
+              <Card style={style.uploadCard}>
                 <Upload/>
               </Card>
             </div> :

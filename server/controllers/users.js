@@ -120,3 +120,32 @@ module.exports.createActiveCart = (req, res) => {
       res.status(500).send(err);
     });
 };
+
+module.exports.discardCurrentCart = (req, res) => {
+  if (Number(req.params.id) !== Number(req.user.id)) {
+    res.status(401).send('You must be logged in');
+  }
+  return User.where({id: req.params.id})
+    .fetch()
+    .then(profile => {
+      return profile.save(
+        {
+          'active_cart': null
+        },
+        {
+          method: 'update'
+        }
+      );
+    })
+    .then(() => {
+      res.status(201);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).send(err);
+    })
+    .error(err => {
+      console.error(err);
+      res.status(500).send(err);
+    });
+};

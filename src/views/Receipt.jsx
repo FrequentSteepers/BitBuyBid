@@ -25,7 +25,7 @@ class Receipt extends Component {
   }
 
   render() {
-    if (this.props.pendingTransaction) {
+    if (this.props.pendingTransaction && this.props.pendingTransaction['amzn_purchase_url']) {
       return (
         <div>
           <h2>Thank you!</h2>

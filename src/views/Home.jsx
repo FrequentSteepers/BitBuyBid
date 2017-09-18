@@ -1,10 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
+import Paper from 'material-ui/Paper';
 import Search from '../components/Search.jsx';
-import Listings from '../components/Listings.jsx';
 import CartWidget from '../components/CartWidget.jsx';
-import SearchItem from '../components/SearchItem.jsx';
+import Listing from '../components/Listing.jsx';
 
 class Home extends React.Component {
   static fetchData(store) {
@@ -14,13 +13,11 @@ class Home extends React.Component {
   render() {
     return (
       <div>
-        <CartWidget />
+        <CartWidget/>
         <Search/> 
-        {this.props.products.map(p => {
-          return ( 
-            <SearchItem item={p} key={p.id} />
-          );
-        })}
+        <Paper style={{position: 'relative', top: '60px', textAlign: 'center', backgroundColor: 'white'}}>
+          {this.props.products.map(p => p.img_url_sm ? <Listing style={{display: 'inline-block', padding: '15px'}} item={p} key={p.id} /> : null)}
+        </Paper>
       </div>
     );
   }

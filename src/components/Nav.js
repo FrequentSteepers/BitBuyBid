@@ -12,7 +12,7 @@ import { handleLogout } from '../store/modules/app.js';
 const style = {
   nav: {
     position: 'fixed',
-    backgroundColor: 'steelblue',
+    backgroundColor: '#880E4F',
     fontFamily: 'Palatino,serif',
     fontStyle: 'oblique',
     textAlign: 'center',

@@ -13,6 +13,7 @@ class Receipt extends Component {
     this.handleBitcoinBuy = this.handleBitcoinBuy.bind(this);
     this.amount = this.calculateLeftOver();
   }
+
   calculateLeftOver() {
     const total = this.props.cart.reduce((acc, curr) => 
       acc + (Number(curr.price)) * this.props.quantities[curr.prod_id]
@@ -29,8 +30,10 @@ class Receipt extends Component {
       return (
         <div>
           <h2>Thank you!</h2>
-          <h3>Your product should be shipping shortly.</h3>
-          <button onClick={() => this.handleBitcoinBuy(this.amount)}>Get ${this.amount} worth of Bitcoins</button>
+          <RaisedButton
+            onClick={() => this.handleBitcoinBuy(this.amount)}
+            label={`"Get ${this.amount} worth of Bitcoins"`}
+          />
           {<a href={this.props.pendingTransaction['amzn_purchase_url']}>YOUR CART</a>}
         </div>
       );
@@ -38,8 +41,10 @@ class Receipt extends Component {
     return (
       <div>
         <h2>Thank you!</h2>
-        <h3>Your product should be shipping shortly.</h3>
-        <button onClick={() => this.handleBitcoinBuy(this.amount)}>Get ${this.amount} worth of Bitcoins</button>
+        <RaisedButton
+          onClick={() => this.handleBitcoinBuy(this.amount)}
+          label={`"Get ${this.amount} worth of Bitcoins"`}
+        />
         <RaisedButton 
           onClick={() => this.props.handleAmazonCart()}
           label="Create Amazon cart"

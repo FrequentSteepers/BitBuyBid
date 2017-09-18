@@ -5,6 +5,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import { discardCart } from '../store/modules/app';
 import { handleAmazonCart } from '../store/modules/transactions';
 
 class Receipt extends Component {
@@ -35,6 +36,10 @@ class Receipt extends Component {
             label={`"Get ${this.amount} worth of Bitcoins"`}
           />
           {<a href={this.props.pendingTransaction['amzn_purchase_url']}>YOUR CART</a>}
+          <RaisedButton 
+            onClick={() => this.props.discardCart()}
+            label="Discard Cart"
+          />
         </div>
       );
     }
@@ -43,7 +48,7 @@ class Receipt extends Component {
         <h2>Thank you!</h2>
         <RaisedButton
           onClick={() => this.handleBitcoinBuy(this.amount)}
-          label={`"Get ${this.amount} worth of Bitcoins"`}
+          label={`Get ${this.amount} worth of Bitcoins`}
         />
         <RaisedButton 
           onClick={() => this.props.handleAmazonCart()}
@@ -54,15 +59,17 @@ class Receipt extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  cart: state.products.cart,
-  pendingTransaction: state.transactions.pendingTransaction,
-  quantities: state.products.quantities
+const mapStateToProps = ({products, transactions, app}) => ({
+  user: app.user,
+  cart: products.cart,
+  pendingTransaction: transactions.pendingTransaction,
+  quantities: products.quantities
 });
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators({
-    handleAmazonCart
+    handleAmazonCart,
+    discardCart
   }, dispatch);
 };
 

@@ -138,7 +138,7 @@ module.exports.discardCurrentCart = (req, res) => {
       );
     })
     .then(() => {
-      res.status(201);
+      res.sendStatus(204);
     })
     .catch(err => {
       console.error(err);

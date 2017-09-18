@@ -1,5 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {LineChart} from 'react-easy-chart';
+
 
 const BitExchangeChart = function (props) {
   return (

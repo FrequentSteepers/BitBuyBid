@@ -25,7 +25,7 @@ const Listing = ({item, addToCart}) => {
         //background color needs to be determined upon each instantiation of this component:
         backgroundColor: `${item.type === 'amzn' ? 'Turquoise' : (item.type === 'ovsock' ? 'PaleVioletRed' : 'DarkTurquoise')}`
       }}>
-        <CardMedia style={style.media}>
+        <div style={style.media}>
           <Link to={`/product?id=${item.id}`}><img style={style.img} src={item.img_url_sm}/></Link>
           <CardText style={{width: '100%'}}>
             <div style={style.title}>{item.title.slice(0, 25)}</div>
@@ -35,7 +35,7 @@ const Listing = ({item, addToCart}) => {
             <div style={style.seller}>{`${item.type === 'amzn' ? 'Amazon' : (item.type === 'ovsock' ? 'Overstock' : 'Unidentified')}`}</div>
             <FlatButton style={style.addToCart} onClick={ () => { addToCart(item); } }>Add to Cart!</FlatButton>
           </CardActions>
-        </CardMedia>
+        </div>
       </Card>
     </div>
   );

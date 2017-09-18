@@ -60,24 +60,27 @@ export const setTransactions = payload => {
 
 /**
  * On success, move current cart to pendingTransaction.
- *  
+ * 
  * @param {object} payload 
  */
 export const checkout = () => {
   return (dispatch, getState) => {
-    axios.post('/api/transactions', {
-      cart: getState().products.cart, 
-      quantities: getState().products.quantities
-    })
-      .then(res => {
-        dispatch(
-          {
-            type: PROMOTE_CART,
-            payload: res.data
-          }
-        );
+    const {app, products} = getState();
+    if (app.user) {
+      axios.post(`/api/users/${app.user.id}/cart`, {
+        cart: products.cart, 
+        quantities: products.quantities
       })
-      .catch(err => console.log('error in the checkout: ', err));
+        .then(res => {
+          dispatch(
+            {
+              type: PROMOTE_CART,
+              payload: res.data
+            }
+          );
+        })
+        .catch(err => console.log('error in the checkout: ', err));
+    }
   };
 };
 
@@ -86,7 +89,8 @@ export const checkout = () => {
  */
 export const handleAmazonCart = (payload) => {
   return (dispatch, getState) => {
-    axios.post(`/api/transactions/${getState().transactions.pendingTransaction.id}/amzn`, {})
+    const {transactions} = getState();
+    axios.post(`/api/transactions/${transactions.pendingTransaction.id}/amzn`)
       .then(response => {
         dispatch(
           {

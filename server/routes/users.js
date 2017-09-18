@@ -6,6 +6,7 @@ const {
   getOne, 
   update,
   createActiveCart,
+  discardCurrentCart
 } = require('../controllers').Users;
 
 router.route('/')
@@ -16,6 +17,7 @@ router.route('/:id')
   .put(update);
 
 router.route('/:id/cart')
-  .post(createActiveCart);
+  .post(createActiveCart)
+  .delete(discardCurrentCart);
 
 module.exports = router;

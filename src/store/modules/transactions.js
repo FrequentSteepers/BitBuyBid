@@ -24,10 +24,10 @@ export default (state = initialState, {type, payload}) => {
       transactions: payload
     };
   case UPDATE_TRANSACTION_AMZN:
-    const activeTransaction = {...pendingTransaction, ...payload};
+    const activeTransaction = {...state.pendingTransaction, ...payload};
     return {
       ...state,
-      transactions: activeTransaction
+      pendingTransaction: activeTransaction
     };
   case PROMOTE_CART:
     return {

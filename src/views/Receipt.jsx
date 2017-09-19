@@ -5,6 +5,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+import { discardCart } from '../store/modules/app';
 import { handleAmazonCart } from '../store/modules/transactions';
 
 class Receipt extends Component {
@@ -13,6 +14,7 @@ class Receipt extends Component {
     this.handleBitcoinBuy = this.handleBitcoinBuy.bind(this);
     this.amount = this.calculateLeftOver();
   }
+
   calculateLeftOver() {
     const total = this.props.cart.reduce((acc, curr) => 
       acc + (Number(curr.price)) * this.props.quantities[curr.prod_id]
@@ -25,21 +27,29 @@ class Receipt extends Component {
   }
 
   render() {
-    if (this.props.transactions.length > 0 && this.props.transactions.slice(-1)[0]['amzn_purchase_url']) {
+    if (this.props.pendingTransaction && this.props.pendingTransaction['amzn_purchase_url']) {
       return (
         <div>
           <h2>Thank you!</h2>
-          <h3>Your product should be shipping shortly.</h3>
-          <button onClick={() => this.handleBitcoinBuy(this.amount)}>Get ${this.amount} worth of Bitcoins</button>
-          {<a href={this.props.transactions.slice(-1)[0]['amzn_purchase_url']}>YOUR CART</a>}
+          <RaisedButton
+            onClick={() => this.handleBitcoinBuy(this.amount)}
+            label={`"Get ${this.amount} worth of Bitcoins"`}
+          />
+          {<a href={this.props.pendingTransaction['amzn_purchase_url']}>YOUR CART</a>}
+          <RaisedButton 
+            onClick={() => this.props.discardCart()}
+            label="Discard Cart"
+          />
         </div>
       );
     }
     return (
       <div>
         <h2>Thank you!</h2>
-        <h3>Your product should be shipping shortly.</h3>
-        <button onClick={() => this.handleBitcoinBuy(this.amount)}>Get ${this.amount} worth of Bitcoins</button>
+        <RaisedButton
+          onClick={() => this.handleBitcoinBuy(this.amount)}
+          label={`Get ${this.amount} worth of Bitcoins`}
+        />
         <RaisedButton 
           onClick={() => this.props.handleAmazonCart()}
           label="Create Amazon cart"
@@ -49,15 +59,17 @@ class Receipt extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  cart: state.products.cart,
-  transactions: state.transactions.transactions,
-  quantities: state.products.quantities
+const mapStateToProps = ({products, transactions, app}) => ({
+  user: app.user,
+  cart: products.cart,
+  pendingTransaction: transactions.pendingTransaction,
+  quantities: products.quantities
 });
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators({
-    handleAmazonCart
+    handleAmazonCart,
+    discardCart
   }, dispatch);
 };
 

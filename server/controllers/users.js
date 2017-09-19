@@ -1,7 +1,7 @@
-const models = require('../../db/models');
+const {User, Transaction, Purchase} = require('../../db/models');
 
 module.exports.getAll = (req, res) => {
-  models.Users.fetchAll()
+  Users.fetchAll()
     .then(profiles => {
       res.status(200).send(profiles);
     })
@@ -12,7 +12,7 @@ module.exports.getAll = (req, res) => {
 };
 
 module.exports.create = (req, res) => {
-  models.User.forge(req.body)
+  User.forge(req.body)
     .save()
     .then(result => {
       res.status(201).send(result.omit('password'));
@@ -26,7 +26,7 @@ module.exports.create = (req, res) => {
 };
 
 module.exports.getOne = (req, res) => {
-  models.User.where({ id: req.params.id })
+  User.where({ id: req.params.id })
     .fetch()
     .then(profile => {
       if (!profile) {
@@ -43,7 +43,7 @@ module.exports.getOne = (req, res) => {
 };
 
 module.exports.update = (req, res) => {
-  models.User.where({ id: req.params.id }).fetch()
+  User.where({ id: req.params.id }).fetch()
     .then(profile => {
       if (!profile) {
         throw profile;
@@ -61,21 +61,91 @@ module.exports.update = (req, res) => {
     });
 };
 
-// module.exports.deleteOne = (req, res) => {
-//   models.Profile.where({ id: req.params.id }).fetch()
-//     .then(profile => {
-//       if (!profile) {
-//         throw profile;
-//       }
-//       return profile.destroy();
-//     })
-//     .then(() => {
-//       res.sendStatus(200);
-//     })
-//     .error(err => {
-//       res.status(503).send(err);
-//     })
-//     .catch(() => {
-//       res.sendStatus(404);
-//     });
-// };
+module.exports.createActiveCart = (req, res) => {
+  if (!req.body.cart || req.body.cart.length === 0) {
+    res.status(405).send('You must have a cart');
+  }
+  if (Number(req.params.id) !== Number(req.user.id)) {
+    res.status(401).send('You must be logged in');
+  }
+  let builtTransaction = {};
+  Transaction.forge(
+    { 
+      buyer_id: req.user.id		
+    }
+  )
+    .save()
+    .then(result => {
+      builtTransaction = result;
+      builtTransaction.cart = [];
+      return Promise.all(
+        req.body.cart.map(
+          p => {
+            Purchase.forge({
+              transaction_id: result.id, 
+              product_id: p.id,
+              quantity: req.body.quantities[p.prod_id] || 1
+            })
+              .save();
+          }
+        )
+      );
+    })
+    .then(result => {
+      return User.where({id: req.params.id})
+        .fetch();
+    })
+    .then(profile => {
+      if (!profile) {
+        throw profile;
+      }
+      return profile.save(
+        {
+          'active_cart': builtTransaction.id
+        }, 
+        { 
+          method: 'update' 
+        }
+      );
+    })
+    .then(() => {
+      res.status(201).json(builtTransaction);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).send(err);
+    })
+    .error(err => {
+      console.error(err);
+      res.status(500).send(err);
+    });
+};
+
+module.exports.discardCurrentCart = (req, res) => {
+  if (Number(req.params.id) !== Number(req.user.id)) {
+    res.status(401).send('You must be logged in');
+  }
+  return User.where({id: req.params.id})
+    .fetch()
+    .then(profile => {
+      return profile.save(
+        {
+          'active_cart': null
+        },
+        {
+          method: 'update'
+        }
+      );
+    })
+    .then(() => {
+      res.sendStatus(204);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).send(err);
+    })
+    .error(err => {
+      console.error(err);
+      res.status(500).send(err);
+    });
+};

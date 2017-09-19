@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "thesis",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/FrequentSteepers/BitBuyz.git"
+  },
   "scripts": {
     "start": "node built/server.js",
     "build": "babel server/ -d dist",
@@ -13,7 +17,7 @@
     "test:watch": "npm run test -- --watch",
     "rebuild": "grunt pgcreatedb:default && knex migrate:latest --env NODE_ENV && knex seed:run --env NODE_ENV"
   },
-  "author": "",
+  "author": "Frequent Steepers",
   "license": "ISC",
   "devDependencies": {
     "babel-core": "^6.2.1",
@@ -96,6 +100,7 @@
     "react-router-config": "^1.0.0-beta.4",
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^4.0.8",
+    "react-stripe-checkout": "^2.6.3",
     "redux": "^3.0.4",
     "redux-thunk": "^2.1.0",
     "style-loader": "^0.13.1",

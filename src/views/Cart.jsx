@@ -27,8 +27,6 @@ class Checkout extends Component {
           {this.props.cart.map((item, i) => {
             return <CartItem key={i} item={item} />;
           })}
-          <div>Subtotal: <Subtotal />
-          </div>
           <Switch>
             <Route exact path='/cart/confirm'>
               <div>
@@ -44,7 +42,10 @@ class Checkout extends Component {
               </div>
             </Route>
             <Route path='/cart'>
-              <Link to='/cart/confirm'><FlatButton label="Checkout!"/></Link>
+              <div>
+                Subtotal: <Subtotal />
+                {this.props.cart.length !== 0 && <Link to='/cart/confirm'><FlatButton label="Checkout!"/></Link>}
+              </div>
             </Route>
             <Route path='/receipt'>
               <Receipt/>

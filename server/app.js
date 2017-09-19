@@ -27,7 +27,6 @@ import {
 import middleware from './middleware';
 import router from './routes/router.jsx';
 
-global.navigator = { userAgent: 'all' };
 
 const app = express();
 
@@ -43,7 +42,6 @@ app.use(middleware.flash());
 
 
 app.use('/auth', auth);
-app.use('/api', api);
 app.use('/api/users', users);
 app.use('/api/products', products);
 app.use('/api/transactions', transactions);

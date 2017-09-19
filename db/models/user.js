@@ -6,7 +6,7 @@ const User = db.Model.extend({
     return this.hasMany('Auth');
   },
   activeCart: function() {
-    return this.belongsTo('Transaction');
+    return this.belongsTo('Transaction', 'active_cart', 'id');
   },
   address: function() {
     return this.hasOne('Address');

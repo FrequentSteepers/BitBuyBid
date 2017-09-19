@@ -9,7 +9,7 @@ exports.up = function (knex, Promise) {
       table.string('email', 100).nullable();
       table.string('phone', 100).nullable();
       table.string('picture', 250).nullable();
-      table.integer('transaction_id').references('transactions.id').nullable().onDelete('CASCADE');
+      table.integer('active_cart').references('transactions.id').nullable().onDelete('CASCADE');
       table.timestamps(true, true);
     }),
     knex.schema.createTableIfNotExists('addresses', function (table) {

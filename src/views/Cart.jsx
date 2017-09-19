@@ -30,14 +30,14 @@ class Checkout extends Component {
             <Route exact path='/cart/confirm'>
               <div>
                 Subtotal: <Subtotal />
-                <Link to='/receipt' onClick={() => this.props.checkout()}><FlatButton label="checkout"/></Link>
+                <Link to='/receipt' onClick={() => this.props.checkout()}><FlatButton label="Confirm"/></Link>
                 <Link to='/cart'><FlatButton label="Abort"/></Link>
               </div>
             </Route>
             <Route path='/cart'>
               <div>
                 Subtotal: <Subtotal />
-                <Link to='/cart/confirm'><FlatButton label="Checkout"/></Link>
+                {this.props.cart.length !== 0 && <Link to='/cart/confirm'><FlatButton label="Checkout"/></Link>}
               </div>
             </Route>
             <Route path='/receipt'>

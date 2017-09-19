@@ -44,7 +44,7 @@ class Checkout extends Component {
               </div>
             </Route>
             <Route path='/cart'>
-              <Link to='/cart/confirm'><FlatButton label="Checkout with Amazon"/></Link>
+              <Link to='/cart/confirm'><FlatButton label="Checkout!"/></Link>
             </Route>
             <Route path='/receipt'>
               <Receipt/>

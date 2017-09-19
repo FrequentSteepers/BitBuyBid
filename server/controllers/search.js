@@ -36,8 +36,8 @@ module.exports.search = (req, res) => {
 
   Product
     .query((qb) => {
-      qb.whereRaw(`TRIM(LOWER(title)) LIKE '%${req.body.searchTerm.trim().toLowerCase()}%'`)
-        .limit(20);
+      qb.whereRaw(`TRIM(LOWER(title)) LIKE '%${req.body.searchTerm.trim().toLowerCase()}%' ORDER BY TYPE ASC`)
+        .limit(40);
     })
     .fetchAll()
     .then(products => {
@@ -65,7 +65,7 @@ module.exports.search = (req, res) => {
       if (!Array.isArray(results)) {
         throw results;
       }
-      res.json({results: results[0].concat(results[1] || [])}).status(200);
+      res.json({results: (results[1] || []).concat(results[0] || [])}).status(200);
     })
     .error((...err) => {
       console.error(...err);

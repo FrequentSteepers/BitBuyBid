@@ -3,6 +3,7 @@ import { push } from 'react-router-redux';
 
 export const appTypes = {
   SET_USER: 'app/SET_USER',
+  DISCARD_CART: 'app/DISCARD_CART'
 };
 
 const initialState = {
@@ -16,6 +17,11 @@ export default (state = initialState, {type, payload}) => {
     return {
       ...state, 
       user: payload
+    };
+  case appTypes.DISCARD_CART: 
+    return {
+      ...state, 
+      user: {...state.user, 'active_cart': null} 
     };
   default: return state;
   }
@@ -74,5 +80,19 @@ export const handleLogout = () => {
           payload: null
         });
       });
+  };
+};
+
+export const discardCart = () => {
+  return (dispatch, getState) => {
+    axios.delete(`/api/users/${getState().app.user.id}/cart`)
+      .then(res => {
+        console.log(res);
+        dispatch({
+          type: appTypes.DISCARD_CART,
+          payload: null
+        });
+      })
+      .catch(console.error);
   };
 };

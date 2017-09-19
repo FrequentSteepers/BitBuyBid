@@ -45,7 +45,10 @@ class Checkout extends Component {
               </div>
             </Route>
             <Route path='/cart'>
-              <Link to='/cart/confirm'><FlatButton label="Checkout!"/></Link>
+              <div>
+                Subtotal: <Subtotal />
+                {this.props.cart.length !== 0 && <Link to='/cart/confirm'><FlatButton label="Checkout!"/></Link>}
+              </div>
             </Route>
             <Route path='/receipt'>
               <Receipt/>

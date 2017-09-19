@@ -1,14 +1,16 @@
 import axios from 'axios';
 
 /**
- * Listings type
+ * Products type
  */
-export const SET_PRODUCTS = 'listings/SET_PRODUCTS';
-export const SELECT_PRODUCT = 'listings/SELECT_PRODUCT';
+export const SET_PRODUCTS = 'products/SET_PRODUCTS';
+export const SELECT_PRODUCT = 'products/SELECT_PRODUCT';
 export const CREATE_CART = 'products/CREATE_CART';
 export const ADD_TO_CART = 'products/ADD_TO_CART';
 export const REMOVE_FROM_CART = 'products/REMOVE_FROM_CART';
 export const DECREMENT_ITEM = 'products/DECREMENT_ITEM';
+
+export const PROMOTE_CART = 'transaction/PROMOTE_CART';
 
 const initialState = {
   products: [],
@@ -16,8 +18,9 @@ const initialState = {
   cart: [],
   quantities: {}
 };
+
 /**
- * Listings reducer function
+ * Products reducer function
  */
 export default (state = initialState, {type, payload}) => {
   switch (type) {
@@ -73,14 +76,18 @@ export default (state = initialState, {type, payload}) => {
       quantities: decQuantities,
       cart: freshCart || state.cart
     };
+  case PROMOTE_CART:
+    return {
+      ...state,
+      cart: [],
+    };
   default: return state;
   }
 };
 
 /**
- * Listings dispatchers
+ * Products dispatchers
  */
-
 export const setProducts = (searchTerm, dispatch) => {
   return (dispatch) => {
     axios.post('/api/search', {searchTerm: searchTerm})

@@ -3,9 +3,12 @@ import axios from 'axios';
 export const ADD_TRANSACTION = 'transactions/ADD_TRANSACTION';
 export const SET_TRANSACTIONS = 'transactions/SET_TRANSACTIONS';
 export const UPDATE_TRANSACTION_AMZN = 'transaction/UPDATE_TRANSACTION_AMZN';
+export const PROMOTE_CART = 'transaction/PROMOTE_CART';
 
+// sync with user.activeCart
 const initialState = {
-  transactions: []
+  transactions: [],
+  pendingTransaction: null, 
 };
 
 export default (state = initialState, {type, payload}) => {
@@ -21,10 +24,15 @@ export default (state = initialState, {type, payload}) => {
       transactions: payload
     };
   case UPDATE_TRANSACTION_AMZN:
-    const activeTransaction = {... state.transactions[state.transactions.length - 1], ...payload};
+    const activeTransaction = {...state.pendingTransaction, ...payload};
     return {
       ...state,
-      transactions: state.transactions.slice(0, -1).concat([activeTransaction])
+      pendingTransaction: activeTransaction
+    };
+  case PROMOTE_CART:
+    return {
+      ...state,
+      pendingTransaction: payload
     };
   default: return state;
   }
@@ -50,21 +58,29 @@ export const setTransactions = payload => {
   };
 };
 
-export const checkout = (payload, dispatch) => {
+/**
+ * On success, move current cart to pendingTransaction.
+ * 
+ * @param {object} payload 
+ */
+export const checkout = () => {
   return (dispatch, getState) => {
-    axios.post('/api/transactions', {
-      cart: getState().products.cart, 
-      quantities: getState().products.quantities
-    })
-      .then(res => {
-        dispatch(
-          {
-            type: ADD_TRANSACTION,
-            payload: res.data
-          }
-        );
+    const {app, products} = getState();
+    if (app.user) {
+      axios.post(`/api/users/${app.user.id}/cart`, {
+        cart: products.cart, 
+        quantities: products.quantities
       })
-      .catch(err => console.log('error in the checkout: ', err));
+        .then(res => {
+          dispatch(
+            {
+              type: PROMOTE_CART,
+              payload: res.data
+            }
+          );
+        })
+        .catch(err => console.log('error in the checkout: ', err));
+    }
   };
 };
 
@@ -73,7 +89,8 @@ export const checkout = (payload, dispatch) => {
  */
 export const handleAmazonCart = (payload) => {
   return (dispatch, getState) => {
-    axios.post(`/api/transactions/${getState().transactions.transactions.slice(-1)[0].id}/amzn`, {})
+    const {transactions} = getState();
+    axios.post(`/api/transactions/${transactions.pendingTransaction.id}/amzn`)
       .then(response => {
         dispatch(
           {

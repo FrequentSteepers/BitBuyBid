@@ -11,6 +11,7 @@ import Listing from '../components/Listing.jsx';
 import Receipt from '../views/Receipt.jsx';
 import CartItem from '../components/CartItem.jsx';
 import Subtotal from '../components/Subtotal.jsx';
+import Stripe from '../components/Stripe.jsx';
 import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 import FlatButton from 'material-ui/FlatButton';
 
@@ -29,15 +30,21 @@ class Checkout extends Component {
           <Switch>
             <Route exact path='/cart/confirm'>
               <div>
-                Subtotal: <Subtotal />
-                <Link to='/receipt' onClick={() => this.props.checkout()}><FlatButton label="Confirm"/></Link>
+                <Link to='/receipt' onClick={() => this.props.checkout()}><FlatButton label="Amazon Checkout"/></Link>
+                <Link to='/cart/stripe'><FlatButton label="Stripe Checkout"/></Link>
                 <Link to='/cart'><FlatButton label="Abort"/></Link>
+              </div>
+            </Route>
+            <Route path='/cart/stripe'>
+              <div>
+                <script src="https://checkout.stripe.com/checkout.js"></script>
+                <Stripe />
               </div>
             </Route>
             <Route path='/cart'>
               <div>
                 Subtotal: <Subtotal />
-                {this.props.cart.length !== 0 && <Link to='/cart/confirm'><FlatButton label="Checkout"/></Link>}
+                {this.props.cart.length !== 0 && <Link to='/cart/confirm'><FlatButton label="Checkout!"/></Link>}
               </div>
             </Route>
             <Route path='/receipt'>

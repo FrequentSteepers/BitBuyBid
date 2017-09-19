@@ -7,14 +7,9 @@ class Stripe extends Component {
     
     this.onToken = (token) => {
       console.log('token: ', token);
-      // fetch('/save-stripe-token', {
-      //   method: 'POST',
-      //   body: JSON.stringify(token),
-      // }).then(response => {
-      //   response.json().then(data => {
-      //     alert(`We are in business, ${data.email}`);
-      //   });
-      // });
+      //here we can do stuff with the returned transaction token
+      //probably need to send to the server and somehow mark the
+      //transaction as complete in the database
     };
   }
 
@@ -24,6 +19,7 @@ class Stripe extends Component {
         <StripeCheckout
           token={this.onToken}
           stripeKey="pk_test_5PUQTJpGR4ExQgfjhdOz2cw0"
+          bitcoin={true}
         />
       </div>
     );

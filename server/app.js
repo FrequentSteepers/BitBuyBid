@@ -39,6 +39,7 @@ app.use(middleware.auth.session);
 app.use(middleware.passport.initialize());
 app.use(middleware.passport.session());
 app.use(middleware.flash());
+app.use(middleware.compression());
 
 
 app.use('/auth', auth);

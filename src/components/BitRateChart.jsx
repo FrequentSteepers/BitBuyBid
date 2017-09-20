@@ -3,18 +3,17 @@ import {connect} from 'react-redux';
 import {LineChart} from 'react-easy-chart';
 
 
-const BitExchangeChart = function ({exchanges}) {
-
+const BitRateChart = function ({exchanges}) {  
   return (
     <div>
       <LineChart
         data={[
           exchanges.map((item) => {
-            return {x: new Date(item.date).getTime(), y: Number(item.dollar_amt)};
+            return item ? {x: new Date(item.date).getTime(), y: Number(item.dollar_amt)} : null;
           })
         ]}
       />
-      <p>Bitcoin: ${exchanges[0].dollar_amt}</p>
+      <p>Bitcoin: ${exchanges[0] ? exchanges[0].dollar_amt : null}</p>
     </div>
   );
 };
@@ -25,4 +24,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps)(BitExchangeChart);
+export default connect(mapStateToProps)(BitRateChart);

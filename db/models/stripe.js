@@ -3,8 +3,8 @@ const Purchase = require('./purchase');
 
 const StripePurchase = db.Model.extend({
   tableName: 'stripe_purchases',
-  purchases: function() {
-    return this.morphOne('Purchase');
+  receipt: function() {
+    return this.morphOne(Purchase);
   }
 });
 

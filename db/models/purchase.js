@@ -1,4 +1,7 @@
 const db = require('../');
+const Amazon = require('./amazon');
+const Stripe = require('./stripe');
+
 
 const Purchase = db.Model.extend({
   tableName: 'purchases',
@@ -12,7 +15,7 @@ const Purchase = db.Model.extend({
     return this.belongsTo('Reviews', 'review_id', 'id');
   },
   receipt: function() {
-    return this.morphTo('receipt', 'stripe_purchase', 'amazon_purchase');
+    return this.morphTo('receipt', ['receipt_type', 'receipt_id'], 'stripe_purchase', 'amazon_purchase');
   }
 });
 

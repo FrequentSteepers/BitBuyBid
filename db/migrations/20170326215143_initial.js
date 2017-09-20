@@ -73,12 +73,10 @@ exports.up = function (knex, Promise) {
       table.integer('transaction_id').references('transactions.id').onDelete('CASCADE');
       table.integer('product_id').references('products.id').onDelete('CASCADE');
       table.integer('review_id').references('reviews.id').onDelete('CASCADE');
-      // table.text('amzn_cart_id').notNullable();
-      // table.text('amzn_HMAC').nullable();
-      // table.text('amzn_URLEncodedHMAC').nullable();
-      // table.text('amzn_purchase_url').nullable();
-      // id of the transaction's facilitator. i.e. stripe(0), Amazon(1), Overstock(2):
-      table.integer('facilitator_id').nullable();
+
+      table.string('purchase_type').nullable();
+      table.integer('purchase_id').nullable();
+
     }),
     knex.schema.createTableIfNotExists('amazon_purchases', function(table) {
       table.increments('id').primary();
@@ -90,7 +88,6 @@ exports.up = function (knex, Promise) {
     knex.schema.createTableIfNotExists('stripe_purchases', function(table) {
       table.increments('id').primary();
       table.string('stripe_purchase_id').notNullable();
-      // table.string('')
     }),
     knex.schema.createTableIfNotExists('exchanges', function(table) {
       table.increments('id').primary();

@@ -9,6 +9,39 @@ const Product = db.Model.extend({
   },
   category: function() {
     return this.hasOne('Category');
+  },
+  initialize: function() {
+    this.on('created', (model) => {
+      const {
+        id,
+        title, 
+        description, 
+        type,
+        img_url_sm, 
+        img_url_md, 
+        img_url_lg,
+        prod_id,
+      } = model.toJSON();
+      db.client.create(
+        {
+          index: 'product',
+          type,
+          id,
+          body: {
+            title: title,
+            tags: description.split(' ').filter(w => w.length > 3),
+            id: id,
+            img_url_sm,
+            img_url_md,
+            img_url_lg,
+            prod_id,
+            description,
+            type,
+            counter: 1
+          }
+        }
+      );
+    });
   }
 });
 

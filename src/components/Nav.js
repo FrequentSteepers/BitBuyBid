@@ -5,7 +5,6 @@ import AppBar from 'material-ui/AppBar';
 import FlatButton from 'material-ui/FlatButton';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-import BitRateChart from './BitRateChart.jsx';
 
 import { bindActionCreators } from 'redux';
 import { handleLogout } from '../store/modules/app.js';
@@ -90,9 +89,7 @@ class Navbar extends React.Component {
           <Link style={style.link} to='/cart'><MenuItem >Cart</MenuItem></ Link>
           <Link style={style.link} to='/' onClick={this.props.handleLogout}><MenuItem>Logout</MenuItem></ Link>
           <Link style={style.link} to='/login'><MenuItem>Login</MenuItem></ Link>
-          <BitRateChart />
         </Drawer>
-        
       </div>
     );
   }

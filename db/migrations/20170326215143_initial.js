@@ -9,7 +9,7 @@ exports.up = function (knex, Promise) {
       table.string('email', 100).nullable();
       table.string('phone', 100).nullable();
       table.string('picture', 250).nullable();
-      table.integer('active_cart').references('transactions.id').nullable().onDelete('CASCADE');
+      table.integer('transaction_id').references('transactions.id').nullable().onDelete('CASCADE');
       table.timestamps(true, true);
     }),
     knex.schema.createTableIfNotExists('addresses', function (table) {
@@ -56,10 +56,6 @@ exports.up = function (knex, Promise) {
     }),
     knex.schema.createTableIfNotExists('transactions', function(table) {
       table.increments('id').unsigned().primary();
-      table.text('amzn_cart_id').nullable();
-      table.text('amzn_HMAC').nullable();
-      table.text('amzn_URLEncodedHMAC').nullable();
-      table.text('amzn_purchase_url').nullable();
       table.integer('buyer_id').references('users.id').onDelete('CASCADE');
     }),
     knex.schema.createTableIfNotExists('reviews', function(table) {
@@ -77,6 +73,24 @@ exports.up = function (knex, Promise) {
       table.integer('transaction_id').references('transactions.id').onDelete('CASCADE');
       table.integer('product_id').references('products.id').onDelete('CASCADE');
       table.integer('review_id').references('reviews.id').onDelete('CASCADE');
+      // table.text('amzn_cart_id').notNullable();
+      // table.text('amzn_HMAC').nullable();
+      // table.text('amzn_URLEncodedHMAC').nullable();
+      // table.text('amzn_purchase_url').nullable();
+      // id of the transaction's facilitator. i.e. stripe(0), Amazon(1), Overstock(2):
+      table.integer('facilitator_id').nullable();
+    }),
+    knex.schema.createTableIfNotExists('amazon_purchases', function(table) {
+      table.increments('id').primary();
+      table.text('amzn_cart_id').notNullable();
+      table.text('amzn_HMAC').nullable();
+      table.text('amzn_URLEncodedHMAC').nullable();
+      table.text('amzn_purchase_url').nullable();
+    }),
+    knex.schema.createTableIfNotExists('stripe_purchases', function(table) {
+      table.increments('id').primary();
+      table.string('stripe_purchase_id').notNullable();
+      // table.string('')
     }),
     knex.schema.createTableIfNotExists('exchanges', function(table) {
       table.increments('id').primary();
@@ -93,10 +107,13 @@ exports.down = function (knex, Promise) {
     knex.schema.dropTable('reviews'),
     knex.schema.dropTable('tags'),
     knex.schema.dropTable('purchases'),
+    knex.schema.dropTable('amazon_purchases'),
+    knex.schema.dropTable('stripe_purchases'),
     knex.schema.dropTable('transactions'),
     knex.schema.dropTable('products'),
     knex.schema.dropTable('users'),
     knex.schema.dropTable('categories'),
-    knex.schema.dropTable('exchanges')
+    knex.schema.dropTable('exchanges'),
+
   ]);
 };

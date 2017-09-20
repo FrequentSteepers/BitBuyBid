@@ -10,6 +10,9 @@ const Purchase = db.Model.extend({
   },
   review: function() {
     return this.belongsTo('Reviews', 'review_id', 'id');
+  },
+  receipt: function() {
+    return this.morphTo('receipt', 'stripe_purchase', 'amazon_purchase');
   }
 });
 

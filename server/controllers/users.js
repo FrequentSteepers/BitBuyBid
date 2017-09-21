@@ -101,7 +101,6 @@ module.exports.createActiveCart = (req, res) => {
       }
       return profile.save(
         {
-          //sending an active cart id? 
           'active_cart': builtTransaction.id
         }, 
         { 

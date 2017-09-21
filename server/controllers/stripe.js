@@ -1,7 +1,6 @@
 const { Stripe } = require('../../db/models');
 
 module.exports.stripeCheckout = (req, res) => {
-  console.log('trans id: ', req.params.id);
   Stripe.forge({
     trans_id: req.params.id,
     client_ip: req.body.client_ip,

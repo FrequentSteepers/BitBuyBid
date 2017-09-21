@@ -23,7 +23,6 @@ class Stripe extends Component {
         email: token.email,
         payment: token.type
       });
-      // .then(console.log);
     };
   }
 

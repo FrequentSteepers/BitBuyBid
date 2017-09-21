@@ -67,7 +67,6 @@ export const checkout = () => {
   return (dispatch, getState) => {
     const {app, products} = getState();
     if (app.user) {
-      console.log('app here in reduuuuux: ', app)
       axios.post(`/api/users/${app.user.id}/cart`, {
         cart: products.cart, 
         quantities: products.quantities

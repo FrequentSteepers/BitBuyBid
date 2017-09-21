@@ -34,19 +34,17 @@ module.exports.search = (req, res) => {
     res.status(400).end(); // bad request
   }
 
-  Product
-    .query((qb) => {
-      qb.whereRaw(`TRIM(LOWER(title)) LIKE '%${req.body.searchTerm.trim().toLowerCase()}%' ORDER BY TYPE ASC`)
-        .limit(40);
-    })
-    .fetchAll()
-    .then(products => {
-      if (products.length === 0) {
+  axios.get(`http://localhost:9200/product/_search?q=tags:${req.body.searchTerm}`)
+    .then(({data}) => {
+      if (data.hits.total === 0) {
         console.log('searching foreign');
         return;
       }
 
-      throw [products.models, undefined];
+      throw [data.hits.hits.map(({_source, _score}) => {
+        _source.score = _score;
+        return _source;
+      }), undefined];
     })
     .then(() => {
       return Promise.all([searchOverstock(req.body.searchTerm), searchAmazon(req.body.searchTerm)]);
@@ -66,10 +64,6 @@ module.exports.search = (req, res) => {
         throw results;
       }
       res.json({results: (results[1] || []).concat(results[0] || [])}).status(200);
-    })
-    .error((...err) => {
-      console.error(...err);
-      res.status(500).end();
     });
 };
 

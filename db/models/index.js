@@ -7,6 +7,8 @@ module.exports = {
   Review: require('./review'),
   Address: require('./address'),
   Tag: require('./tag'),
-  Purchase: require('./purchase'),
-  Exchange: require('./exchange')
+  Exchange: require('./exchange'),
+  Amazon: require('./amazon'),
+  Stripe: require('./stripe'),
+  Purchase: require('./purchase')
 };

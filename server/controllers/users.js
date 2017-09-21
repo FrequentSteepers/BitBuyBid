@@ -76,8 +76,8 @@ module.exports.createActiveCart = (req, res) => {
   )
     .save()
     .then(result => {
-      builtTransaction = result;
-      builtTransaction.cart = [];
+      builtTransaction = result.toJSON();
+      builtTransaction.cart = req.body.cart;
       return Promise.all(
         req.body.cart.map(
           p => {
@@ -109,6 +109,7 @@ module.exports.createActiveCart = (req, res) => {
       );
     })
     .then(() => {
+      console.log(builtTransaction);
       res.status(201).json(builtTransaction);
     })
     .catch(err => {

@@ -33,7 +33,7 @@ class Receipt extends Component {
           <h2>Thank you!</h2>
           <RaisedButton
             onClick={() => this.handleBitcoinBuy(this.amount)}
-            label={`"Get ${this.amount} worth of Bitcoins"`}
+            label={`Get ${this.amount} worth of Bitcoins`}
           />
           {<a href={this.props.pendingTransaction['amzn_purchase_url']}>YOUR CART</a>}
           <RaisedButton 

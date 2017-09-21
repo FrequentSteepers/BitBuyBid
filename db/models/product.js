@@ -21,6 +21,7 @@ const Product = db.Model.extend({
         img_url_md, 
         img_url_lg,
         prod_id,
+        price
       } = model.toJSON();
       db.client.create(
         {
@@ -37,6 +38,7 @@ const Product = db.Model.extend({
             prod_id,
             description,
             type,
+            price,
             counter: 1
           }
         }

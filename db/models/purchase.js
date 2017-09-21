@@ -1,5 +1,6 @@
 const db = require('../');
 
+
 const Purchase = db.Model.extend({
   tableName: 'purchases',
   transaction: function() {
@@ -10,6 +11,12 @@ const Purchase = db.Model.extend({
   },
   review: function() {
     return this.belongsTo('Reviews', 'review_id', 'id');
+  },
+  amazon_receipt: function() {
+    return this.belongsTo('amazon_purchases');
+  },
+  stripe_receipt: function() {
+    return this.belongsTo('stripe_purchases');
   }
 });
 

@@ -1,4 +1,4 @@
-const { Transaction } = require('../../db/models');
+const { Transaction, Amazon } = require('../../db/models');
 const axios = require('axios');
 
 const {buildAmazonRequest} = require('../../utils').amazon;
@@ -49,6 +49,7 @@ module.exports.createAmazonCart = (req, res) => {
         }
       ));
       const response = {
+        trans_id: req.params.id,
         amzn_cart_id: parsed.CartCreateResponse.Cart.CartId._text,
         amzn_HMAC: parsed.CartCreateResponse.Cart.HMAC._text,
         amzn_URLEncodedHMAC: parsed.CartCreateResponse.Cart.URLEncodedHMAC._text,
@@ -75,7 +76,7 @@ module.exports.createAmazonCart = (req, res) => {
             console.error(e);
             res.status(405).end();
           }
-          t.save(response);
+          Amazon.forge(response).save();
         });
     })
     .catch(err => {

@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
-
+import Stripe from '../components/Stripe.jsx';
+import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -16,7 +17,7 @@ class Receipt extends Component {
   }
 
   calculateLeftOver() {
-    const total = this.props.cart.reduce((acc, curr) => 
+    const total = (this.props.cart.length !== 0 ? this.props.cart : this.props.pendingTransaction ? this.props.pendingTransaction.cart : []).reduce((acc, curr) => 
       acc + (Number(curr.price)) * this.props.quantities[curr.prod_id]
       , 0).toFixed(2);
     return (Math.ceil(total) - total).toFixed(2);
@@ -27,33 +28,37 @@ class Receipt extends Component {
   }
 
   render() {
-    if (this.props.pendingTransaction && this.props.pendingTransaction['amzn_purchase_url']) {
       return (
         <div>
-          <h2>Thank you!</h2>
-          <RaisedButton
-            onClick={() => this.handleBitcoinBuy(this.amount)}
-            label={`"Get ${this.amount} worth of Bitcoins"`}
-          />
-          {<a href={this.props.pendingTransaction['amzn_purchase_url']}>YOUR CART</a>}
-          <RaisedButton 
-            onClick={() => this.props.discardCart()}
-            label="Discard Cart"
-          />
-        </div>
-      );
-    }
-    return (
-      <div>
-        <h2>Thank you!</h2>
-        <RaisedButton
-          onClick={() => this.handleBitcoinBuy(this.amount)}
-          label={`Get ${this.amount} worth of Bitcoins`}
-        />
-        <RaisedButton 
-          onClick={() => this.props.handleAmazonCart()}
-          label="Create Amazon cart"
-        />
+          {
+          <Switch>
+            <Route exact path='/receipt/amazon'>
+              <div>
+                <h2>Thank you!</h2>
+                <RaisedButton
+                  onClick={() => this.handleBitcoinBuy(this.amount)}
+                  label={`Get ${this.amount} worth of Bitcoins`}
+                />
+                {this.props.pendingTransaction['amzn_purchase_url'] && <a href={this.props.pendingTransaction['amzn_purchase_url']}>YOUR CART</a>}
+                {this.props.pendingTransaction && this.props.pendingTransaction['amzn_purchase_url'] ? 
+                  <RaisedButton 
+                    onClick={() => this.props.discardCart()}
+                    label="Discard Cart"
+                    /> : 
+                  <RaisedButton 
+                    onClick={() => this.props.handleAmazonCart()}
+                    label="Create Amazon cart"
+                    />}
+              </div>
+            </Route>
+            <Route exact path='/receipt/stripe'>
+              <div>
+                <script src="https://checkout.stripe.com/checkout.js"></script>
+                <Stripe />
+              </div>
+            </Route>
+          </Switch>
+        }
       </div>
     );
   }

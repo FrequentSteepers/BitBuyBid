@@ -73,7 +73,6 @@ class Navbar extends React.Component {
           iconElementRight={
             this.props.user ? 
               <div>
-                {this.props.pendingTransaction && <Link to='/receipt'><FlatButton label="pending cart" labelStyle={{color: 'white'}}/></Link>}
                 <Link to ='/profile'><FlatButton label={this.props.user.username} labelStyle={{color: 'white'}} /></Link> 
                 <Link to ='/logout' ><FlatButton label="Logout" labelStyle={{color: 'white'}} onClick={this.props.handleLogout} /></Link>
               </div> :

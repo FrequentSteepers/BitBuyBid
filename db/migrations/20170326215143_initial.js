@@ -80,6 +80,7 @@ exports.up = function (knex, Promise) {
     }),
     knex.schema.createTableIfNotExists('amazon_purchases', function(table) {
       table.increments('id').primary();
+      table.integer('trans_id').notNullable();
       table.text('amzn_cart_id').notNullable();
       table.text('amzn_HMAC').nullable();
       table.text('amzn_URLEncodedHMAC').nullable();
@@ -87,7 +88,7 @@ exports.up = function (knex, Promise) {
     }),
     knex.schema.createTableIfNotExists('stripe_purchases', function(table) {
       table.increments('id').primary();
-      table.string('trans_id').notNullable();
+      table.integer('trans_id').notNullable();
       table.string('client_ip').notNullable();
       table.string('createAt').notNullable();
       table.string('email').notNullable();

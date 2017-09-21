@@ -24,7 +24,7 @@ class Checkout extends Component {
     return (
       <BrowserRouter> 
         <div>
-          {this.props.cart.map((item, i) => {
+          {(this.props.cart.length !== 0 ? this.props.cart : this.props.pendingTransaction && this.props.pendingTransaction.cart ? this.props.pendingTransaction.cart : []).map((item, i) => {
             return <CartItem key={i} item={item} />;
           })}
           <div>
@@ -33,13 +33,13 @@ class Checkout extends Component {
           <Switch>
             <Route exact path='/cart/confirm'>
               <div>
-                <Link to='/receipt/amazon' onClick={() => this.props.checkout()}><FlatButton label="Amazon Checkout"/></Link>
-                <Link to='/receipt/stripe' onClick={() => this.props.checkout()}><FlatButton label="Stripe Checkout"/></Link>
+                <Link to='/receipt/amazon'><FlatButton label="Amazon Checkout"/></Link>
+                <Link to='/receipt/stripe'><FlatButton label="Stripe Checkout"/></Link>
                 <Link to='/cart'><FlatButton label="Abort"/></Link>
               </div>
             </Route>
             <Route path='/cart'>
-              {this.props.cart.length !== 0 && <Link to='/cart/confirm'><FlatButton label="Checkout!"/></Link>}
+              {this.props.cart.length !== 0 && <Link to='/cart/confirm'><FlatButton label="Checkout!" onClick={() => this.props.checkout()}/></Link>}
             </Route>
             <Route path='/receipt'>
               <Receipt/>
@@ -54,7 +54,8 @@ class Checkout extends Component {
 const mapStateToProps = (state) => 
   ({
     cart: state.products.cart,
-    quantities: state.products.quantities
+    quantities: state.products.quantities,
+    pendingTransaction: transactions.pendingTransaction,
   });
 
 const mapDispatchToProps = (dispatch) => {

@@ -10,7 +10,8 @@ const style = {
 const mapStateToProps = state => {
   return {
     cart: state.products.cart,
-    quantities: state.products.quantities
+    quantities: state.products.quantities,
+    pendingTransactions: state.transactions.pendingTransaction
   };
 };
 
@@ -21,7 +22,7 @@ class Subtotal extends Component {
   render() {
     return (
       <div style={style.subtotal}>
-        ${this.props.cart.reduce((acc, product) => {
+        ${(this.props.cart.length !== 0 ? this.props.cart : this.props.pendingTransaction && this.props.pendingTransaction.cart ? this.props.pendingTransaction.cart : []).reduce((acc, product) => {
           return product.price ? 
             acc += product.price * this.props.quantities[product.prod_id] : 
             acc;

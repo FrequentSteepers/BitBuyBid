@@ -17,7 +17,7 @@ class Receipt extends Component {
   }
 
   calculateLeftOver() {
-    const total = this.props.cart.reduce((acc, curr) => 
+    const total = (this.props.cart.length !== 0 ? this.props.cart : this.props.pendingTransaction ? this.props.pendingTransaction.cart : []).reduce((acc, curr) => 
       acc + (Number(curr.price)) * this.props.quantities[curr.prod_id]
       , 0).toFixed(2);
     return (Math.ceil(total) - total).toFixed(2);
@@ -37,9 +37,9 @@ class Receipt extends Component {
                 <h2>Thank you!</h2>
                 <RaisedButton
                   onClick={() => this.handleBitcoinBuy(this.amount)}
-                  label={`"Get ${this.amount} worth of Bitcoins"`}
+                  label={`Get ${this.amount} worth of Bitcoins`}
                 />
-                <a href={this.props.pendingTransaction ? this.props.pendingTransaction['amzn_purchase_url'] : null}>YOUR CART</a>
+                {this.props.pendingTransaction['amzn_purchase_url'] && <a href={this.props.pendingTransaction['amzn_purchase_url']}>YOUR CART</a>}
                 {this.props.pendingTransaction && this.props.pendingTransaction['amzn_purchase_url'] ? 
                   <RaisedButton 
                     onClick={() => this.props.discardCart()}
@@ -68,7 +68,8 @@ const mapStateToProps = ({products, transactions, app}) => ({
   user: app.user,
   cart: products.cart,
   pendingTransaction: transactions.pendingTransaction,
-  quantities: products.quantities
+  quantities: products.quantities,
+  
 });
 
 const mapDispatchToProps = dispatch => {

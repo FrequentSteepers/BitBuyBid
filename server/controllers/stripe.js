@@ -6,7 +6,7 @@ module.exports.stripeCheckout = (req, res) => {
     client_ip: req.body.client_ip,
     createAt: req.body.created,
     email: req.body.email,
-    payment: req.body.type
+    payment: req.body.payment
   })
   .save()
   .then(response => res.sendStatus(201))

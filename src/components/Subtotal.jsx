@@ -9,7 +9,7 @@ const style = {
 
 const mapStateToProps = state => {
   return {
-    cart: (state.products.cart.length ? state.products.cart : ((state.transactions.pendingTransaction && state.transactions.pendingTransaction.cart) ? state.transactions.pendingTransaction.cart : [])),
+    cart: (state.products.cart.length ? state.products.cart : (state.transactions.pendingTransaction && state.transactions.pendingTransaction.cart) ? state.transactions.pendingTransaction.cart : []),
     quantities: state.products.quantities
   };
 };

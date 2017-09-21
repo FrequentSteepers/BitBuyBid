@@ -27,25 +27,19 @@ class Checkout extends Component {
           {this.props.cart.map((item, i) => {
             return <CartItem key={i} item={item} />;
           })}
+          <div>
+            Subtotal: <Subtotal />
+          </div>
           <Switch>
             <Route exact path='/cart/confirm'>
               <div>
-                <Link to='/receipt' onClick={() => this.props.checkout()}><FlatButton label="Amazon Checkout"/></Link>
-                <Link to='/cart/stripe'><FlatButton label="Stripe Checkout"/></Link>
+                <Link to='/receipt/amazon' onClick={() => this.props.checkout()}><FlatButton label="Amazon Checkout"/></Link>
+                <Link to='/receipt/stripe' onClick={() => this.props.checkout()}><FlatButton label="Stripe Checkout"/></Link>
                 <Link to='/cart'><FlatButton label="Abort"/></Link>
               </div>
             </Route>
-            <Route path='/cart/stripe'>
-              <div>
-                <script src="https://checkout.stripe.com/checkout.js"></script>
-                <Stripe />
-              </div>
-            </Route>
             <Route path='/cart'>
-              <div>
-                Subtotal: <Subtotal />
-                {this.props.cart.length !== 0 && <Link to='/cart/confirm'><FlatButton label="Checkout!"/></Link>}
-              </div>
+              {this.props.cart.length !== 0 && <Link to='/cart/confirm'><FlatButton label="Checkout!"/></Link>}
             </Route>
             <Route path='/receipt'>
               <Receipt/>

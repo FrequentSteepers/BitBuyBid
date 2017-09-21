@@ -3,7 +3,8 @@ const express = require('express');
 const router = express.Router();
 const {
   Transactions,
-  Amazon
+  Amazon,
+  Stripe
 } = require('../controllers');
 
 const {create, getAll, getOne, update, deleteOne} = Transactions;
@@ -30,6 +31,9 @@ router.route('/:id/amzn')
     }
   })
   .post(Amazon.createAmazonCart);
+
+router.route('/:id/stripe')
+  .post(Stripe.stripeCheckout);
 
 router.route('/:id')
   .all((req, res, next) => {

@@ -68,8 +68,7 @@ const mapStateToProps = ({products, transactions, app}) => ({
   user: app.user,
   cart: products.cart,
   pendingTransaction: transactions.pendingTransaction,
-  quantities: products.quantities,
-  
+  quantities: products.quantities
 });
 
 const mapDispatchToProps = dispatch => {

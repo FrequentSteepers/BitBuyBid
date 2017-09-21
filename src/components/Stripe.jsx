@@ -16,7 +16,6 @@ class Stripe extends Component {
     this.calculateTotal = this.calculateTotal.bind(this);
     
     this.onToken = (token) => {
-      console.log('Stripe tx token: ', token);
       axios.post(`/api/transactions/${this.props.pendingTransaction.id}/stripe`, {
         client_ip: token.client_ip,
         created: token.created,

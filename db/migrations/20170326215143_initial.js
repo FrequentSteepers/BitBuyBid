@@ -38,10 +38,10 @@ exports.up = function (knex, Promise) {
       table.bigint('upc').unsigned().nullable();
       table.string('catalog_id', 200).nullable();
       table.decimal('price').unsigned().nullable();
-      table.string('buy_url', 500).nullable();
-      table.string('img_url_sm', 500).nullable();
-      table.string('img_url_md', 500).nullable();
-      table.string('img_url_lg', 500).nullable();
+      table.text('buy_url').nullable();
+      table.text('img_url_sm').nullable();
+      table.text('img_url_md').nullable();
+      table.text('img_url_lg').nullable();
       table.string('type', 20).notNullable();
       table.string('title', 500).notNullable();
       table.text('description').nullable();

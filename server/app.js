@@ -40,6 +40,13 @@ app.use(middleware.passport.initialize());
 app.use(middleware.passport.session());
 app.use(middleware.flash());
 app.use(middleware.compression());
+app.use((req, res, next) => {
+  if (req.user) {
+    req.user.auths = undefined;
+    delete req.user.auths;
+  }
+  next();
+});
 
 
 app.use('/auth', auth);

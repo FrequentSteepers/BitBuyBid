@@ -2,10 +2,10 @@
 const request = require('supertest');
 const express = require('express');
 const expect = require('chai').expect;
-const app = require('../app.js');
+const app = require('../../dist/app.js');
 const dbUtils = require('../../db/lib/utils.js');
 
-describe('Products API', function () {
+xdescribe('Products API', function () {
   beforeEach(function (done) {
     dbUtils.rollbackMigrate(done);
   });

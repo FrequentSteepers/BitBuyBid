@@ -48,7 +48,7 @@ class CartWidget extends Component {
               </div>
               {this.props.cart ? this.props.cart.map((product, i) => {
                 return (
-                  <div cols={1} onClick={() => this.props.selectProduct(product)} key={i}>
+                  <div cols={1} onClick={() => this.props.selectProduct(product.id)} key={i}>
                     {i > 0 ? <hr/> : null}
                     <Link style={this.style.link} to={`/product?id=${product.id}`}>
                       <img style={this.style.img} src={product.img_url_sm} alt="" />

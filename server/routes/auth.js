@@ -17,6 +17,8 @@ router.route('/login')
   .post(urlencodedParser, middleware.passport.authenticate('local-login'), 
     (req, res) => {
       if (req.user) {
+        req.user.auths = undefined;
+        delete req.user.auths;
         res.json(req.user);
       } else {
         res.status(401);
@@ -30,6 +32,8 @@ router.route('/signup')
   })
   .post(middleware.passport.authenticate('local-signup'), (req, res) => {
     if (req.user) {
+      req.user.auths = undefined;
+      delete req.user.auths;
       res.json(req.user);
     } else {
       res.status(401);

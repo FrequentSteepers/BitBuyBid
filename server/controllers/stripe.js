@@ -8,7 +8,7 @@ module.exports.stripeCheckout = (req, res) => {
     email: req.body.email,
     payment: req.body.payment
   })
-  .save()
-  .then(response => res.sendStatus(201))
-  .error(err => res.sendStatus(501));
-}
+    .save()
+    .then(response => res.sendStatus(201))
+    .error(err => res.sendStatus(501));
+};

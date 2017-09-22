@@ -6,13 +6,13 @@ export default function renderFullHTMLPage(stringifyHTML, initialState, user) {
     <html>
       <head>
         <title>Bit Buy</title>
-        <link rel="stylesheet" type="text/css" href="/scripts/style.css" />
       </head>
       <body>
         <div id="root" dangerouslySetInnerHTML={{ __html: stringifyHTML }} />
         <script dangerouslySetInnerHTML={{ __html: `window.__PRELOADED_STATE__ = ${JSON.stringify(initialState)};` }}></script>
         <script dangerouslySetInnerHTML={ {__html: `var USER="${user}"`} }/>
         <script src="/scripts/bundle.js"></script>
+        <link rel="stylesheet" type="text/css" href="/scripts/style.css" />
       </body>
     </html>
   )}`;

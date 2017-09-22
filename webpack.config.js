@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
+const MinifyPlugin = require('babel-minify-webpack-plugin');
 
 const config = {
   entry: ['babel-polyfill',
@@ -21,6 +22,12 @@ const config = {
   plugins: [
     new webpack.NoErrorsPlugin(),
     new ExtractTextPlugin('style.css'),
+    new MinifyPlugin({}, {}),
+    new webpack.DefinePlugin({
+      'process.env': {
+        'NODE_ENV': JSON.stringify('production')
+      }
+    })
   ],
 
   module: {

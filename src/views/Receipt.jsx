@@ -28,9 +28,9 @@ class Receipt extends Component {
   }
 
   render() {
-      return (
-        <div>
-          {
+    return (
+      <div>
+        {
           <Switch>
             <Route exact path='/receipt/amazon'>
               <div>
@@ -44,11 +44,11 @@ class Receipt extends Component {
                   <RaisedButton 
                     onClick={() => this.props.discardCart()}
                     label="Discard Cart"
-                    /> : 
+                  /> : 
                   <RaisedButton 
                     onClick={() => this.props.handleAmazonCart()}
                     label="Create Amazon cart"
-                    />}
+                  />}
               </div>
             </Route>
             <Route exact path='/receipt/stripe'>

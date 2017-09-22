@@ -12,9 +12,10 @@ module.exports = function(grunt) {
     mochaTest: {
       test: {
         options: {
-          reporter: 'spec'
+          reporter: 'spec',
+          compilers: 'jsx:babel-core/register'
         },
-        src: ['server/test/**/*.js']
+        src: ['dist/test/**/*.js']
       }
     },
 

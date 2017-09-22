@@ -46,7 +46,7 @@ class Profile extends Component {
   calculateDate() {
     let joinedAt = new Date(Date.now() - Date.parse(this.props.user.created_at));
     if (!joinedAt) {
-      return '[You are not logged in!]'
+      return '[You are not logged in!]';
     } else if (joinedAt.getHours() < 48) {
       return `${joinedAt.getHours()} hours ago`; 
     } else if (joinedAt.getWeeks() < 8) {
@@ -60,28 +60,28 @@ class Profile extends Component {
     return (
       <div>
         {this.props.user ? 
-        <div onClick={(e) => this.toggleUploadOff(e)}>
-          <Paper style={style.paper}>
-            <Card style={style.transactionsCard}>
-              <ProfilePicture toggle={this.toggleUpload} photo={this.props.user.picture}/>
-              <div style={style.information}>
-                <div style={style.username}>{this.props.user && this.props.user.first + ' ' + this.props.user.last}</div>
-                <div style={{fontStyle: 'italic'}}>Joined {this.calculateDate()}</div>
-              </div>
-            </Card>
-            <Transactions />
-          </Paper>
-          {
-            this.state.showUpload ? 
-              <div id='upload' style={style.upload}>
-                <Card style={style.uploadCard}>
-                  <Upload/>
-                </Card>
-              </div> :
-              null
-          }
-        </div> : 
-        <h1> Not logged in! </h1>
+          <div onClick={(e) => this.toggleUploadOff(e)}>
+            <Paper style={style.paper}>
+              <Card style={style.transactionsCard}>
+                <ProfilePicture toggle={this.toggleUpload} photo={this.props.user.picture}/>
+                <div style={style.information}>
+                  <div style={style.username}>{this.props.user && this.props.user.first + ' ' + this.props.user.last}</div>
+                  <div style={{fontStyle: 'italic'}}>Joined {this.calculateDate()}</div>
+                </div>
+              </Card>
+              <Transactions />
+            </Paper>
+            {
+              this.state.showUpload ? 
+                <div id='upload' style={style.upload}>
+                  <Card style={style.uploadCard}>
+                    <Upload/>
+                  </Card>
+                </div> :
+                null
+            }
+          </div> : 
+          <h1> Not logged in! </h1>
         }
       </div>
     );

@@ -1,7 +1,7 @@
 module.exports = (models) => {
   // require('./overstock')(models);
   // require('./amazon')(models);
-  // require('./exchange')(models);
+  require('./exchange')(models);
 
   var CronJob = require('cron').CronJob;
 

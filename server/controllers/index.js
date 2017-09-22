@@ -3,6 +3,7 @@ module.exports = {
   Products: require('./products'),
   Transactions: require('./transactions'),
   Search: require('./search'),
-  Amazon: require('./amazon')
+  Amazon: require('./amazon'),
+  Stripe: require('./stripe')
 };
 

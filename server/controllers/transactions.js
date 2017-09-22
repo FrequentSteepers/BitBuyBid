@@ -18,7 +18,7 @@ module.exports.create = (req, res) => {
     .save()
     .then(result => {
       builtTransaction = result;
-      builtTransaction.cart = [];
+      builtTransaction.cart = req.body.cart;
       return Promise.all(
         req.body.cart.map(
           p => {

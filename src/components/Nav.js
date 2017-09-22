@@ -73,7 +73,6 @@ class Navbar extends React.Component {
           iconElementRight={
             this.props.user ? 
               <div>
-                {this.props.pendingTransaction && <Link to='/receipt'><FlatButton label="pending cart" labelStyle={{color: 'white'}}/></Link>}
                 <Link to ='/profile'><FlatButton label={this.props.user.username} labelStyle={{color: 'white'}} /></Link> 
                 <Link to ='/logout' ><FlatButton label="Logout" labelStyle={{color: 'white'}} onClick={this.props.handleLogout} /></Link>
               </div> :
@@ -84,11 +83,11 @@ class Navbar extends React.Component {
           }
         />
         <Drawer docked={false} width={250} open={this.state.open} onRequestChange={(open) => this.setState({open})}>
-          <Link style={style.link} to='/'><MenuItem>Search</MenuItem></ Link>
-          <Link style={style.link} to='/profile'><MenuItem>Profile</MenuItem></ Link>
-          <Link style={style.link} to='/cart'><MenuItem >Cart</MenuItem></ Link>
-          <Link style={style.link} to='/' onClick={this.props.handleLogout}><MenuItem>Logout</MenuItem></ Link>
-          <Link style={style.link} to='/login'><MenuItem>Login</MenuItem></ Link>
+          <Link style={style.link} to='/'><MenuItem>Search</MenuItem></Link>
+          <Link style={style.link} to='/profile'><MenuItem>Profile</MenuItem></Link>
+          <Link style={style.link} to='/cart'><MenuItem >Cart</MenuItem></Link>
+          <Link style={style.link} to='/' onClick={this.props.handleLogout}><MenuItem>Logout</MenuItem></Link>
+          <Link style={style.link} to='/login'><MenuItem>Login</MenuItem></Link>
         </Drawer>
       </div>
     );

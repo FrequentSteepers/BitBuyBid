@@ -70,8 +70,7 @@ export const style = {
       right: '5%'
     },
     collapse: {
-      position: 'realtive', 
-      display: 'inline-block', 
+      color: 'teal', 
       float: 'right'
     },
     cart: {

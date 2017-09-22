@@ -30,7 +30,7 @@ class Transactions extends Component {
     return (
       <div> 
         {this.props.transactions ? 
-          (this.props.transactions.map((transaction, i) => 
+          (this.props.transactions.reverse().map((transaction, i) => 
             (<Card key={i} style={{padding: '15px', margin: '4px'}}>
               <Transaction key={i} transaction={transaction}/>
             </Card>))

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import {selectProduct, addToCart, removeFromCart, decrementItem} from '../store/modules/products.js';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
+import FlatButton from 'material-ui/FlatButton';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import {GridList} from 'material-ui/GridList';
 import Paper from 'material-ui/Paper';
@@ -43,11 +44,11 @@ class CartWidget extends Component {
             <Paper cols={2} style={this.style.paper}>
               <div cols={2} style={this.style.header}>
                 <div style={this.style.cart}>Cart</div>
-                <button style={this.style.collapse} type='button' onClick={() => this.setState({display: false})}>collapse</button>
+                <FlatButton style={this.style.collapse} type='button' onClick={() => this.setState({display: false})} label='collapse'></FlatButton>
               </div>
               {this.props.cart ? this.props.cart.map((product, i) => {
                 return (
-                  <div cols={1} onClick={() => this.props.selectProduct(product.id)} key={i}>
+                  <div cols={1} onClick={() => this.props.selectProduct(product)} key={i}>
                     {i > 0 ? <hr/> : null}
                     <Link style={this.style.link} to={`/product?id=${product.id}`}>
                       <img style={this.style.img} src={product.img_url_sm} alt="" />
@@ -70,15 +71,15 @@ class CartWidget extends Component {
                   <b><i>Subtotal:</i></b>
                   <Subtotal/>
                 </div>
-                <div>
-                  <Link to='/cart'><button>Checkout</button></Link>
-                </div>
+                <Link to='/cart'><FlatButton>Checkout</FlatButton></Link>
               </div>
             </Paper>
           </GridList> : false}
-      </div> : <button style={this.style.expand} type='button' onClick={() => this.setState({display: true})}>expand</button>
+      </div> : <FlatButton style={this.style.expand} type='button' onClick={() => this.setState({display: true})} label='expand'></FlatButton>
     );
   }
 }
+
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(CartWidget);

@@ -11,14 +11,6 @@ import { Provider } from 'react-redux';
 
 const store = configureStore(window.__PRELOADED_STATE__, window);
 
-// const setup = () => {
-//   const wrapper = mount(<Provider store={store}><App /></Provider>);
-
-//   return {
-//     wrapper,
-//   };
-// };
-
 describe('App', () => {
   const setup = () => {
     const wrapper = mount(<Provider store={store}><App /></Provider>);
@@ -28,7 +20,6 @@ describe('App', () => {
     };
   };
   const { wrapper } = setup();
-  // console.log(wrapper);
   it('renders something', () => {
     expect(wrapper).to.exist;
   });

@@ -8,6 +8,8 @@ import configureStore from '../../src/store/index.js';
 import { Provider } from 'react-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
+const store = configureStore(window.__PRELOADED_STATE__, window);
+
 var item = {
   id: 38,
   prod_id: "108871731461846856|OVSOCK",
@@ -29,7 +31,6 @@ var item = {
   updated_at: "2017-09-15T18:51:18.679Z"
 };
 
-const store = configureStore(window.__PRELOADED_STATE__, window);
 
 describe('CartItem', () => {
   const setup = () => {
@@ -41,7 +42,7 @@ describe('CartItem', () => {
   };
   const { wrapper } = setup();
   
-  it('renders something', () => {
+  it('Renders something', () => {
     expect(wrapper).to.exist;
   });
   it('Buttons render', () => {
@@ -52,6 +53,9 @@ describe('CartItem', () => {
     expect(wrapper.find('button').at(1).text()).to.equal('-');
     expect(wrapper.find('button').at(2).text()).to.equal('Remove from Cart');
   });
+  // it('Buttons have access to cart functions', () => {
+  //   expect(wrapper.props().addToCart).to.exist;
+  // });
   it('H4 renders', () => {
     expect(wrapper.find('h4').length).to.equal(1);
   });
